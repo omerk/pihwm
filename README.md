@@ -1,4 +1,4 @@
-lcwfpihwkm
+lcwfpihwm
 ==========
 
-lightweight C wrappers for Raspberry Pi hardware kernel modules
+lightweight C wrappers for Raspberry Pi hardware modules
