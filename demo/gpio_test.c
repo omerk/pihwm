@@ -4,6 +4,8 @@
 int main(void)
 {
 	unsigned int val, i;
+
+	printf("main() start\n");
 	
 	gpio_init(17, OUTPUT);
 	gpio_init(18, INPUT);
@@ -20,5 +22,9 @@ int main(void)
 	
 	gpio_release(17);
 	gpio_release(18);
+
+	printf("main() end\n");
+
+	return 0;
 }
 

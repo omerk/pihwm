@@ -8,9 +8,6 @@
 #include <string.h>
 #include "pi_i2c.h"
 
-// Print debug messages?
-#define	DEBUG	1
-
 // Registers
 #define	IODIRA	0x00
 #define	IODIRB	0x01
