@@ -1,15 +1,7 @@
 #ifndef PI_GPIO_H
 #define PI_GPIO_H
 
-#define	INPUT	"in"
-#define	OUTPUT	"out"
-#define	IN		INPUT
-#define	OUT		OUTPUT
-
-#define	HIGH	"1"
-#define	LOW		"0"
-#define	ON		HIGH
-#define	OFF		LOW
+#include "pihwm.h"
 
 extern int gpio_init(int pin, char* dir);
 extern int gpio_write(int pin, char* val);

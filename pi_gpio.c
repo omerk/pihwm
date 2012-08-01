@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include "pihwm.h"
 #include "pi_gpio.h"
-
-//#define DEBUG 1
 
 
 int gpio_init(int pin, char* dir)
@@ -15,9 +14,7 @@ int gpio_init(int pin, char* dir)
 
 	file = fopen("/sys/class/gpio/export", "w");
 	if ( file == NULL ){
-		#ifdef DEBUG
-		printf("[ERROR] Can't open file (export)\n");
-		#endif
+		debug("[%s] Can't open file (export)\n", __func__);
 		return -1;
 	}
 
@@ -29,9 +26,7 @@ int gpio_init(int pin, char* dir)
 	sprintf(filename, "/sys/class/gpio/gpio%d/direction", pin);
 	file = fopen(filename, "w");
 	if ( file == NULL ){
-		#ifdef DEBUG
-		printf("[ERROR] Can't open file (direction)");
-		#endif
+		debug("[%s] Can't open file (direction)\n", __func__);
 		return -1;
 	}
 
@@ -52,9 +47,7 @@ int gpio_write(int pin, char* val)
 	sprintf(filename, "/sys/class/gpio/gpio%d/value", pin);
 	file = fopen(filename, "w");
 	if ( file == NULL ){
-		#ifdef DEBUG
-		printf("[ERROR] Can't open file (value):%s", filename);
-		#endif
+		debug("[%s] Can't open file (value): %s\n", __func__, filename);
 		return -1;
 	}
 
@@ -75,9 +68,7 @@ int gpio_read(int pin)
 	sprintf(filename, "/sys/class/gpio/gpio%d/value", pin);
 	file = fopen(filename, "r");
 	if ( file == NULL ){
-		#ifdef DEBUG
-		printf("[ERROR] Can't open file (value):%s", filename);
-		#endif
+		debug("[%s] Can't open file (value): %s\n", __func__, filename);
 		return -1;
 	}
 
@@ -85,15 +76,11 @@ int gpio_read(int pin)
 	if( fread(valStr, 1, 1, file) == 1 ){
 		val = atoi(valStr);
 
-		#ifdef DEBUG
 		printf("valStr: %s, val: %d\n", valStr, val);
-		#endif
 
 		return val;
 	} else {
-		#ifdef DEBUG
-		printf("[ERROR] Can't read pin value");
-		#endif
+		debug("[%s] Can't read pin value", __func__);
 		return -1;
 	}
 
@@ -108,9 +95,7 @@ int gpio_release(int pin)
 	
 	file = fopen("/sys/class/gpio/unexport", "w");
 	if ( file == NULL ){
-		#ifdef DEBUG
-		printf("[ERROR] Can't open file (unexport)");
-		#endif
+		debug("[%s] Can't open file (unexport)\n", __func__);
 		return -1;
 	}
 
@@ -121,7 +106,4 @@ int gpio_release(int pin)
 
 	return 1;
 }
-
-
-
 
