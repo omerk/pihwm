@@ -36,7 +36,6 @@ int i2c_select_device(unsigned int fd, unsigned int addr)
 
 int i2c_write(unsigned int fd, unsigned int addr, unsigned char* data, unsigned int len)
 {
-	int i;
 
 	if( i2c_select_device(fd, addr) ){
 		if ( write(fd, data, len) != len ) {
