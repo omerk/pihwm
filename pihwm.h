@@ -1,6 +1,8 @@
 #ifndef PIHWM_C
 #define PIHWM_C
 
+#include <sys/time.h>
+
 // Useful constants
 #define INPUT	"in"
 #define OUTPUT	"out"
@@ -22,6 +24,7 @@
 	#define debug(...) ;
 #endif
 
+#define delay(d) usleep(d*1000);
 
 #endif
 
