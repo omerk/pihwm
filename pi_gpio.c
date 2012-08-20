@@ -100,7 +100,7 @@ int isr_handler(void *isr)
             
 			if (fdset[1].revents & POLLPRI) {
 				// We have an interrupt!
-				//len = read(fdset[1].fd, buf, 64);
+				len = read(fdset[1].fd, buf, 64); // looks like we need this.
 				// Call ISR
 				(*i.isr)(i.pin);
 			}
