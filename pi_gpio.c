@@ -36,6 +36,7 @@ int gpio_init(int pin, char* dir)
 	}
 
 	sprintf(pinStr, "%d", pin);
+	// TODO: Add check here
 	fwrite(pinStr, sizeof(char), strlen(pinStr), file);
 
 	fclose(file);
@@ -47,7 +48,8 @@ int gpio_init(int pin, char* dir)
 		return -1;
 	}
 
-	fwrite(dir, sizeof(char), 2, file);
+	// TODO: Add check here
+	fwrite(dir, sizeof(char), strlen(dir), file);
 
 	fclose(file);
 
