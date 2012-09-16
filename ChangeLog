@@ -1,5 +1,15 @@
 2012-09-16  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
+	* demo/gpio_int.c: Format to GNU coding style.
+	* demo/gpio_test.c: Format to GNU coding style, add GPL header,
+	include pihwm.h.
+	* demo/i2c_ads1015.c, demo/i2c_hmc6352.c, demo/i2c_mcp23017.c
+	* demo/pwm_demo.c, demo/spi_bb_mcp3202.c: Format to GNU coding
+	style.
+	* lib/pihwm.h: Include unistd.h, needed for sleep.
+
+2012-09-16  Jeremy Bennett  <jeremy.bennett@embecosm.com>
+
 	* demo/Makefile.am: Add -lpthread to each demo LDADD
 	* demo/Makefile.in: Regenerated.
 	* doc/Makefile.in: Regenerated.

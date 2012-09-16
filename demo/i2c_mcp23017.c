@@ -17,28 +17,41 @@
 // I2C Addres (A2,A1,A0 tied to ground)
 #define ADDR	0x20
 
-int main()
+int
+main ()
 {
-	int fd;	
+  int fd;
 
-	printf("main() start\n");
+  printf ("main() start\n");
 
-	// Init I2C bus
-	fd = i2c_init("/dev/i2c-0");
-	if ( fd < 0 ){
-		return 1;
-	}
-	
-	// Set pin directions
-	i2c_write(fd, ADDR, a({IODIRA,0x00}), 2);
-	i2c_write(fd, ADDR, a({IODIRB,0x00}), 2);
+  // Init I2C bus
+  fd = i2c_init ("/dev/i2c-0");
+  if (fd < 0)
+    {
+      return 1;
+    }
 
-	// Set pin values
-	i2c_write(fd, ADDR, a({GPIOA,0xFF}), 2);
-	i2c_write(fd, ADDR, a({GPIOB,0xFF}), 2);
+  // Set pin directions
+  i2c_write (fd, ADDR, a (
+			   {
+			   IODIRA, 0x00}
+	     ), 2);
+  i2c_write (fd, ADDR, a (
+			   {
+			   IODIRB, 0x00}
+	     ), 2);
 
-	printf("main() end\n");
+  // Set pin values
+  i2c_write (fd, ADDR, a (
+			   {
+			   GPIOA, 0xFF}
+	     ), 2);
+  i2c_write (fd, ADDR, a (
+			   {
+			   GPIOB, 0xFF}
+	     ), 2);
 
-	return 0;
+  printf ("main() end\n");
+
+  return 0;
 }
-

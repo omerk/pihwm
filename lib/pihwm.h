@@ -24,6 +24,9 @@
 #ifndef PIHWM_H
 #define PIHWM_H
 
+/* Headers needed here */
+#include <unistd.h>
+
 /* Useful constants */
 #define INPUT	"in"
 #define OUTPUT	"out"

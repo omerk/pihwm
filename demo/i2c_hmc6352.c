@@ -11,35 +11,37 @@
 // I2C Address
 #define ADDR	0x21
 
-int main()
+int
+main ()
 {
-	int fd;
-	unsigned char r[2];
-	unsigned int res, i;
+  int fd;
+  unsigned char r[2];
+  unsigned int res, i;
 
-	printf("main() start\n");
+  printf ("main() start\n");
 
-	// Init I2C bus
-	fd = i2c_init("/dev/i2c-0");
-	if ( fd < 0 ){
-		return 1;
-	}
-	
-	for(i=0; i<10; i++){
+  // Init I2C bus
+  fd = i2c_init ("/dev/i2c-0");
+  if (fd < 0)
+    {
+      return 1;
+    }
 
-		// Request Data
-		i2c_write(fd, ADDR, "A" , 1);
-		sleep(0.1);
-		i2c_read(fd, ADDR, r, 2);
+  for (i = 0; i < 10; i++)
+    {
 
-		res = (r[0] << 8 | r[1]) / 10;
+      // Request Data
+      i2c_write (fd, ADDR, "A", 1);
+      sleep (0.1);
+      i2c_read (fd, ADDR, r, 2);
 
-		printf("res: %d\t(res_h: 0x%02x res_l: 0x%02x)\n", res, r[0], r[1]);
-		sleep(1);
-	}
+      res = (r[0] << 8 | r[1]) / 10;
 
-	printf("main() end\n");
+      printf ("res: %d\t(res_h: 0x%02x res_l: 0x%02x)\n", res, r[0], r[1]);
+      sleep (1);
+    }
 
-	return 0;
+  printf ("main() end\n");
+
+  return 0;
 }
-
