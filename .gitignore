@@ -13,3 +13,12 @@
 
 # Default output
 a.out
+
+# Emacs backup files
+*~
+
+# Automake cache directory
+autom4te.cache
+
+# Typical build directory
+bd

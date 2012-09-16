@@ -1,0 +1,10 @@
+	  pihwm - a Lightweight C Library for Raspberry Pi Hardware
+	  =========================================================
+
+
+New in release 0.0.1
+====================
+
+A first release prepared for the UK Open Source Hardware User Group (OSHUG) camp on 15/16 September 2012.
+
+Provides basic library functions for gpio and i2c.

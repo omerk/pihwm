@@ -1,0 +1,34 @@
+2012-09-16  Jeremy Bennett <jeremy.bennett@embecosm.com>
+
+	* aclocal.m4, AUTHORS, compile, config.guess, config.h.in,
+	* config.sub: Created.
+	* configure: Regenerated.
+	* configure.ac, COPYING, ChangeLog: Created.
+	* demo: Directory created for demo programs.
+	* demo/Makefile.am: Created.
+	* demo/Makefile.in: Regenerated.
+	* depcomp: Created.
+	* doc: Directory created for documentation.
+	* doc/Makefile.am: Created.
+	* doc/Makefile.in: Regenerated.
+	* INSTALL, install-sh: Created.
+	* lib: Directory created for the library.
+	* lib/Makefile.am: Created.
+	* lib/Makefile.in: Regenerated.
+	* ltmain.sh: Created:
+	* m4: Directory created for local macros
+	* m4/libtool.m4, m4/ltoptions.m4, m4/ltsugar.m4, m4/ltversion.m4:
+	* m4/lt~obsolete.m4, missing, Makefile.am: Created.
+	* Makefile.in: Regenerated.
+	* NEWS: Created.
+	* pi_gpio.c, pi_gpio.h, pi_i2c.c, pi_i2c.h, pi_pwm.c, pi_pwm.h:
+	* pihwm.h: Moved to lib directory.
+	* README: Created.
+	* testsuite: Directory created for tests
+	* testsuite/Makefile: Regenerated.
+	* testsuite/Makefile.am: Created.
+
+2012-09-16  Omer Kilic <omer@kilic.name>
+
+	* pi_gpio.c, pi_gpio.h, pi_i2c.c, pi_i2c.h, pi_pwm.c, pi_pwm.h:
+	* pihwm.h: Created.
