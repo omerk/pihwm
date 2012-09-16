@@ -27,7 +27,7 @@
 # Standard place for local macros
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS               = lib       \
-			demo      \
-			doc       \
-			testsuite
+SUBDIRS = lib       \
+	  demo      \
+	  doc       \
+	  testsuite

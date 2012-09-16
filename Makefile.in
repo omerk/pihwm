@@ -161,6 +161,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
 GREP = @GREP@
+INCLUDES = @INCLUDES@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -261,9 +262,9 @@ top_srcdir = @top_srcdir@
 # Standard place for local macros
 ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = lib       \
-			demo      \
-			doc       \
-			testsuite
+	  demo      \
+	  doc       \
+	  testsuite
 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive

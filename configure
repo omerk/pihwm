@@ -636,6 +636,7 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+INCLUDES
 LOCAL_DEFS
 LOCAL_LDFLAGS
 LOCAL_CFLAGS
@@ -12253,7 +12254,11 @@ BUILD_DIR=`pwd`
 
 
 
-ac_config_files="$ac_config_files Makefile doc/Makefile lib/Makefile testsuite/Makefile"
+# Ensure we can find the library headers when building the demos and tests.
+INCLUDES="$INCLUDES -I\${top_srcdir}/lib"
+
+
+ac_config_files="$ac_config_files Makefile demo/Makefile doc/Makefile lib/Makefile testsuite/Makefile"
 
 
 # Generate the output
@@ -13269,6 +13274,7 @@ do
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
+    "demo/Makefile") CONFIG_FILES="$CONFIG_FILES demo/Makefile" ;;
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
     "lib/Makefile") CONFIG_FILES="$CONFIG_FILES lib/Makefile" ;;
     "testsuite/Makefile") CONFIG_FILES="$CONFIG_FILES testsuite/Makefile" ;;

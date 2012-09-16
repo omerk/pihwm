@@ -1,5 +1,15 @@
 2012-09-16  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
+	* demo/Makefile.am: Add -lpthread to each demo LDADD
+	* demo/Makefile.in: Regenerated.
+	* doc/Makefile.in: Regenerated.
+	* lib/Makefile.in: Regenerated.
+	* Makefile.am: Correct typo "SUBDIRS".
+	* Makefile.in: Regenerated.
+	* testsuite/Makefile.in: Regenerated.
+
+2012-09-16  Jeremy Bennett  <jeremy.bennett@embecosm.com>
+
 	* lib/pi_gpio.c: Add GPL header, change C++ comments to C,
 	include config.h first.
 	* lib/pi_gpio.h: Add GPL header, change C++ comments to C, remove

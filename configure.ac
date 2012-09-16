@@ -95,7 +95,12 @@ AC_SUBST(LOCAL_CFLAGS)
 AC_SUBST(LOCAL_LDFLAGS)
 AC_SUBST(LOCAL_DEFS)
 
+# Ensure we can find the library headers when building the demos and tests.
+INCLUDES="$INCLUDES -I\${top_srcdir}/lib"
+AC_SUBST(INCLUDES)
+
 AC_CONFIG_FILES([Makefile             \
+                 demo/Makefile        \
                  doc/Makefile         \
                  lib/Makefile         \
                  testsuite/Makefile])
