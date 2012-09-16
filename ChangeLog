@@ -1,10 +1,32 @@
-2012-09-16  Jeremy Bennett <jeremy.bennett@embecosm.com>
+2012-09-16  Jeremy Bennett  <jeremy.bennett@embecosm.com>
+
+	* lib/pi_gpio.c: Add GPL header, change C++ comments to C,
+	include config.h first.
+	* lib/pi_gpio.h: Add GPL header, change C++ comments to C, remove
+	pwhwm.h header.
+	(isr_handler): Change return type to void *, remove unused var
+	"len", cast return types to void *, test results of calls to read ()
+	(gpio_clear_int): return 0 always.
+	(gpio_read): Use type compliant initialization of valStr;
+	* lib/pi_i2c.c: Add GPL header, include config.h first, include
+	sys/ioctl.h.
+	* lib/pi_i2c.h: Add GPL header, change C++ comments to C, remove
+	pwhwm.h header.
+	* lib/pi_pwm.c: Add GPL header, change C++ comments to C,
+	include config.h first.
+	<clk_map, gpio_map, pwm_map>: Changed declaration to unsigned int.
+	* lib/pi_pwm.h: Add GPL header, change C++ comments to C, remove
+	pwhwm.h header.
+	* lib/pihwm.h: Add GPL header, change C++ comments to C. Change to
+	use sleep rather than usleep, and remove header.
+
+2012-09-16  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
 	* lib/pi_gpio.h, lib/pi_i2c.c, lib/pi_i2c.h, lib/pi_pwm.c,
 	* lib/pi_pwm.h, lib/pihwm.h: Reformat using indent to GNU coding
 	standards.
 
-2012-09-16  Jeremy Bennett <jeremy.bennett@embecosm.com>
+2012-09-16  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
 	* aclocal.m4, AUTHORS, compile, config.guess, config.h.in,
 	* config.sub: Created.
@@ -34,7 +56,7 @@
 	* testsuite/Makefile: Regenerated.
 	* testsuite/Makefile.am: Created.
 
-2012-09-16  Omer Kilic <omer@kilic.name>
+2012-09-16  Omer Kilic  <omer@kilic.name>
 
 	* pi_gpio.c, pi_gpio.h, pi_i2c.c, pi_i2c.h, pi_pwm.c, pi_pwm.h:
 	* pihwm.h: Created.

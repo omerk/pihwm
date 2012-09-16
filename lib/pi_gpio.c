@@ -1,3 +1,28 @@
+/* pi_gpio.c -- gpio library function implementation.
+
+   Copyright (C) 2012 Omer Kilic
+   Copyright (C) 2012 Embecosm Limited
+
+   Contributor Omer Kilic <omer@kilic.name>
+   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
+
+   This file is part of pihwm.
+
+   This program is free software; you can redistribute it and/or modify it
+   under the terms of the GNU General Public License as published by the Free
+   Software Foundation; either version 3 of the License, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful, but WITHOUT
+   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+   more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this program.  If not, see <http://www.gnu.org/licenses/>. */
+
+#include "config.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -7,6 +32,7 @@
 #include <errno.h>
 #include <poll.h>
 #include <pthread.h>
+
 #include "pihwm.h"
 #include "pi_gpio.h"
 
@@ -38,7 +64,7 @@ gpio_init (int pin, char *dir)
     }
 
   sprintf (pinStr, "%d", pin);
-  // TODO: Add check here
+  /* TODO: Add check here */
   fwrite (pinStr, sizeof (char), strlen (pinStr), file);
 
   fclose (file);
@@ -51,7 +77,7 @@ gpio_init (int pin, char *dir)
       return -1;
     }
 
-  // TODO: Add check here
+  /* TODO: Add check here */
   fwrite (dir, sizeof (char), strlen (dir), file);
 
   fclose (file);
@@ -60,12 +86,13 @@ gpio_init (int pin, char *dir)
 }
 
 
-// Bits from: https://www.ridgerun.com/developer/wiki/index.php/Gpio-int-test.c
-int
+/* Bits from:
+   https://www.ridgerun.com/developer/wiki/index.php/Gpio-int-test.c */
+static void *
 isr_handler (void *isr)
 {
   struct pollfd fdset[2];
-  int nfds = 2, gpio_fd, rc, len;
+  int nfds = 2, gpio_fd, rc;
   char *buf[64];
 
   isr_t i = *(isr_t *) isr;
@@ -74,8 +101,8 @@ isr_handler (void *isr)
     {
       printf ("isr_handler running\n");
 
-      // Get /value fd
-      // TODO: Add check here
+      /* Get /value fd
+	 TODO: Add check here */
       gpio_fd = gpio_valfd ((int) i.pin);
 
 
@@ -89,18 +116,16 @@ isr_handler (void *isr)
 	  fdset[1].fd = gpio_fd;
 	  fdset[1].events = POLLPRI;
 
-	  // poll() with a timeout of a second
-	  rc = poll (fdset, nfds, 1000);
+	  rc = poll (fdset, nfds, 1000);	/* Timeout in ms */
 
 	  if (rc < 0)
 	    {
 	      debug ("\npoll() failed!\n");
-	      return -1;
+	      return (void *) -1;
 	    }
 
 	  if (rc == 0)
 	    {
-	      // Timeout 
 	      debug ("poll() timeout.\n");
 	      if (isr_handler_flag == 0)
 		{
@@ -111,21 +136,29 @@ isr_handler (void *isr)
 
 	  if (fdset[1].revents & POLLPRI)
 	    {
-	      // We have an interrupt!
-	      len = read (fdset[1].fd, buf, 64);	// looks like we need this.
-	      // Call ISR
-	      (*i.isr) (i.pin);
+	      /* We have an interrupt! */
+	      if (-1 == read (fdset[1].fd, buf, 64))
+		{
+		  debug ("read failed for interrupt");
+		  return (void *) -1;
+		}
+
+	      (*i.isr) (i.pin);		/* Call the ISR */
 	    }
 
 	  if (fdset[0].revents & POLLIN)
 	    {
-	      (void) read (fdset[0].fd, buf, 1);
+	      if (-1 == read (fdset[0].fd, buf, 1))
+		{
+		  debug ("read failed for stdin read");
+		  return (void *) -1;
+		}
+
 	      printf ("\npoll() stdin read 0x%2.2X\n", (unsigned int) buf[0]);
 	    }
 
 	  fflush (stdout);
 	}
-
     }
   else
     {
@@ -139,16 +172,16 @@ isr_handler (void *isr)
 int
 gpio_set_int (int pin, void (*isr) (int), char *mode)
 {
-  // Details of the ISR
+  /* Details of the ISR */
   isr_t *i = (isr_t *) malloc (sizeof (isr_t));
   i->pin = pin;
   i->isr = isr;
 
-  // Set up interrupt
+  /* Set up interrupt */
   gpio_edge (pin, mode);
 
-  // Set isr_handler flag and create thread
-  // TODO: check for errors using retval
+  /* Set isr_handler flag and create thread
+     TODO: check for errors using retval */
   isr_handler_flag = 1;
   pthread_create (&isr_handler_thread, NULL, isr_handler, (void *) i);
   pthread_tryjoin_np (isr_handler_thread, NULL);
@@ -160,10 +193,11 @@ gpio_set_int (int pin, void (*isr) (int), char *mode)
 int
 gpio_clear_int (int pin)
 {
-  // this will terminate isr_handler thread
+  /* this will terminate isr_handler thread */
   isr_handler_flag = 0;
 
-  //TODO: Reset "edge", release pin?
+  /* TODO: Reset "edge", release pin? */
+  return  0;			/* Is this a correct return result. */
 }
 
 
@@ -216,7 +250,11 @@ gpio_write (int pin, char *val)
   int file;
 
   file = gpio_valfd (pin);
-  write (file, val, (sizeof (char) * 1));
+  if (-1 == write (file, val, (sizeof (char) * 1)))
+    {
+      debug ("[%s] Can't write to GPIO", __func__);
+      return -1;
+    }
   close (file);
 
   return 1;
@@ -226,12 +264,12 @@ gpio_write (int pin, char *val)
 int
 gpio_read (int pin)
 {
-  char valStr[1] = { NULL };
+  char valStr[1] = "";
   unsigned int val;
   int file;
 
   file = gpio_valfd (pin);
-  //fseek(file, 0, SEEK_SET);
+  /* fseek(file, 0, SEEK_SET); */
   if (read (file, &valStr, 1) == 1)
     {
       val = atoi (valStr);

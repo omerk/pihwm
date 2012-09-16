@@ -1,21 +1,42 @@
-#ifndef PIHWM_C
-#define PIHWM_C
+/* pihwm.h -- general library header
 
-#include <sys/time.h>
+   Copyright (C) 2012 Omer Kilic
+   Copyright (C) 2012 Embecosm Limited
 
-// Useful constants
+   Contributor Omer Kilic <omer@kilic.name>
+   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
+
+   This file is part of pihwm.
+
+   This program is free software; you can redistribute it and/or modify it
+   under the terms of the GNU General Public License as published by the Free
+   Software Foundation; either version 3 of the License, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful, but WITHOUT
+   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+   more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this program.  If not, see <http://www.gnu.org/licenses/>. */
+
+#ifndef PIHWM_H
+#define PIHWM_H
+
+/* Useful constants */
 #define INPUT	"in"
 #define OUTPUT	"out"
-#define IN		INPUT
-#define OUT		OUTPUT
+#define IN	INPUT
+#define OUT	OUTPUT
 
 #define HIGH	"1"
-#define LOW		"0"
-#define ON		HIGH
-#define OFF		LOW
+#define LOW	"0"
+#define ON	HIGH
+#define OFF	LOW
 
 
-// Useful macros
+/* Useful macros */
 #define a(...) (unsigned char[])__VA_ARGS__
 
 #ifdef DEBUG
@@ -24,6 +45,6 @@
 #define debug(...) ;
 #endif
 
-#define delay(d) usleep(d*1000);
+#define delay(d) sleep(d);
 
 #endif

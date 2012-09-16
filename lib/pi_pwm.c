@@ -1,5 +1,29 @@
+/* pi_pwm.c -- Pulse width modulation library function implementation.
 
-// Based (very) heavily on Gert Jan van Loo's example code.
+   Copyright (C) 2012 Omer Kilic
+   Copyright (C) 2012 Embecosm Limited
+
+   Contributor Omer Kilic <omer@kilic.name>
+   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
+
+   This file is part of pihwm.
+
+   This program is free software; you can redistribute it and/or modify it
+   under the terms of the GNU General Public License as published by the Free
+   Software Foundation; either version 3 of the License, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful, but WITHOUT
+   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+   more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this program.  If not, see <http://www.gnu.org/licenses/>. */
+
+/* Based (very) heavily on Gert Jan van Loo's example code. */
+
+#include "config.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -16,21 +40,23 @@
 
 
 int mem_fd;
-char *clk_mem, *clk_map;
-char *gpio_mem, *gpio_map;
-char *pwm_mem, *pwm_map;
+char *clk_mem;
+unsigned char *clk_map;
+char *gpio_mem;
+unsigned char *gpio_map;
+char *pwm_mem;
+unsigned char *pwm_map;
 
-// I/O access
+/* I/O access */
 volatile unsigned *gpio;
 volatile unsigned *pwm;
 volatile unsigned *clk;
 
 
-// Set up memory regions to access the peripherals.
-// This is a bit of 'magic' which you should not touch.
-// It it also the part of the code which makes that
-// you have to use 'sudo' to run this program.
-//
+/* Set up memory regions to access the peripherals.
+
+   This is a bit of 'magic' which you should not touch.  It it also the part
+   of the code which makes that you have to use 'sudo' to run this program. */
 void
 setup_io ()
 {
@@ -116,17 +142,16 @@ setup_io ()
   pwm = (volatile unsigned *) pwm_map;
 
 
-  // GPIO18= PWM channel-A       Funct. 5
-  // Setup GPIO18 as PWM output
+  /* GPIO18= PWM channel-A       Funct. 5
+     Setup GPIO18 as PWM output */
   INP_GPIO (18);
   SET_GPIO_ALT (18, 5);
 
-}				// setup_io
+}	/* setup_io */
 
 
 
-// Undo what we did above
-//
+/* Undo what we did above */
 void
 restore_io ()
 {
@@ -136,65 +161,63 @@ restore_io ()
 }				// restore_io
 
 
-//
-// Setup the Pulse Width Modulator
-// It needs a clock and needs to be off
-//
+/* Setup the Pulse Width Modulator
+   It needs a clock and needs to be off */
 void
 setup_pwm ()
 {
-  // Derive PWM clock direct from X-tal
-  // thus any system auto-slow-down-clock-to-save-power does not effect it
-  // The values below depends on the X-tal frequency!
-  PWMCLK_DIV = 0x5A000000 | (32 << 12);	// set pwm div to 32 (19.2/3 = 600KHz)
-  PWMCLK_CNTL = 0x5A000011;	// Source=osc and enable
+  /* Derive PWM clock direct from X-tal
+     thus any system auto-slow-down-clock-to-save-power does not effect it
+     The values below depends on the X-tal frequency! */
+  PWMCLK_DIV = 0x5A000000 | (32 << 12);/* set pwm div to 32 (19.2/3 = 600KHz) */
+  PWMCLK_CNTL = 0x5A000011;	/* Source=osc and enable */
 
-  // Make sure it is off and that the B driver (GPIO4) is low
-  GPIO_CLR0 = 1 << 4;		// Set GPIO 4 LOW
+  /* Make sure it is off and that the B driver (GPIO4) is low */
+  GPIO_CLR0 = 1 << 4;		/* Set GPIO 4 LOW */
   PWM_CONTROL = 0;
   usleep (100);
 
-  // I use 1024 steps for the PWM
-  // (Just a nice value which I happen to like)
+  /* I use 1024 steps for the PWM
+     (Just a nice value which I happen to like) */
   PWM0_RANGE = 0x400;
   usleep (100);
 
-}				// setup_pwm
+}	/* setup_pwm */
 
 
-// Set PWM value
-// This routine does not wait for the value to arrive
-// If a new value comes in before it is picked up by the chip
-// it will definitely be too fast for the motor to respond to it
-//
+/* Set PWM value
+
+   This routine does not wait for the value to arrive If a new value comes in
+   before it is picked up by the chip it will definitely be too fast for the
+   motor to respond to it */
 void
 set_pwm (int v)
-{				// make sure value is in safe range
+{				/* make sure value is in safe range */
   if (v < 0)
     v = 0;
   if (v > 0x400)
     v = 0x400;
   PWM0_DATA = v;
-}				// set_pwm
+
+}	/* set_pwm */
 
 
-// Force PWM value update
-// This routine makes sure the new value goes in.
-// This is done by dis-abling the PWM, write the value
-// and enable it again. This routine is weak as it
-// uses a delay which is tested (but not guaranteed)
-// Controls channel 0 only.
-//
+/* Force PWM value update
+
+   This routine makes sure the new value goes in.  This is done by dis-abling
+   the PWM, write the value and enable it again. This routine is weak as it
+   uses a delay which is tested (but not guaranteed) Controls channel 0
+   only. */
 void
 force_pwm (int v, int mode)
 {
-  // disable
+  /* disable */
   PWM_CONTROL = 0;
-  // wait for this command to get to the PWM clock domain
-  // that depends on PWN clock speed
-  // unfortunately there is no way to know when this has happened :-(
+  /* wait for this command to get to the PWM clock domain that depends on PWN
+     clock speed. Unfortunately there is no way to know when this has happened
+     :-( */
   usleep (100);
-  // make sure value is in safe range
+  /* make sure value is in safe range */
   if (v < 0)
     v = 0;
   if (v > 0x400)
@@ -204,10 +227,10 @@ force_pwm (int v, int mode)
 
   PWM_CONTROL = mode;
   usleep (100);
-}				// force_pwm
+}	/* force_pwm */
 
 
-// Turn off PWM
+/* Turn off PWM */
 void
 pwm_off ()
 {
