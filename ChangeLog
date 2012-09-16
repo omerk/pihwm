@@ -1,5 +1,11 @@
 2012-09-16  Jeremy Bennett <jeremy.bennett@embecosm.com>
 
+	* lib/pi_gpio.h, lib/pi_i2c.c, lib/pi_i2c.h, lib/pi_pwm.c,
+	* lib/pi_pwm.h, lib/pihwm.h: Reformat using indent to GNU coding
+	standards.
+
+2012-09-16  Jeremy Bennett <jeremy.bennett@embecosm.com>
+
 	* aclocal.m4, AUTHORS, compile, config.guess, config.h.in,
 	* config.sub: Created.
 	* configure: Regenerated.

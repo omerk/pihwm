@@ -19,12 +19,11 @@
 #define a(...) (unsigned char[])__VA_ARGS__
 
 #ifdef DEBUG
-	#define debug(...) printf(__VA_ARGS__)
+#define debug(...) printf(__VA_ARGS__)
 #else
-	#define debug(...) ;
+#define debug(...) ;
 #endif
 
 #define delay(d) usleep(d*1000);
 
 #endif
-
