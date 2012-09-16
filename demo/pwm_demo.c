@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "pi_pwm.h"
+#include "../pi_pwm.h"
 
 
 void quick_pwm_demo()

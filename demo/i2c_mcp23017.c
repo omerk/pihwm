@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <errno.h>
 #include <string.h>
-#include "pi_i2c.h"
+#include "../pi_i2c.h"
 
 // Registers
 #define	IODIRA	0x00

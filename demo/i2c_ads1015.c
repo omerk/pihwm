@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <errno.h>
 #include <string.h>
-#include "pi_i2c.h"
+#include "../pi_i2c.h"
 
 // I2C Address
 #define ADDR	0x48

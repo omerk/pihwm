@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "pihwm.h"
-#include "pi_gpio.h"
+#include "../pi_gpio.h"
 
 
 #define	INT_PIN	18

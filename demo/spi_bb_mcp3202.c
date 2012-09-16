@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-#include "pihwm.h"
-#include "pi_gpio.h"
+#include "../pi_gpio.h"
 
 // SPI pins
 #define	SS	18

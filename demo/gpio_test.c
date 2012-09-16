@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "pi_gpio.h"
+#include "../pi_gpio.h"
 
 int main(void)
 {
