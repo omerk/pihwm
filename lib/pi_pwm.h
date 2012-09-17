@@ -91,16 +91,16 @@
 
 
 /* I/O access */
-extern volatile unsigned *gpio;
-extern volatile unsigned *pwm;
-extern volatile unsigned *clk;
+volatile unsigned *gpio;
+volatile unsigned *pwm;
+volatile unsigned *clk;
 
 
-extern void setup_io ();
-extern void restore_io ();
-extern void setup_pwm ();
-extern void set_pwm (int v);
-extern void force_pwm (int v, int mode);
-extern void pwm_off ();
+void setup_io ();
+void restore_io ();
+void setup_pwm ();
+void set_pwm (int v);
+void force_pwm (int v, int mode);
+void pwm_off ();
 
 #endif
