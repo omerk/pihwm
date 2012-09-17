@@ -3,7 +3,7 @@
    Copyright (C) 2012 Omer Kilic
    Copyright (C) 2012 Embecosm Limited
 
-   Contributor Omer Kilic <omer@kilic.name>
+   Contributor Omer Kilic <omerkilic@gmail.com>
    Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
 
    This file is part of pihwm.

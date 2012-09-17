@@ -1,5 +1,15 @@
 2012-09-17  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
+	* AUTHORS, ChangeLog, configure.ac, demo/gpio_int.c,
+	* demo/gpio_test.c, demo/i2c_ads1015.c, demo/i2c_hmc6352.c,
+	* demo/i2c_mcp23017.c, demo/pwm_demo.c, demo/spi_bb_mcp3202.c,
+	* lib/pi_gpio.c, lib/pi_gpio.h, lib/pi_i2c.c, lib/pi_i2c.h,
+	* lib/pi_pwm.c, lib/pi_pwm.h, lib/pihwm.h: Correct Omer Kilic's
+	email address.
+	* configure: Regenerated
+
+2012-09-17  Jeremy Bennett  <jeremy.bennett@embecosm.com>
+
 	* demo/gpio_int.c: Add GPL header, change C++ comments to C.
 	* demo/i2c_ads1015.c: Add GPL header, change C++ comments to C,
 	include pihwm.h.
@@ -106,7 +116,7 @@
 	* testsuite/Makefile: Regenerated.
 	* testsuite/Makefile.am: Created.
 
-2012-09-16  Omer Kilic  <omer@kilic.name>
+2012-09-16  Omer Kilic  <omerkilic@gmail.com>
 
 	* pi_gpio.c, pi_gpio.h, pi_i2c.c, pi_i2c.h, pi_pwm.c, pi_pwm.h:
 	* pihwm.h: Created.

@@ -28,7 +28,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 # Use a full version number (x.y.z, possibly with "rc<n>" as a suffix) when
 # preparing a release, otherwise use a the date version (yyyy-mm-dd).
-AC_INIT([pihwm], [2012-08-16], [omer@kilic.name])
+AC_INIT([pihwm], [2012-09-17], [omerkilic@gmail.com])
 AC_CONFIG_MACRO_DIR([m4])
 
 # Generically use extensions such as _GNU_SOURCE if available.
@@ -109,7 +109,7 @@ AC_CONFIG_FILES([Makefile             \
 AC_COPYRIGHT([Copyright (C) 2012 Omer Kilic
 Copyright (C) 2012 Embecosm Limited
 
-Contributor Omer Kilic <omer@kilic.name>
+Contributor Omer Kilic <omerkilic@gmail.com>
 Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
 
 This file is part of OpenRISC 1000 Architectural Simulator.
