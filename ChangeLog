@@ -1,5 +1,27 @@
 2012-09-17  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
+	* demo/gpio_int.c: Add GPL header, change C++ comments to C.
+	* demo/i2c_ads1015.c: Add GPL header, change C++ comments to C,
+	include pihwm.h.
+	(ads1015_read): Change all binary numbers to hex, provide default
+	value for cmd[0].
+	* demo/i2c_hmc6352.c: Add GPL header, change C++ comments to C,
+	include pihwm.h.
+	(main): Cast arg to i2c_write as unsigned char *.
+	* demo/i2c_mcp23017.c: Add GPL header, change C++ comments to C,
+	include pihwm.h.
+	* demo/pwm_demo.c: Add GPL header, change C++ comments to C,
+	include pihwm.h.
+	* demo/spi_bb_mcp3202.c: Add GPL header, change C++ comments to C,
+	include pihwm.h.
+	(adc_read): Change binary number to hex format.
+	* lib/pi_gpio.h: Replace Arduino wrappers by true functions.
+	* lib/pi_gpio.c (pinMode, digitalWrite, digitalRead)
+	(attachInterrupt, detachInterrupt): Wrappers for Arduino like
+	behaviour.
+
+2012-09-17  Jeremy Bennett  <jeremy.bennett@embecosm.com>
+
 	Merging in from commit c93f284a42ecadddbcabf95c042e77dbf51c719b by
 	Omer Kilic <omerkilic@gmail.com>
 
@@ -9,8 +31,8 @@
 2012-09-16  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
 	* demo/gpio_int.c: Format to GNU coding style.
-	* demo/gpio_test.c: Format to GNU coding style, add GPL header,
-	include pihwm.h.
+	* demo/gpio_test.c: Format to GNU coding style, change C++
+	comments to C, add GPL header, include pihwm.h.
 	* demo/i2c_ads1015.c, demo/i2c_hmc6352.c, demo/i2c_mcp23017.c
 	* demo/pwm_demo.c, demo/spi_bb_mcp3202.c: Format to GNU coding
 	style.

@@ -308,3 +308,90 @@ gpio_release (int pin)
 
   return 1;
 }
+
+
+/*! Wrapper for Arduino pin mode.
+
+    @param[in] pin  Pin to intialize
+    @param[in] dir  Direction to use in "input" or "output".
+
+    @return  0 on success, -1 on failure. */
+int
+pinMode (int   pin,
+	 char *dir)
+{
+  return  gpio_init (pin, dir);
+
+}	/* pinMode () */
+
+
+/*! Wrapper for Arduino write to pin.
+
+    We have to map the Arduino text "HIGH" and "LOW" into "1" and "0" for
+    Raspberry Pi.
+
+    @param[in] pin  Pin to write to
+    @param[in] val  Value to write, "HIGH" or LOW"
+
+    @return  0 on success, -1 on failure. */
+int
+digitalWrite (int   pin,
+	      char *val)
+{
+  if (0 == strcmp (val, "HIGH"))
+    {
+      return gpio_write (pin, HIGH);
+    }
+  else if (0 == strcmp (val, "LOW"))
+    {
+      return gpio_write (pin, LOW);
+    }
+  else
+    {
+      debug  ("[%s] Unrecognized value: %s: ignored.\n", __func__, val);
+      return  -1;
+    }
+}	/* digitalWrite () */
+
+
+/*! Wrapper for Arduino read from pin.
+
+    @param[in] pin  Pin to read from
+
+    @return  Value read. */
+int
+digitalRead (int  pin)
+{
+  return  gpio_read (pin);
+
+}	/* digitalRead () */
+
+
+/*! Wrapper for Arduino interrupt attach.
+
+    @param[in] pin   Pin concerned with interrupt
+    @param[in] isr   Interrupt service routine
+    @param[in] mode  Edge on which to trigger ("rising", "falling", "both");
+
+    @return  0 on success, -1 on failure. */
+int
+attachInterrupt (int    pin,
+		 void (*isr) (int),
+		 char  *mode)
+{
+  return  gpio_set_int (pin, isr, mode);
+
+}	/* attachInterrupt () */
+
+
+/*! Wrapper for Arduino interrupt detach.
+
+    @param[in] pin   Pin concerned with interrupt
+
+    @return  0 on success, -1 on failure. */
+int
+detachInterrupt (int  pin)
+{
+  return  gpio_clear_int (pin);
+
+}	/* detachInterrupt () */
