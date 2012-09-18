@@ -1,5 +1,13 @@
 2012-09-17  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
+	* configure.ac: Remove unecessary components and reference to
+	OpenRISC.
+	* config.h.in, configure, demo/Makefile.in, doc/Makefile.in,
+	* lib/Makefile.in, Makefile.in, testsuite/Makefile.in:
+	Regenerated.
+
+2012-09-17  Jeremy Bennett  <jeremy.bennett@embecosm.com>
+
 	* AUTHORS, ChangeLog, configure.ac, demo/gpio_int.c,
 	* demo/gpio_test.c, demo/i2c_ads1015.c, demo/i2c_hmc6352.c,
 	* demo/i2c_mcp23017.c, demo/pwm_demo.c, demo/spi_bb_mcp3202.c,

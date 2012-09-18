@@ -28,17 +28,13 @@ ACLOCAL_AMFLAGS = -I m4
 
 # Use a full version number (x.y.z, possibly with "rc<n>" as a suffix) when
 # preparing a release, otherwise use a the date version (yyyy-mm-dd).
-AC_INIT([pihwm], [2012-09-17], [omerkilic@gmail.com])
+AC_INIT([pihwm], [2012-09-18], [omerkilic@gmail.com])
 AC_CONFIG_MACRO_DIR([m4])
 
 # Generically use extensions such as _GNU_SOURCE if available.
 AC_USE_SYSTEM_EXTENSIONS
 
-# Check we have the execute source file present for sanity. Specify a separate
-# config for the testsuite OR1K specific programs, since we'll need different
-# tool chain there (the OpenRISC one, rather than the native one).
-
-AC_CANONICAL_TARGET([])
+# Set up to use libtool and automake as well and create a config header
 AC_PROG_LIBTOOL
 AM_INIT_AUTOMAKE
 
@@ -57,39 +53,21 @@ AC_PROG_MAKE_SET
 AC_PROG_INSTALL
 AC_TYPE_SIGNAL
 
-AC_CHECK_HEADERS(unistd.h stdlib.h stdarg.h string.h strings.h      \
-		 sys/ptem.h sys/pte.h sys/stream.h sys/stropts.h sys/select.h \
-		 termcap.h termios.h termio.h sys/file.h locale.h getopt.h    \
-		 net/ethernet.h sys/ethernet.h malloc.h inttypes.h libintl.h  \
-                 limits.h linux/if_tun.h)
-AC_CHECK_FUNCS(strcasecmp select setenv putenv tcgetattr setlocale lstat)
-AC_CHECK_FUNCS(grantpt unlockpt ptsname on_exit)
-AC_CHECK_FUNCS(basename)
+# Use AC_CHECK_HEADERS and AC_CHECK_FUNCS here as needed.
 
 # define options
 AC_MSG_CHECKING(whether to enable profiling)
 AC_ARG_ENABLE(profiling,
     [  --enable-profiling      generate profiling code], [
     case "$enableval" in
-	yes) profile="-pg" ;;
+	yes) CFLAGS="$CFLAGS -pg" ;;
     esac
 ])
 AC_MSG_RESULT(${enable_profiling-no})
 
-# Check for a DejaGNU global config file. If not set, then set it
-# ourselves. This stops runtest complaining
-DEJAGNU="\$(top_srcdir)/testsuite/global-conf.exp"
+# We can set and AC_SUBST DEJAGNU and RUNTESTDEFAULTFLAGS here if needed.
 
-AC_SUBST(DEJAGNU)
-
-# The following line will override the default definition of the srcdir, and
-# ensure that short names are used for the test names.
-RUNTESTDEFAULTFLAGS="--tool \$\$tool"
-AC_SUBST(RUNTESTDEFAULTFLAGS)
-
-BUILD_DIR=`pwd`
-AC_SUBST(BUILD_DIR)
-
+# Export flags and any local flags used.
 AC_SUBST(CFLAGS)
 AC_SUBST(LOCAL_CFLAGS)
 AC_SUBST(LOCAL_LDFLAGS)
@@ -112,7 +90,7 @@ Copyright (C) 2012 Embecosm Limited
 Contributor Omer Kilic <omerkilic@gmail.com>
 Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
 
-This file is part of OpenRISC 1000 Architectural Simulator.
+This file is part of pihwm.
 
 This program is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
