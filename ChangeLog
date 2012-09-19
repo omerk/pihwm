@@ -1,4 +1,13 @@
-2012-09-17  Jeremy Bennett  <jeremy.bennett@embecosm.com>
+2012-09-19  Jeremy Bennett  <jeremy.bennett@embecosm.com>
+
+	* doc/.gitignore, doc/config.texi, doc/fdl-1.2.texi: Created.
+	* doc/Makefile.am: Added details of documentation.
+	* doc/Makefile.in: Regenerated.
+	* doc/mdate-sh, doc/pihwm.texi, doc/texinfo.tex, doc/version.texi:
+	Created.
+	* NEWS: Updated for current version.
+
+2012-09-18  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
 	* configure.ac: Remove unecessary components and reference to
 	OpenRISC.

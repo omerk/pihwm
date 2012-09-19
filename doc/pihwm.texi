@@ -1,0 +1,225 @@
+\input texinfo   @c -*- texinfo -*-
+@setfilename pihwm.info
+@afourpaper
+@include version.texi
+@include config.texi
+@dircategory Embedded development
+@direntry
+* pihwm: (libpihwm.a).	A lightweight C library for Raspberry Pi hardware
+@end direntry
+
+@copying
+This file documents the lightweight C library for Raspberry Pi
+hardware, @value{PIHWM}.
+
+Copyright @copyright{} 2012 Embecosm Limited.
+
+@quotation
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled
+``GNU Free Documentation License''.
+@end quotation
+@end copying
+
+@setchapternewpage on
+@settitle @value{PIHWM} User Guide
+
+@syncodeindex fn cp
+@syncodeindex vr cp
+
+@titlepage
+@title @value{PIHWM} User Guide
+@author Jeremy Bennett
+@author Embecosm Limited
+@author Issue 1 for @value{PIHWM} @value{VERSION}
+
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+     
+Published by Embecosm Limited
+@end titlepage
+
+@contents
+
+@node Top
+@c Perhaps this should be the title of the document (but only for info,
+@c not for TeX).  Existing GNU manuals seem inconsistent on this point.
+@top Scope of this Document
+
+This document is the user guide for @value{PIHWM}, the ligthweight C
+library for Raspberry Pi hardware.
+
+@menu
+* Installation::
+* Library::
+* Demo Programs::
+
+* @value{PIHWM} Developer's Guide::
+
+* GNU Free Documentation License::  The license for this documentation
+* Index::
+@end menu
+
+@node Installation
+@chapter Installation
+@cindex installing @value{PIHWM}
+
+Installation follows standard GNU protocols.
+
+@menu
+* Preparation::
+* Configuring the Build::
+* Build and Install::
+* Usage::
+* Known Issues::
+@end menu
+
+@node Preparation
+@section Preparation
+
+Unpack the software and create a @emph{separate} directory in which to
+build it:
+
+@example
+tar jxf pihwm-@value{VERSION}.tar.bz2
+cd pihwm-@value{VERSION}
+mkdir bd
+cd bd
+@end example
+
+Alternatively, the latest version software may be cloned from git:
+
+@example
+git clone git://github.com/embecosm/pihwm.git
+cd pihwm
+mkdir bd
+cd bd
+@end example
+
+@node Configuring the Build
+@section Configuring the Build
+
+Configure the software using the @command{configure} script in the
+main directory.
+
+@example
+../configure
+@end example
+
+There are several options available, many of which are standard to GNU
+@command{configure} scripts.  Use @kbd{configure --help} to see all
+the options.  The most useful is @code{--prefix} to specify a
+directory for installation of the library.
+
+@node Build and Install
+@section Building and Installing
+Build the tool with:
+
+@example
+make all
+@end example
+
+If you have DejaGNU installed, you can verify the tool as follows
+(otherwise omit this step):
+
+@example
+make check
+@end example
+
+Install the tool with:
+
+@example
+make install
+@end example
+
+This will install the library in @emph{prefix}/lib, the demo programs
+in @emph{prefix}/bin, headers in @emph{prefix}/include and the
+documentation in @emph{prefix}/share, where @emph{prefix} is the
+prefix specified when configuring, if any.
+
+The documentation may be created and installed in alternative formats (PDF,
+Postscript, DVI, HTML) with for example:
+
+@example
+make pdf
+make install-pdf
+@end example
+
+@node Usage
+@section Usage
+@cindex running @value{PIHWM}
+
+@value{PIHWM} is for use as a C library.  A separate chapter gives
+details of how to use the library, and the API it implements
+(@pxref{Library, , Library})
+
+The library is supplied with a number of demo programs.  Details of
+the programs and the hardware they drive are provided in a separate
+chapter (@pxref{Demo Programs, , Demo Programs})
+
+@node Known Issues
+@section Known Problems and Issues
+
+Full details of outstanding issues may be found in the @file{NEWS} file in
+the main directory of the distribution.  At present there is no bug
+tracker, so send details of any issues to the author.
+
+@node Library
+@chapter Library
+@cindex usage and API of the @value{PIHWM} library.
+
+The library may be used by adding @code{-lpihwm} when compiling on the
+Raspberry Pi.  Programs should include @code{pihwm.h} and any other
+hardware specific headers from the @code{include} directory as
+required.  Note that if a prefix has been specified when configuring,
+it may be necessary to specify the location of the library (using the
+@code{-L} flag) and the headers (using the @code{-I} flag).
+
+For example, running on the RaspberryPi:
+
+@example
+gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
+@end example
+
+This rest of this chapter will document the library API.
+
+@node Demo Programs
+@chapter Demo Programs
+@cindex demo programs for @value{PIHWM}
+
+A number of demo programs are built with the library and may be found
+in the @emph{prefix}/bin directory.  Details of each demo, and the
+circuit it drives are specified in the 
+
+The rest of this chapter will document the demo programs.
+
+@node @value{PIHWM} Developer's Guide
+@chapter @value{PIHWM} Developer's Guide
+
+These are notes to help those wanting to extend @value{PIHWM}.  This
+section assumes the use of a tag file, so file locations of entities'
+definitions are not in general provided.  For more on tags, see the
+Linux manual page for @command{etags}.  A tag file can be created
+with:
+
+@example
+make tags
+@end example
+
+@node  GNU Free Documentation License
+@chapter GNU Free Documentation License
+@cindex license for @value{PIHWM}
+
+@include fdl-1.2.texi
+
+@node Index
+
+@unnumbered Index
+
+@printindex cp
+
+@bye

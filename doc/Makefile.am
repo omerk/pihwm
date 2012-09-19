@@ -23,4 +23,11 @@
 # Process this file with automake to produce a Makefile.in for use with
 # autoconf.
 
-# No content yet.
+# The manual
+info_TEXINFOS = pihwm.texi
+
+# Included files
+pihwm_TEXINFOS = config.texi  \
+		 fdl-1.2.texi \
+		 version.texi
+

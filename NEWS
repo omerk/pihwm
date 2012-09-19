@@ -2,9 +2,21 @@
 	  =========================================================
 
 
+New in the current development tree
+===================================
+
+The code is restructured to use a standard configure, make, make install build
+sequence.
+
+Known issues:
+
+There is currently no test suite.
+
+
 New in release 0.0.1
 ====================
 
-A first release prepared for the UK Open Source Hardware User Group (OSHUG) camp on 15/16 September 2012.
+A first release prepared for the UK Open Source Hardware User Group (OSHUG)
+camp on 15/16 September 2012.
 
 Provides basic library functions for gpio and i2c.
