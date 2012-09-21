@@ -1,10 +1,17 @@
+2012-09-20  Jeremy Bennett  <jeremy.bennett@embecosm.com>
+
+	* doc/pihwm.texi: Add API sections to library.
+	* lib/pihwm.h: Include stdio.h when debugging.
+
 2012-09-19  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
 	* doc/.gitignore, doc/config.texi, doc/fdl-1.2.texi: Created.
 	* doc/Makefile.am: Added details of documentation.
 	* doc/Makefile.in: Regenerated.
-	* doc/mdate-sh, doc/pihwm.texi, doc/texinfo.tex, doc/version.texi:
-	Created.
+	* doc/mdate-sh:	Created.
+	* doc/pihwm.info: Generated.
+	* doc/pihwm.texi, doc/texinfo.tex: Created.
+	* doc/version.texi: Generated.
 	* NEWS: Updated for current version.
 
 2012-09-18  Jeremy Bennett  <jeremy.bennett@embecosm.com>

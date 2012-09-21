@@ -151,11 +151,11 @@ make install-pdf
 
 @node Usage
 @section Usage
-@cindex running @value{PIHWM}
+@cindex using @value{PIHWM}
 
-@value{PIHWM} is for use as a C library.  A separate chapter gives
-details of how to use the library, and the API it implements
-(@pxref{Library, , Library})
+@value{PIHWM} is a C library.  A separate chapter gives details of how
+to use the library, and the API it implements (@pxref{Library, ,
+Library})
 
 The library is supplied with a number of demo programs.  Details of
 the programs and the hardware they drive are provided in a separate
@@ -172,6 +172,15 @@ tracker, so send details of any issues to the author.
 @chapter Library
 @cindex usage and API of the @value{PIHWM} library.
 
+@menu
+* Library Usage::
+* API::
+@end menu
+
+@node Library Usage
+@section Library Usage
+@cindex using @value{PIHWM}
+
 The library may be used by adding @code{-lpihwm} when compiling on the
 Raspberry Pi.  Programs should include @code{pihwm.h} and any other
 hardware specific headers from the @code{include} directory as
@@ -185,7 +194,43 @@ For example, running on the RaspberryPi:
 gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
 @end example
 
-This rest of this chapter will document the library API.
+@node API
+@section API
+@cindex the @value{PIHWM} API
+
+@menu
+* General API (pihwm.h)::
+* GPIO API (pihwm_gpio.h)::
+* I2C API (pihwm_i2c.h)::
+* Pulse Width Modulation API (pihwm_pwm.h)
+@end menu
+
+@node General API (pihwm.h)
+@subsection General API (pihwm.h)
+@cindex the general API (pihwm.h)
+@cindex pihwm.h
+
+The general API is found in the @code{pihwm.h} header, which should be
+included before any other @value{PIHWM} header.
+
+@deftypevr {Global Define} #define INPUT
+...
+@end deftypevr
+
+@node GPIO API (pihwm_gpio.h)
+@subsection GPIO API (pihwm_gpio.h)
+@cindex the GPIO API (pihwm_gpio.h)
+@cindex pihwm_gpio.h
+
+@node I2C API (pihwm_i2c.h)
+@subsection I2C API (pihwm_i2c.h)
+@cindex the I2C API (pihwm_i2c.h)
+@cindex pihwm_i2c.h
+
+@node Pulse Width Modulation API (pihwm_pwm.h)
+@subsection Pulse Width Modulation API (pihwm_pwm.h)
+@cindex the Pulse Width Modulation API (pihwm_pwm.h)
+@cindex pihwm_pwm.h
 
 @node Demo Programs
 @chapter Demo Programs

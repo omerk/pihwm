@@ -27,6 +27,10 @@
 /* Headers needed here */
 #include <unistd.h>
 
+#ifdef DEBUG
+#include <stdio.h>
+#endif
+
 /* Useful constants */
 #define INPUT	"in"
 #define OUTPUT	"out"
