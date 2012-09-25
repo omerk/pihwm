@@ -48,6 +48,49 @@ typedef struct
 } isr_t;
 
 
+static int
+gpio_edge (int pin, char *edge)
+{
+  FILE *file;
+  char filename[35];
+
+  sprintf (filename, "/sys/class/gpio/gpio%d/edge", pin);
+  file = fopen (filename, "w");
+  if (file == NULL)
+    {
+      debug ("[%s] Can't open file (edge): %s\n", __func__, filename);
+      return -1;
+    }
+
+  fwrite (edge, sizeof (char), strlen (edge) + 1, file);
+
+  fclose (file);
+
+  return 1;
+}
+
+
+static int
+gpio_valfd (int pin)
+{
+  int file;
+  char filename[35];
+
+  sprintf (filename, "/sys/class/gpio/gpio%d/value", pin);
+  file = open (filename, O_RDWR | O_NONBLOCK);
+  if (file < 0)
+    {
+      debug ("[%s] Can't open file (value): %s\n", __func__, filename);
+      return -1;
+    }
+  else
+    {
+      return file;
+    }
+
+}
+
+
 int
 gpio_init (int pin, char *dir)
 {
@@ -202,49 +245,6 @@ gpio_clear_int (int pin)
 
 
 int
-gpio_edge (int pin, char *edge)
-{
-  FILE *file;
-  char filename[35];
-
-  sprintf (filename, "/sys/class/gpio/gpio%d/edge", pin);
-  file = fopen (filename, "w");
-  if (file == NULL)
-    {
-      debug ("[%s] Can't open file (edge): %s\n", __func__, filename);
-      return -1;
-    }
-
-  fwrite (edge, sizeof (char), strlen (edge) + 1, file);
-
-  fclose (file);
-
-  return 1;
-}
-
-
-int
-gpio_valfd (int pin)
-{
-  int file;
-  char filename[35];
-
-  sprintf (filename, "/sys/class/gpio/gpio%d/value", pin);
-  file = open (filename, O_RDWR | O_NONBLOCK);
-  if (file < 0)
-    {
-      debug ("[%s] Can't open file (value): %s\n", __func__, filename);
-      return -1;
-    }
-  else
-    {
-      return file;
-    }
-
-}
-
-
-int
 gpio_write (int pin, char *val)
 {
   int file;
@@ -315,7 +315,7 @@ gpio_release (int pin)
     @param[in] pin  Pin to intialize
     @param[in] dir  Direction to use in "input" or "output".
 
-    @return  0 on success, -1 on failure. */
+    @return  1 on success, -1 on failure. */
 int
 pinMode (int   pin,
 	 char *dir)
@@ -333,7 +333,7 @@ pinMode (int   pin,
     @param[in] pin  Pin to write to
     @param[in] val  Value to write, "HIGH" or LOW"
 
-    @return  0 on success, -1 on failure. */
+    @return  1 on success, -1 on failure. */
 int
 digitalWrite (int   pin,
 	      char *val)
@@ -358,7 +358,7 @@ digitalWrite (int   pin,
 
     @param[in] pin  Pin to read from
 
-    @return  Value read. */
+    @return  Value read or -1 on failure. */
 int
 digitalRead (int  pin)
 {
@@ -373,7 +373,7 @@ digitalRead (int  pin)
     @param[in] isr   Interrupt service routine
     @param[in] mode  Edge on which to trigger ("rising", "falling", "both");
 
-    @return  0 on success, -1 on failure. */
+    @return  1 on success, -1 on failure. */
 int
 attachInterrupt (int    pin,
 		 void (*isr) (int),

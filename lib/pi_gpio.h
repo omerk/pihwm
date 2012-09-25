@@ -28,8 +28,6 @@
 int gpio_init (int pin, char *dir);
 int gpio_set_int (int pin, void (*isr) (int), char *mode);
 int gpio_clear_int (int pin);
-int gpio_edge (int pin, char *edge);
-int gpio_valfd (int pin);
 int gpio_write (int pin, char *val);
 int gpio_read (int pin);
 int gpio_release (int pin);

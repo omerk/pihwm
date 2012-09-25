@@ -202,7 +202,7 @@ gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
 * General API (pihwm.h)::
 * GPIO API (pihwm_gpio.h)::
 * I2C API (pihwm_i2c.h)::
-* Pulse Width Modulation API (pihwm_pwm.h)
+* Pulse Width Modulation API (pihwm_pwm.h)::
 @end menu
 
 @node General API (pihwm.h)
@@ -213,14 +213,133 @@ gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
 The general API is found in the @code{pihwm.h} header, which should be
 included before any other @value{PIHWM} header.
 
-@deftypevr {Global Define} #define INPUT
-...
-@end deftypevr
+@defvr {Defined constant} INPUT
+@defvrx {Defined constant} IN
+
+These are both @code{#define}d to the constant string @code{"in"}.
+
+@end defvr
+
+@defvr {Defined constant} OUTPUT
+@defvrx {Defined constant} OUT
+
+These are both @code{#define}d to the constant string @code{"out"}.
+
+@end defvr
+
+@defvr {Defined constant} HIGH
+@defvrx {Defined constant} ON
+
+These are both @code{#define}d to the constant string @code{"1"}.
+
+@end defvr
+
+@defvr {Defined constant} LOW
+@defvrx {Defined constant} OFF
+
+These are both @code{#define}d to the constant string @code{"0"}.
+
+@end defvr
+
+@deffn {Macro} debug (@var{...})
+
+If the constant @code{DEBUG} is defined, then this maps directly to
+@code{printf(@var{...})}, otherwise it is empty.
+
+@end deffn
+
+@deffn {Macro} delay (@var{d})
+
+This is defined as a synonymn for @code{sleep(@var{d})}.
+
+@end deffn
 
 @node GPIO API (pihwm_gpio.h)
 @subsection GPIO API (pihwm_gpio.h)
 @cindex the GPIO API (pihwm_gpio.h)
 @cindex pihwm_gpio.h
+
+The following functions are defined for driving the GPIO interface.
+
+@deftypefun int gpio_init (int @var{pin}, char *@var{dir})
+Initialize the GPIO interface for the pin numbered @var{pin} on the
+@value{PI} P1 header in the direction specified by @var{dir}.
+@var{dir} should be either @code{"in"} or @code{"out"}, for which the
+defined constants @code{INPUT}, @code{IN}, @code{OUTPUT} or @code{OUT}
+may be used.
+
+Returns 1 on success and -1 on failure.
+@end deftypefun
+
+@deftypefun int gpio_release (int @var{pin})
+The inverse of @code{gpio_init}. Frees the  pin numbered @var{pin} on the
+@value{PI} P1 header, so it can be used for other purposes.
+
+Returns 1 on success and -1 on failure.
+@end deftypefun
+
+@deftypefun int gpio_write (int @var{pin}, char *@var{val})
+Set the pin numbered @var{pin} on the @value{PI} P1 header to the
+value specified by @var{val}.  @var{dir} should be either @code{"0"}
+or @code{"1"}.  The defined constants @code{LOW} or @code{OFF} may be
+used instead of @code{0} and @code{HIGH} or @code{ON} instead of @code{1}/
+
+Returns 1 on success and -1 on failure.
+@end deftypefun
+
+@deftypefun int gpio_read (int @var{pin})
+Read the value on the pin numbered @var{pin} on the @value{PI} P1
+header.
+
+On success, returns 0 or 1 depending on whether the pin is low or high
+respectively. On failure returns -1.
+@end deftypefun
+
+@deftypefun int gpio_set_int (int @var{pin}, void (*@var{isr}) (int), char *@var{mode})
+Set @var{int} as the interrupt service routine (@acronym{ISR}) for
+pin numbered @var{pin} on the @value{PI} P1 header.  @var{mode} should
+be one of the strings @code{"rising"}, @code{"falling"} or
+@code{"both"} to indicate which edge(s) the @acronym{ISR} is to be
+triggered on.
+
+The function @var{isr} is called whenever the edge specified occurs,
+receiving as argument the number of the pin which triggered the interrupt.
+
+Returns 1 on success. Never fails!
+@end deftypefun
+
+@deftypefun int gpio_clear_int (int @var{pin})
+Clears any interrupt service routine (@acronym{ISR}) set on the pin
+numbered @var{pin} on the @value{PI} P1 header. The @acronym{ISR} will
+have been set originally by a call to @code{gpio_set_int}.
+
+Returns 0 on success. Never fails!
+@end deftypefun
+
+In addition to the standard functions, a number of convenience
+functions are provided, which follow the Arduino style.
+
+@deftypefun int pinMode (int @var{pin}, char *@var{val})
+This is a synonym for @code{gpio_init}/
+@end deftypefun
+
+@deftypefun int digitalWrite (int @var{pin}, char *@var{val})
+This is a near synonym for @code{gpio_write}, except that
+@code{"HIGH"} is mapped to @code{"1} and @code{"LOW"} is mapped to
+@code{"0} before passing @var{val}.
+@end deftypefun
+
+@deftypefun int digitalRead (int @var{pin})
+This is a synonym for @code{gpio_read}.
+@end deftypefun
+
+@deftypefun int attachInterrupt (int @var{pin}, void (*@var{isr}) (int), char *@var{mode})
+This is a synonym for @code{gpio_set_interrupt}.
+@end deftypefun
+
+@deftypefun int detachInterrupt (int @var{pin})
+This is a synonym for @code{gpio_clear_int}.
+@end deftypefun
 
 @node I2C API (pihwm_i2c.h)
 @subsection I2C API (pihwm_i2c.h)

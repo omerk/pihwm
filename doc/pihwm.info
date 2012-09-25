@@ -63,8 +63,8 @@ File: pihwm.info,  Node: Preparation,  Next: Configuring the Build,  Up: Install
 Unpack the software and create a _separate_ directory in which to build
 it:
 
-     tar jxf pihwm-2012-09-18.tar.bz2
-     cd pihwm-2012-09-18
+     tar jxf pihwm-2012-09-25.tar.bz2
+     cd pihwm-2012-09-25
      mkdir bd
      cd bd
 
@@ -127,9 +127,8 @@ File: pihwm.info,  Node: Usage,  Next: Known Issues,  Prev: Build and Install,  
 1.4 Usage
 =========
 
-pihwm is for use as a C library.  A separate chapter gives details of
-how to use the library, and the API it implements (*note Library:
-Library.)
+pihwm is a C library.  A separate chapter gives details of how to use
+the library, and the API it implements (*note Library: Library.)
 
 The library is supplied with a number of demo programs.  Details of the
 programs and the hardware they drive are provided in a separate chapter
@@ -151,6 +150,17 @@ File: pihwm.info,  Node: Library,  Next: Demo Programs,  Prev: Installation,  Up
 2 Library
 *********
 
+* Menu:
+
+* Library Usage::
+* API::
+
+
+File: pihwm.info,  Node: Library Usage,  Next: API,  Up: Library
+
+2.1 Library Usage
+=================
+
 The library may be used by adding `-lpihwm' when compiling on the
 Raspberry Pi.  Programs should include `pihwm.h' and any other hardware
 specific headers from the `include' directory as required.  Note that
@@ -162,7 +172,144 @@ For example, running on the RaspberryPi:
 
      gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
 
-This rest of this chapter will document the library API.
+
+File: pihwm.info,  Node: API,  Prev: Library Usage,  Up: Library
+
+2.2 API
+=======
+
+* Menu:
+
+* General API (pihwm.h)::
+* GPIO API (pihwm_gpio.h)::
+* I2C API (pihwm_i2c.h)::
+* Pulse Width Modulation API (pihwm_pwm.h)::
+
+
+File: pihwm.info,  Node: General API (pihwm.h),  Next: GPIO API (pihwm_gpio.h),  Up: API
+
+2.2.1 General API (pihwm.h)
+---------------------------
+
+The general API is found in the `pihwm.h' header, which should be
+included before any other pihwm header.
+
+ -- Defined constant: INPUT
+ -- Defined constant: IN
+     These are both `#define'd to the constant string `"in"'.
+
+
+ -- Defined constant: OUTPUT
+ -- Defined constant: OUT
+     These are both `#define'd to the constant string `"out"'.
+
+
+ -- Defined constant: HIGH
+ -- Defined constant: ON
+     These are both `#define'd to the constant string `"1"'.
+
+
+ -- Defined constant: LOW
+ -- Defined constant: OFF
+     These are both `#define'd to the constant string `"0"'.
+
+
+ -- Macro: debug (...)
+     If the constant `DEBUG' is defined, then this maps directly to
+     `printf(...)', otherwise it is empty.
+
+
+ -- Macro: delay (D)
+     This is defined as a synonymn for `sleep(D)'.
+
+
+
+File: pihwm.info,  Node: GPIO API (pihwm_gpio.h),  Next: I2C API (pihwm_i2c.h),  Prev: General API (pihwm.h),  Up: API
+
+2.2.2 GPIO API (pihwm_gpio.h)
+-----------------------------
+
+The following functions are defined for driving the GPIO interface.
+
+ -- Function: int gpio_init (int PIN, char *DIR)
+     Initialize the GPIO interface for the pin numbered PIN on the
+     _Raspberry Pi_ P1 header in the direction specified by DIR.  DIR
+     should be either `"in"' or `"out"', for which the defined
+     constants `INPUT', `IN', `OUTPUT' or `OUT' may be used.
+
+     Returns 1 on success and -1 on failure.
+
+ -- Function: int gpio_release (int PIN)
+     The inverse of `gpio_init'. Frees the  pin numbered PIN on the
+     _Raspberry Pi_ P1 header, so it can be used for other purposes.
+
+     Returns 1 on success and -1 on failure.
+
+ -- Function: int gpio_write (int PIN, char *VAL)
+     Set the pin numbered PIN on the _Raspberry Pi_ P1 header to the
+     value specified by VAL.  DIR should be either `"0"' or `"1"'.  The
+     defined constants `LOW' or `OFF' may be used instead of `0' and
+     `HIGH' or `ON' instead of `1'/
+
+     Returns 1 on success and -1 on failure.
+
+ -- Function: int gpio_read (int PIN)
+     Read the value on the pin numbered PIN on the _Raspberry Pi_ P1
+     header.
+
+     On success, returns 0 or 1 depending on whether the pin is low or
+     high respectively. On failure returns -1.
+
+ -- Function: int gpio_set_int (int PIN, void (*ISR) (int), char *MODE)
+     Set INT as the interrupt service routine (ISR) for pin numbered
+     PIN on the _Raspberry Pi_ P1 header.  MODE should be one of the
+     strings `"rising"', `"falling"' or `"both"' to indicate which
+     edge(s) the ISR is to be triggered on.
+
+     The function ISR is called whenever the edge specified occurs,
+     receiving as argument the number of the pin which triggered the
+     interrupt.
+
+     Returns 1 on success. Never fails!
+
+ -- Function: int gpio_clear_int (int PIN)
+     Clears any interrupt service routine (ISR) set on the pin numbered
+     PIN on the _Raspberry Pi_ P1 header. The ISR will have been set
+     originally by a call to `gpio_set_int'.
+
+     Returns 0 on success. Never fails!
+
+In addition to the standard functions, a number of convenience
+functions are provided, which follow the Arduino style.
+
+ -- Function: int pinMode (int PIN, char *VAL)
+     This is a synonym for `gpio_init'/
+
+ -- Function: int digitalWrite (int PIN, char *VAL)
+     This is a near synonym for `gpio_write', except that `"HIGH"' is
+     mapped to `"1' and `"LOW"' is mapped to `"0' before passing VAL.
+
+ -- Function: int digitalRead (int PIN)
+     This is a synonym for `gpio_read'.
+
+ -- Function: int attachInterrupt (int PIN, void (*ISR) (int), char
+          *MODE)
+     This is a synonym for `gpio_set_interrupt'.
+
+ -- Function: int detachInterrupt (int PIN)
+     This is a synonym for `gpio_clear_int'.
+
+
+File: pihwm.info,  Node: I2C API (pihwm_i2c.h),  Next: Pulse Width Modulation API (pihwm_pwm.h),  Prev: GPIO API (pihwm_gpio.h),  Up: API
+
+2.2.3 I2C API (pihwm_i2c.h)
+---------------------------
+
+
+File: pihwm.info,  Node: Pulse Width Modulation API (pihwm_pwm.h),  Prev: I2C API (pihwm_i2c.h),  Up: API
+
+2.2.4 Pulse Width Modulation API (pihwm_pwm.h)
+----------------------------------------------
 
 
 File: pihwm.info,  Node: Demo Programs,  Next: pihwm Developer's Guide,  Prev: Library,  Up: Top
@@ -630,12 +777,72 @@ Index
  [index ]
 * Menu:
 
-* demo programs for pihwm:               Demo Programs.         (line 6)
-* installing pihwm:                      Installation.          (line 6)
+* attachInterrupt:                       GPIO API (pihwm_gpio.h).
+                                                               (line 71)
+* debug:                                 General API (pihwm.h).
+                                                               (line 30)
+* delay:                                 General API (pihwm.h).
+                                                               (line 35)
+* demo programs for pihwm:               Demo Programs.        (line  6)
+* detachInterrupt:                       GPIO API (pihwm_gpio.h).
+                                                               (line 74)
+* digitalRead:                           GPIO API (pihwm_gpio.h).
+                                                               (line 67)
+* digitalWrite:                          GPIO API (pihwm_gpio.h).
+                                                               (line 63)
+* gpio_clear_int:                        GPIO API (pihwm_gpio.h).
+                                                               (line 50)
+* gpio_init:                             GPIO API (pihwm_gpio.h).
+                                                               (line  9)
+* gpio_read:                             GPIO API (pihwm_gpio.h).
+                                                               (line 31)
+* gpio_release:                          GPIO API (pihwm_gpio.h).
+                                                               (line 17)
+* gpio_set_int:                          GPIO API (pihwm_gpio.h).
+                                                               (line 38)
+* gpio_write:                            GPIO API (pihwm_gpio.h).
+                                                               (line 23)
+* HIGH:                                  General API (pihwm.h).
+                                                               (line 20)
+* IN:                                    General API (pihwm.h).
+                                                               (line 11)
+* INPUT:                                 General API (pihwm.h).
+                                                               (line 10)
+* installing pihwm:                      Installation.         (line  6)
 * license for pihwm:                     GNU Free Documentation License.
-                                                                (line 6)
-* running pihwm:                         Usage.                 (line 6)
-* usage and API of the pihwm library.:   Library.               (line 6)
+                                                               (line  6)
+* LOW:                                   General API (pihwm.h).
+                                                               (line 25)
+* OFF:                                   General API (pihwm.h).
+                                                               (line 26)
+* ON:                                    General API (pihwm.h).
+                                                               (line 21)
+* OUT:                                   General API (pihwm.h).
+                                                               (line 16)
+* OUTPUT:                                General API (pihwm.h).
+                                                               (line 15)
+* pihwm.h:                               General API (pihwm.h).
+                                                               (line  6)
+* pihwm_gpio.h:                          GPIO API (pihwm_gpio.h).
+                                                               (line  6)
+* pihwm_i2c.h:                           I2C API (pihwm_i2c.h).
+                                                               (line  6)
+* pihwm_pwm.h:                           Pulse Width Modulation API (pihwm_pwm.h).
+                                                               (line  6)
+* pinMode:                               GPIO API (pihwm_gpio.h).
+                                                               (line 60)
+* the general API (pihwm.h):             General API (pihwm.h).
+                                                               (line  6)
+* the GPIO API (pihwm_gpio.h):           GPIO API (pihwm_gpio.h).
+                                                               (line  6)
+* the I2C API (pihwm_i2c.h):             I2C API (pihwm_i2c.h).
+                                                               (line  6)
+* the pihwm API:                         API.                  (line  6)
+* the Pulse Width Modulation API (pihwm_pwm.h): Pulse Width Modulation API (pihwm_pwm.h).
+                                                               (line  6)
+* usage and API of the pihwm library.:   Library.              (line  6)
+* using pihwm <1>:                       Library Usage.        (line  6)
+* using pihwm:                           Usage.                (line  6)
 
 
 
@@ -646,11 +853,17 @@ Node: Preparation1407
 Node: Configuring the Build1854
 Node: Build and Install2344
 Node: Usage3074
-Node: Known Issues3525
-Node: Library3853
-Node: Demo Programs4513
-Node: pihwm Developer's Guide4877
-Node: GNU Free Documentation License5333
-Node: Index27747
+Node: Known Issues3514
+Node: Library3842
+Node: Library Usage3988
+Node: API4585
+Node: General API (pihwm.h)4805
+Node: GPIO API (pihwm_gpio.h)5738
+Node: I2C API (pihwm_i2c.h)8650
+Node: Pulse Width Modulation API (pihwm_pwm.h)8848
+Node: Demo Programs9052
+Node: pihwm Developer's Guide9416
+Node: GNU Free Documentation License9872
+Node: Index32286
 
 End Tag Table

@@ -29,3 +29,5 @@
 @c
 @c Name of the pihwm library
 @set PIHWM pihwm
+@c Name of the board
+@set PI @emph{Raspberry Pi}

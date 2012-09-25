@@ -72,17 +72,17 @@ ads1015_read (int fd, unsigned int chan)
 
 
   /* Set R_CONF */
-  i2c_write (fd, ADDR, a (
+  i2c_write (fd, ADDR, (unsigned char[])
 			   {
 			   R_CONF, cmd[0], cmd[1]}
-	     ), 3);
+	     , 3);
   delay (10);
 
   /* Point to R_CONV */
-  i2c_write (fd, ADDR, a (
+  i2c_write (fd, ADDR, (unsigned char[])
 			   {
 			   R_CONV}
-	     ), 1);
+	     , 1);
   delay (10);
 
   /* Read conversion result */

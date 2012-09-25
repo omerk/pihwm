@@ -57,24 +57,24 @@ main ()
     }
 
   /* Set pin directions */
-  i2c_write (fd, ADDR, a (
+  i2c_write (fd, ADDR, (unsigned char [])
 			   {
 			   IODIRA, 0x00}
-	     ), 2);
-  i2c_write (fd, ADDR, a (
+	     , 2);
+  i2c_write (fd, ADDR, (unsigned char [])
 			   {
 			   IODIRB, 0x00}
-	     ), 2);
+	     , 2);
 
   /* Set pin values */
-  i2c_write (fd, ADDR, a (
+  i2c_write (fd, ADDR, (unsigned char [])
 			   {
 			   GPIOA, 0xFF}
-	     ), 2);
-  i2c_write (fd, ADDR, a (
+	     , 2);
+  i2c_write (fd, ADDR, (unsigned char [])
 			   {
 			   GPIOB, 0xFF}
-	     ), 2);
+	     , 2);
 
   printf ("main() end\n");
 

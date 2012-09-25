@@ -28,15 +28,17 @@ ACLOCAL_AMFLAGS = -I m4
 
 # Use a full version number (x.y.z, possibly with "rc<n>" as a suffix) when
 # preparing a release, otherwise use a the date version (yyyy-mm-dd).
-AC_INIT([pihwm], [2012-09-18], [omerkilic@gmail.com])
+AC_INIT([pihwm], [2012-09-25], [omerkilic@gmail.com])
 AC_CONFIG_MACRO_DIR([m4])
 
 # Generically use extensions such as _GNU_SOURCE if available.
 AC_USE_SYSTEM_EXTENSIONS
 
-# Set up to use libtool and automake as well and create a config header
+# Set up to use libtool and automake as well, with silent output, and create a
+# config header
 AC_PROG_LIBTOOL
 AM_INIT_AUTOMAKE
+m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
 AC_CONFIG_HEADERS([config.h])
 

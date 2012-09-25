@@ -1,3 +1,26 @@
+2012-09-25  Jeremy Bennett  <jeremy.bennett@embecosm.com>
+
+	* aclocal.m4, configure: Regenerated.
+	* configure.ac: Updated version date, use silent output
+	* demo/i2c_ads1015.c (ads1015_read): Replace macro "a" by its
+	contents.
+	* demo/i2c_mcp23017.c (main): Replace macro "a" by its
+	contents.
+	* demo/Makefile.in: Regenerated.
+	* doc/config.texi: Added definition of PI.
+	* doc/Makefile.in, doc/pihwm.info: Regenerated.
+	* doc/pihwm.texi <General API (pihwm.h)>: Complete section.
+	<GPIO API (pihwm_gpio.h)>: Complete section.
+	* doc/version.texi: Regenerated.
+	* lib/Makefile.in: Regenerated.
+	* lib/pi_gpio.c (gpio_edge, gpio_valfd): Make static and move
+	before externally visible functions.
+	(pinMode, digitalWrite, digitalRead, attachInterrupt)
+	(detachInterrupt): Correct commenting of return value.
+	* lib/pi_gpio.h (gpio_edge, gpio_valfd): Remove.
+	* lib/pihwm.h <a>: Remove macro definition.
+	* Makefile.in, testsuite/Makefile.in: Regenerated.
+
 2012-09-20  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
 	* doc/pihwm.texi: Add API sections to library.

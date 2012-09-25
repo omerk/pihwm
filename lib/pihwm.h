@@ -44,8 +44,6 @@
 
 
 /* Useful macros */
-#define a(...) (unsigned char[])__VA_ARGS__
-
 #ifdef DEBUG
 #define debug(...) printf(__VA_ARGS__)
 #else
