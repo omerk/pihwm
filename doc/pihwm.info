@@ -3,10 +3,10 @@ This is ../../doc/pihwm.info, produced by makeinfo version 4.13 from
 
 INFO-DIR-SECTION Embedded development
 START-INFO-DIR-ENTRY
-* pihwm: (libpihwm.a).	A lightweight C library for Raspberry Pi hardware
+* pihwm: (libpihwm.a).	A lightweight C library for _Raspberry Pi_ hardware
 END-INFO-DIR-ENTRY
 
-This file documents the lightweight C library for Raspberry Pi
+This file documents the lightweight C library for _Raspberry Pi_
 hardware, pihwm.
 
 Copyright (C) 2012 Embecosm Limited.
@@ -25,7 +25,7 @@ Scope of this Document
 **********************
 
 This document is the user guide for pihwm, the ligthweight C library
-for Raspberry Pi hardware.
+for _Raspberry Pi_ hardware.
 
 * Menu:
 
@@ -162,13 +162,13 @@ File: pihwm.info,  Node: Library Usage,  Next: API,  Up: Library
 =================
 
 The library may be used by adding `-lpihwm' when compiling on the
-Raspberry Pi.  Programs should include `pihwm.h' and any other hardware
-specific headers from the `include' directory as required.  Note that
-if a prefix has been specified when configuring, it may be necessary to
-specify the location of the library (using the `-L' flag) and the
-headers (using the `-I' flag).
+_Raspberry Pi_.  Programs should include `pihwm.h' and any other
+hardware specific headers from the `include' directory as required.
+Note that if a prefix has been specified when configuring, it may be
+necessary to specify the location of the library (using the `-L' flag)
+and the headers (using the `-I' flag).
 
-For example, running on the RaspberryPi:
+For example, running on the _Raspberry Pi_:
 
      gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
 
@@ -319,9 +319,145 @@ File: pihwm.info,  Node: Demo Programs,  Next: pihwm Developer's Guide,  Prev: L
 
 A number of demo programs are built with the library and may be found
 in the _prefix_/bin directory.  Details of each demo, and the circuit
-it drives are specified in the
+it drives are specified in the following sections.
 
 The rest of this chapter will document the demo programs.
+
+* Menu:
+
+* Setting up the _Raspberry Pi_::
+
+
+File: pihwm.info,  Node: Setting up the _Raspberry Pi_,  Up: Demo Programs
+
+3.1 Setting up the  _Raspberry Pi_
+==================================
+
+For all these examples we are going to be using the _Raspberry Pi_
+"headless", that is without its own keyboard, mouse and monitor. We'll
+connect to it over Ethenet using the _secure shell_ (`ssh') program
+from a terminal window on another computer.
+
+All the examples will work just fine with the conventional setup with
+keyboard, mouse and monitor. However you're quite likely to want to use
+these circuits to control things like model cars or small robots, and
+you really don't want to have to carry around anything more than a
+battery.
+
+* Menu:
+
+* Setting up the SD Card::
+* Setting up the Network::
+
+
+File: pihwm.info,  Node: Setting up the SD Card,  Next: Setting up the Network,  Up: Setting up the _Raspberry Pi_
+
+3.1.1 Setting up the SD card
+----------------------------
+
+The Occidentalis image can be found at
+
+`http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro/occidentalis-v0-dot-2'.
+
+Full details of how to put this on the SD card (it is not just a matter
+of copying) for a range of operating systems (Windows, Linux, Mac) are
+given at
+
+`http://elinux.org/RPi_Easy_SD_Card_Setup'.
+
+These is the short instructions for Linux. Run them from a shell.
+
+  1. Unzip the image
+
+  2. Use `df -h', then insert your SD card and rerun `df -h'. The new
+     entries are the devices corresponding to your SD card. You'll
+     probably see something like `/dev/mmcblk0p1' or `/dev/sdd1'. The
+     `p1' or `1' are the partition number on the device, but we want to
+     write the whole device, so we'll need to refer to it as
+     `/dev/mmcblk0' or `/dev/sdd'
+
+  3. We don't want anything else trying to write the SD card, so we now
+     unmount it (leave it inserted). Use
+          umount /dev/mmcblk0
+     or
+          umount /dev/sdd1
+
+  4. Now use dd to copy the image to the device. Use the unzipped
+     filename of the distribution and the device name _for the whole
+     card_, not just the partition. For example:
+          dd bs=4M if=Occidentalis_v02.img of=/dev/mmcblk0
+     Change the filename and device name as appropriate.
+
+     _Note._ This can take a long time (5-15 mins). You can check on
+     progress by doing to another shell and running:
+          sudo pkill -USR1 -n -x dd
+
+  5. The image probably won't fill the entire SD card, particularly if
+     it's large card. To fix this, use `gparted'. Run this and select
+     the SD device (for example /dev/mmcblk0 or /dev/sdd). You'll see
+     two partitions, one with a fat16 file system and one with an ext4
+     file system. Select the ext4 partition and use
+     Partition>Resize/Move to expand it to the maximum available size.
+     Then use Edit>Apply Operations to change the size.
+
+
+You now have an Occidentalis _Raspberry Pi_ image using all the space
+available on your SD card.
+
+
+File: pihwm.info,  Node: Setting up the Network,  Prev: Setting up the SD Card,  Up: Setting up the _Raspberry Pi_
+
+3.1.2 Setting up the Network
+----------------------------
+
+The _Raspberry Pi_ Occidentalis SD card is set up by default to accept
+SSH. The Ethernet interface will use DHCP to request an appropriate IP
+address. You can then connect to that address. For example if the IP
+address allocated was 192.168.0.77, you could use:
+
+     ssh pi@192.168.0.77
+
+However for this to work, you need to know which DHCP address has been
+allocated to your _Raspberry Pi_ card. If you are just using your home
+router, you can easily look to see what the value is. But in a more
+secure network environment this may not be possible.
+
+Any router can be set up, so that a particular _Raspberry Pi_
+(identified by its "MAC Address") will always be allocated the same IP
+address. In a school environment it might be appropriate to set this up
+for a classroom set of boards, labelling each board with the IP address.
+
+In a standalone environment, it is good to be able to work without a
+full routed network. This is particularly useful when using a laptop
+with a standalone environment. To make this change, two modifications
+are needed:
+
+  1. On the _Raspberry Pi_ edit the `/etc/networks/interfaces' file.
+     Comment out the lines referencing DHCP and setting up the WLAN
+     (use the `#' character at the start of each line).
+
+     Then add the following lines.
+          iface eth0 inet static
+          address 192.168.2.2
+          network 255.255.255.0
+          gateway 192.168.2.1
+
+     This sets the _Raspberry Pi_ up to have an IP address of
+     192.168.2.2 and connect to a host machine with IP address
+     192.168.2.1 You can use other numbers, but it it good practice to
+     start with 192.168, and the address and gateway must only differ
+     in the last number.
+
+  2. Then on the host machine (e.g. a laptop), edit the network
+     connections for the fixed network. Almost certainly this is set to
+     automatic. Change to manual and specify the network address as
+     192.168.2.1. Don't specify a gateway.
+
+     You should now be able to connect the _Raspberry Pi_ to the host
+     machine by Ethernet and use `ssh' to log in
+
+          ssh pi@192.168.2.2
+
 
 
 File: pihwm.info,  Node: pihwm Developer's Guide,  Next: GNU Free Documentation License,  Prev: Demo Programs,  Up: Top
@@ -847,23 +983,26 @@ Index
 
 
 Tag Table:
-Node: Top773
-Node: Installation1150
-Node: Preparation1407
-Node: Configuring the Build1854
-Node: Build and Install2344
-Node: Usage3074
-Node: Known Issues3514
-Node: Library3842
-Node: Library Usage3988
-Node: API4585
-Node: General API (pihwm.h)4805
-Node: GPIO API (pihwm_gpio.h)5738
-Node: I2C API (pihwm_i2c.h)8650
-Node: Pulse Width Modulation API (pihwm_pwm.h)8848
-Node: Demo Programs9052
-Node: pihwm Developer's Guide9416
-Node: GNU Free Documentation License9872
-Node: Index32286
+Node: Top777
+Node: Installation1156
+Node: Preparation1413
+Node: Configuring the Build1860
+Node: Build and Install2350
+Node: Usage3080
+Node: Known Issues3520
+Node: Library3848
+Node: Library Usage3994
+Node: API4595
+Node: General API (pihwm.h)4815
+Node: GPIO API (pihwm_gpio.h)5748
+Node: I2C API (pihwm_i2c.h)8660
+Node: Pulse Width Modulation API (pihwm_pwm.h)8858
+Node: Demo Programs9062
+Node: Setting up the _Raspberry Pi_9490
+Node: Setting up the SD Card10243
+Node: Setting up the Network12421
+Node: pihwm Developer's Guide14697
+Node: GNU Free Documentation License15153
+Node: Index37567
 
 End Tag Table

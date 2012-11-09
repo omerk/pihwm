@@ -5,11 +5,11 @@
 @include config.texi
 @dircategory Embedded development
 @direntry
-* pihwm: (libpihwm.a).	A lightweight C library for Raspberry Pi hardware
+* pihwm: (libpihwm.a).	A lightweight C library for @value{PI} hardware
 @end direntry
 
 @copying
-This file documents the lightweight C library for Raspberry Pi
+This file documents the lightweight C library for @value{PI}
 hardware, @value{PIHWM}.
 
 Copyright @copyright{} 2012 Embecosm Limited.
@@ -51,7 +51,7 @@ Published by Embecosm Limited
 @top Scope of this Document
 
 This document is the user guide for @value{PIHWM}, the ligthweight C
-library for Raspberry Pi hardware.
+library for @value{PI} hardware.
 
 @menu
 * Installation::
@@ -182,13 +182,13 @@ tracker, so send details of any issues to the author.
 @cindex using @value{PIHWM}
 
 The library may be used by adding @code{-lpihwm} when compiling on the
-Raspberry Pi.  Programs should include @code{pihwm.h} and any other
+@value{PI}.  Programs should include @code{pihwm.h} and any other
 hardware specific headers from the @code{include} directory as
 required.  Note that if a prefix has been specified when configuring,
 it may be necessary to specify the location of the library (using the
 @code{-L} flag) and the headers (using the @code{-I} flag).
 
-For example, running on the RaspberryPi:
+For example, running on the @value{PI}:
 
 @example
 gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
@@ -357,9 +357,162 @@ This is a synonym for @code{gpio_clear_int}.
 
 A number of demo programs are built with the library and may be found
 in the @emph{prefix}/bin directory.  Details of each demo, and the
-circuit it drives are specified in the 
+circuit it drives are specified in the following sections.
 
 The rest of this chapter will document the demo programs.
+
+@menu
+* Setting up the @value{PI}::
+@end menu
+
+@node Setting up the @value{PI}
+@section Setting up the  @value{PI}
+
+For all these examples we are going to be using the @value{PI}
+@dfn{headless}, that is without its own keyboard, mouse and
+monitor. We'll connect to it over Ethenet using the @emph{secure
+shell} (@command{ssh}) program from a terminal window on another computer.
+
+All the examples will work just fine with the conventional setup with
+keyboard, mouse and monitor. However you're quite likely to want to
+use these circuits to control things like model cars or small robots,
+and you really don't want to have to carry around anything more than a battery.
+
+@menu
+* Setting up the SD Card::
+* Setting up the Network::
+@end menu
+
+@node Setting up the SD Card
+@subsection Setting up the SD card
+
+The Occidentalis image can be found at
+
+@uref{http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro/occidentalis-v0-dot-2}.
+
+Full details of how to put this on the SD card (it is not just a
+matter of copying) for a range of operating systems (Windows, Linux,
+Mac) are given at
+
+@uref{http://elinux.org/RPi_Easy_SD_Card_Setup}.
+
+These is the short instructions for Linux. Run them from a shell.
+
+@enumerate
+
+@item 
+Unzip the image
+
+@item
+Use @command{df -h}, then insert your SD card and rerun @command{df -h}. The
+new entries are the devices corresponding to your SD card. You'll
+probably see something like @file{/dev/mmcblk0p1} or
+@file{/dev/sdd1}. The @file{p1} or @file{1} are the partition number
+on the device, but we want to write the whole device, so we'll need to
+refer to it as @file{/dev/mmcblk0} or @file{/dev/sdd}
+
+@item
+We don't want anything else trying to write the SD card, so we now
+unmount it (leave it inserted). Use
+@example
+umount /dev/mmcblk0
+@end example
+or
+@example
+umount /dev/sdd1
+@end example
+
+@item
+Now use dd to copy the image to the device. Use the unzipped filename
+of the distribution and the device name @emph{for the whole card}, not
+just the partition. For example:
+@example
+dd bs=4M if=Occidentalis_v02.img of=/dev/mmcblk0
+@end example
+Change the filename and device name as appropriate.
+
+@emph{Note.} This can take a long time (5-15 mins). You can check on
+progress by doing to another shell and running:
+@example
+sudo pkill -USR1 -n -x dd 
+@end example
+
+@item
+The image probably won't fill the entire SD card, particularly if it's
+large card. To fix this, use @command{gparted}. Run this and select the SD
+device (for example /dev/mmcblk0 or /dev/sdd). You'll see two
+partitions, one with a fat16 file system and one with an ext4 file
+system. Select the ext4 partition and use Partition>Resize/Move to
+expand it to the maximum available size. Then use Edit>Apply
+Operations to change the size.
+
+@end enumerate
+
+You now have an Occidentalis @value{PI} image using all the space
+available on your SD card.
+
+@node Setting up the Network
+@subsection Setting up the Network
+
+The @value{PI} Occidentalis SD card is set up by default to accept
+SSH. The Ethernet interface will use DHCP to request an appropriate IP
+address. You can then connect to that address. For example if the IP
+address allocated was 192.168.0.77, you could use:
+
+@example
+ssh pi@@192.168.0.77
+@end example
+
+However for this to work, you need to know which DHCP address has been
+allocated to your @value{PI} card. If you are just using your home
+router, you can easily look to see what the value is. But in a more
+secure network environment this may not be possible.
+
+Any router can be set up, so that a particular @value{PI} (identified
+by its @dfn{MAC Address}) will always be allocated the same IP
+address. In a school environment it might be appropriate to set this
+up for a classroom set of boards, labelling each board with the IP
+address.
+
+In a standalone environment, it is good to be able to work without a
+full routed network. This is particularly useful when using a laptop
+with a standalone environment. To make this change, two modifications
+are needed:
+
+@enumerate
+
+@item
+On the @value{PI} edit the @file{/etc/networks/interfaces}
+file. Comment out the lines referencing DHCP and setting up the WLAN
+(use the @code{#} character at the start of each line).
+
+Then add the following lines.
+@example
+iface eth0 inet static
+address 192.168.2.2
+network 255.255.255.0
+gateway 192.168.2.1
+@end example
+
+This sets the @value{PI} up to have an IP address of 192.168.2.2 and
+connect to a host machine with IP address 192.168.2.1 You can use
+other numbers, but it it good practice to start with 192.168, and the
+address and gateway must only differ in the last number.
+
+@item
+Then on the host machine (e.g. a laptop), edit the network connections
+for the fixed network. Almost certainly this is set to
+automatic. Change to manual and specify the network address as
+192.168.2.1. Don't specify a gateway.
+
+You should now be able to connect the @value{PI} to the host machine by
+Ethernet and use @command{ssh} to log in
+
+@example
+ssh pi@@192.168.2.2
+@end example
+
+@end enumerate
 
 @node @value{PIHWM} Developer's Guide
 @chapter @value{PIHWM} Developer's Guide
