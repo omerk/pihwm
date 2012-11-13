@@ -26,6 +26,7 @@
 
 /* Headers needed here */
 #include <unistd.h>
+#include <inttypest status.h>
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -34,14 +35,21 @@
 /* Useful constants */
 #define INPUT	"in"
 #define OUTPUT	"out"
-#define IN	INPUT
-#define OUT	OUTPUT
+#define IN		INPUT
+#define OUT		OUTPUT
 
 #define HIGH	"1"
-#define LOW	"0"
-#define ON	HIGH
-#define OFF	LOW
+#define LOW		"0"
+#define ON		HIGH
+#define OFF		LOW
 
+/* Board information */
+#define MODEL_A 100
+#define MODEL_B 200
+#define REV_1	 10
+#define REV_2	 20
+#define MEM_256 1
+#define MEM_512 2
 
 /* Useful macros */
 #ifdef DEBUG
@@ -51,5 +59,11 @@
 #endif
 
 #define delay(d) sleep(d);
+
+/* Function prototypes */
+struct board_info get_board_info();
+uint8_t board_model();
+uint8_t board_rev();
+uint8_t board_mem();
 
 #endif
