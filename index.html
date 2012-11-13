@@ -1,0 +1,1635 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- This file documents the lightweight C library for Raspberry Pi
+hardware, pihwm.
+
+Copyright C 2012 Embecosm Limited.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled
+"GNU Free Documentation License".
+
+ -->
+<!-- Created on November 13, 2012 by texi2html 1.82
+texi2html was written by: 
+            Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people.
+Send bugs and suggestions to <texi2html-bug@nongnu.org>
+-->
+<head>
+<title>pihwm User Guide</title>
+
+<meta name="description" content="pihwm User Guide">
+<meta name="keywords" content="pihwm User Guide">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.82">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.roman {font-family:serif; font-weight:normal;}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<a name="Top"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Scope-of-this-Document"></a>
+<h1 class="settitle">Scope of this Document</h1>
+
+<p>This document is the user guide for pihwm, the ligthweight C
+library for <em>Raspberry Pi</em> hardware.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top"><a href="#Installation">1. Installation</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#Library">2. Library</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#Demo-Programs">3. Demo Programs</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#pihwm-Developer_0027s-Guide">4. pihwm Developer&rsquo;s Guide</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#GNU-Free-Documentation-License">5. GNU Free Documentation License</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">  The license for this documentation
+</td></tr>
+<tr><td align="left" valign="top"><a href="#Index">Index</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr size="1">
+<a name="Installation"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Top" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Preparation" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Top" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Library" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Installation-1"></a>
+<h1 class="chapter">1. Installation</h1>
+<a name="index-installing-pihwm"></a>
+
+<p>Installation follows standard GNU protocols.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top"><a href="#Preparation">1.1 Preparation</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#Configuring-the-Build">1.2 Configuring the Build</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#Build-and-Install">1.3 Building and Installing</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#Usage">1.4 Usage</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#Known-Issues">1.5 Known Problems and Issues</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr size="6">
+<a name="Preparation"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Installation" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Configuring-the-Build" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Installation" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Installation" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Library" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Preparation-1"></a>
+<h2 class="section">1.1 Preparation</h2>
+
+<p>Unpack the software and create a <em>separate</em> directory in which to
+build it:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">tar jxf pihwm-2012-09-25.tar.bz2
+cd pihwm-2012-09-25
+mkdir bd
+cd bd
+</pre></td></tr></table>
+
+<p>Alternatively, the latest version software may be cloned from git:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">git clone git://github.com/embecosm/pihwm.git
+cd pihwm
+mkdir bd
+cd bd
+</pre></td></tr></table>
+
+<hr size="6">
+<a name="Configuring-the-Build"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Preparation" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Build-and-Install" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Installation" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Installation" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Library" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Configuring-the-Build-1"></a>
+<h2 class="section">1.2 Configuring the Build</h2>
+
+<p>Configure the software using the <code>configure</code> script in the
+main directory.
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">../configure
+</pre></td></tr></table>
+
+<p>There are several options available, many of which are standard to GNU
+<code>configure</code> scripts.  Use <kbd>configure --help</kbd> to see all
+the options.  The most useful is <code>--prefix</code> to specify a
+directory for installation of the library.
+</p>
+<hr size="6">
+<a name="Build-and-Install"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Configuring-the-Build" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Usage" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Installation" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Installation" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Library" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Building-and-Installing"></a>
+<h2 class="section">1.3 Building and Installing</h2>
+<p>Build the tool with:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">make all
+</pre></td></tr></table>
+
+<p>If you have DejaGNU installed, you can verify the tool as follows
+(otherwise omit this step):
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">make check
+</pre></td></tr></table>
+
+<p>Install the tool with:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">make install
+</pre></td></tr></table>
+
+<p>This will install the library in <em>prefix</em>/lib, the demo programs
+in <em>prefix</em>/bin, headers in <em>prefix</em>/include and the
+documentation in <em>prefix</em>/share, where <em>prefix</em> is the
+prefix specified when configuring, if any.
+</p>
+<p>The documentation may be created and installed in alternative formats (PDF,
+Postscript, DVI, HTML) with for example:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">make pdf
+make install-pdf
+</pre></td></tr></table>
+
+<hr size="6">
+<a name="Usage"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Build-and-Install" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Known-Issues" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Installation" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Installation" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Library" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Usage-1"></a>
+<h2 class="section">1.4 Usage</h2>
+<a name="index-using-pihwm"></a>
+
+<p>pihwm is a C library.  A separate chapter gives details of how
+to use the library, and the API it implements (see section <a href="#Library">Library</a>)
+</p>
+<p>The library is supplied with a number of demo programs.  Details of
+the programs and the hardware they drive are provided in a separate
+chapter (see section <a href="#Demo-Programs">Demo Programs</a>)
+</p>
+<hr size="6">
+<a name="Known-Issues"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Usage" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Library" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Installation" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Installation" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Library" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Known-Problems-and-Issues"></a>
+<h2 class="section">1.5 Known Problems and Issues</h2>
+
+<p>Full details of outstanding issues may be found in the &lsquo;<tt>NEWS</tt>&rsquo; file in
+the main directory of the distribution.  At present there is no bug
+tracker, so send details of any issues to the author.
+</p>
+<hr size="6">
+<a name="Library"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Known-Issues" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Library-Usage" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Installation" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Top" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Library-1"></a>
+<h1 class="chapter">2. Library</h1>
+<a name="index-usage-and-API-of-the-pihwm-library_002e"></a>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top"><a href="#Library-Usage">2.1 Library Usage</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#API">2.2 API</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr size="6">
+<a name="Library-Usage"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Library" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#API" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Library" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Library" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Library-Usage-1"></a>
+<h2 class="section">2.1 Library Usage</h2>
+<a name="index-using-pihwm-1"></a>
+
+<p>The library may be used by adding <code>-lpihwm</code> when compiling on the
+<em>Raspberry Pi</em>.  Programs should include <code>pihwm.h</code> and any other
+hardware specific headers from the <code>include</code> directory as
+required.  Note that if a prefix has been specified when configuring,
+it may be necessary to specify the location of the library (using the
+<code>-L</code> flag) and the headers (using the <code>-I</code> flag).
+</p>
+<p>For example, running on the <em>Raspberry Pi</em>:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
+</pre></td></tr></table>
+
+<hr size="6">
+<a name="API"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Library-Usage" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#General-API-_0028pihwm_002eh_0029" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Library" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Library" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="API-1"></a>
+<h2 class="section">2.2 API</h2>
+<a name="index-the-pihwm-API"></a>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#I2C-API-_0028pihwm_005fi2c_002eh_0029">2.2.3 I2C API (pihwm_i2c.h)</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#Pulse-Width-Modulation-API-_0028pihwm_005fpwm_002eh_0029">2.2.4 Pulse Width Modulation API (pihwm_pwm.h)</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr size="6">
+<a name="General-API-_0028pihwm_002eh_0029"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#API" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Library" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#API" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="General-API-_0028pihwm_002eh_0029-1"></a>
+<h3 class="subsection">2.2.1 General API (pihwm.h)</h3>
+<a name="index-the-general-API-_0028pihwm_002eh_0029"></a>
+<a name="index-pihwm_002eh"></a>
+
+<p>The general API is found in the <code>pihwm.h</code> header, which should be
+included before any other pihwm header.
+</p>
+<dl>
+<dt><a name="index-INPUT"></a><u>Defined constant:</u> <b>INPUT</b></dt>
+<dt><a name="index-IN"></a><u>Defined constant:</u> <b>IN</b></dt>
+<dd>
+<p>These are both <code>#define</code>d to the constant string <code>&quot;in&quot;</code>.
+</p>
+</dd></dl>
+
+<dl>
+<dt><a name="index-OUTPUT"></a><u>Defined constant:</u> <b>OUTPUT</b></dt>
+<dt><a name="index-OUT"></a><u>Defined constant:</u> <b>OUT</b></dt>
+<dd>
+<p>These are both <code>#define</code>d to the constant string <code>&quot;out&quot;</code>.
+</p>
+</dd></dl>
+
+<dl>
+<dt><a name="index-HIGH"></a><u>Defined constant:</u> <b>HIGH</b></dt>
+<dt><a name="index-ON"></a><u>Defined constant:</u> <b>ON</b></dt>
+<dd>
+<p>These are both <code>#define</code>d to the constant string <code>&quot;1&quot;</code>.
+</p>
+</dd></dl>
+
+<dl>
+<dt><a name="index-LOW"></a><u>Defined constant:</u> <b>LOW</b></dt>
+<dt><a name="index-OFF"></a><u>Defined constant:</u> <b>OFF</b></dt>
+<dd>
+<p>These are both <code>#define</code>d to the constant string <code>&quot;0&quot;</code>.
+</p>
+</dd></dl>
+
+<dl>
+<dt><a name="index-debug"></a><u>Macro:</u> <b>debug</b><i> (<var>...</var>)</i></dt>
+<dd>
+<p>If the constant <code>DEBUG</code> is defined, then this maps directly to
+<code>printf(<var>...</var>)</code>, otherwise it is empty.
+</p>
+</dd></dl>
+
+<dl>
+<dt><a name="index-delay"></a><u>Macro:</u> <b>delay</b><i> (<var>d</var>)</i></dt>
+<dd>
+<p>This is defined as a synonymn for <code>sleep(<var>d</var>)</code>.
+</p>
+</dd></dl>
+
+<hr size="6">
+<a name="GPIO-API-_0028pihwm_005fgpio_002eh_0029"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#General-API-_0028pihwm_002eh_0029" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#I2C-API-_0028pihwm_005fi2c_002eh_0029" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Library" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#API" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="GPIO-API-_0028pihwm_005fgpio_002eh_0029-1"></a>
+<h3 class="subsection">2.2.2 GPIO API (pihwm_gpio.h)</h3>
+<a name="index-the-GPIO-API-_0028pihwm_005fgpio_002eh_0029"></a>
+<a name="index-pihwm_005fgpio_002eh"></a>
+
+<p>The following functions are defined for driving the GPIO interface.
+</p>
+<dl>
+<dt><a name="index-gpio_005finit"></a><u>Function:</u> int <b>gpio_init</b><i> (int <var>pin</var>, char *<var>dir</var>)</i></dt>
+<dd><p>Initialize the GPIO interface for the pin numbered <var>pin</var> on the
+<em>Raspberry Pi</em> P1 header in the direction specified by <var>dir</var>.
+<var>dir</var> should be either <code>&quot;in&quot;</code> or <code>&quot;out&quot;</code>, for which the
+defined constants <code>INPUT</code>, <code>IN</code>, <code>OUTPUT</code> or <code>OUT</code>
+may be used.
+</p>
+<p>Returns 1 on success and -1 on failure.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-gpio_005frelease"></a><u>Function:</u> int <b>gpio_release</b><i> (int <var>pin</var>)</i></dt>
+<dd><p>The inverse of <code>gpio_init</code>. Frees the  pin numbered <var>pin</var> on the
+<em>Raspberry Pi</em> P1 header, so it can be used for other purposes.
+</p>
+<p>Returns 1 on success and -1 on failure.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-gpio_005fwrite"></a><u>Function:</u> int <b>gpio_write</b><i> (int <var>pin</var>, char *<var>val</var>)</i></dt>
+<dd><p>Set the pin numbered <var>pin</var> on the <em>Raspberry Pi</em> P1 header to the
+value specified by <var>val</var>.  <var>dir</var> should be either <code>&quot;0&quot;</code>
+or <code>&quot;1&quot;</code>.  The defined constants <code>LOW</code> or <code>OFF</code> may be
+used instead of <code>0</code> and <code>HIGH</code> or <code>ON</code> instead of <code>1</code>/
+</p>
+<p>Returns 1 on success and -1 on failure.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-gpio_005fread"></a><u>Function:</u> int <b>gpio_read</b><i> (int <var>pin</var>)</i></dt>
+<dd><p>Read the value on the pin numbered <var>pin</var> on the <em>Raspberry Pi</em> P1
+header.
+</p>
+<p>On success, returns 0 or 1 depending on whether the pin is low or high
+respectively. On failure returns -1.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-gpio_005fset_005fint"></a><u>Function:</u> int <b>gpio_set_int</b><i> (int <var>pin</var>, void (*<var>isr</var>) (int), char *<var>mode</var>)</i></dt>
+<dd><p>Set <var>int</var> as the interrupt service routine (<acronym>ISR</acronym>) for
+pin numbered <var>pin</var> on the <em>Raspberry Pi</em> P1 header.  <var>mode</var> should
+be one of the strings <code>&quot;rising&quot;</code>, <code>&quot;falling&quot;</code> or
+<code>&quot;both&quot;</code> to indicate which edge(s) the <acronym>ISR</acronym> is to be
+triggered on.
+</p>
+<p>The function <var>isr</var> is called whenever the edge specified occurs,
+receiving as argument the number of the pin which triggered the interrupt.
+</p>
+<p>Returns 1 on success. Never fails!
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-gpio_005fclear_005fint"></a><u>Function:</u> int <b>gpio_clear_int</b><i> (int <var>pin</var>)</i></dt>
+<dd><p>Clears any interrupt service routine (<acronym>ISR</acronym>) set on the pin
+numbered <var>pin</var> on the <em>Raspberry Pi</em> P1 header. The <acronym>ISR</acronym> will
+have been set originally by a call to <code>gpio_set_int</code>.
+</p>
+<p>Returns 0 on success. Never fails!
+</p></dd></dl>
+
+<p>In addition to the standard functions, a number of convenience
+functions are provided, which follow the Arduino style.
+</p>
+<dl>
+<dt><a name="index-pinMode"></a><u>Function:</u> int <b>pinMode</b><i> (int <var>pin</var>, char *<var>val</var>)</i></dt>
+<dd><p>This is a synonym for <code>gpio_init</code>/
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-digitalWrite"></a><u>Function:</u> int <b>digitalWrite</b><i> (int <var>pin</var>, char *<var>val</var>)</i></dt>
+<dd><p>This is a near synonym for <code>gpio_write</code>, except that
+<code>&quot;HIGH&quot;</code> is mapped to <code>&quot;1</code> and <code>&quot;LOW&quot;</code> is mapped to
+<code>&quot;0</code> before passing <var>val</var>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-digitalRead"></a><u>Function:</u> int <b>digitalRead</b><i> (int <var>pin</var>)</i></dt>
+<dd><p>This is a synonym for <code>gpio_read</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-attachInterrupt"></a><u>Function:</u> int <b>attachInterrupt</b><i> (int <var>pin</var>, void (*<var>isr</var>) (int), char *<var>mode</var>)</i></dt>
+<dd><p>This is a synonym for <code>gpio_set_interrupt</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-detachInterrupt"></a><u>Function:</u> int <b>detachInterrupt</b><i> (int <var>pin</var>)</i></dt>
+<dd><p>This is a synonym for <code>gpio_clear_int</code>.
+</p></dd></dl>
+
+<hr size="6">
+<a name="I2C-API-_0028pihwm_005fi2c_002eh_0029"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Pulse-Width-Modulation-API-_0028pihwm_005fpwm_002eh_0029" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Library" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#API" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="I2C-API-_0028pihwm_005fi2c_002eh_0029-1"></a>
+<h3 class="subsection">2.2.3 I2C API (pihwm_i2c.h)</h3>
+<a name="index-the-I2C-API-_0028pihwm_005fi2c_002eh_0029"></a>
+<a name="index-pihwm_005fi2c_002eh"></a>
+
+<hr size="6">
+<a name="Pulse-Width-Modulation-API-_0028pihwm_005fpwm_002eh_0029"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#I2C-API-_0028pihwm_005fi2c_002eh_0029" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Library" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#API" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Pulse-Width-Modulation-API-_0028pihwm_005fpwm_002eh_0029-1"></a>
+<h3 class="subsection">2.2.4 Pulse Width Modulation API (pihwm_pwm.h)</h3>
+<a name="index-the-Pulse-Width-Modulation-API-_0028pihwm_005fpwm_002eh_0029"></a>
+<a name="index-pihwm_005fpwm_002eh"></a>
+
+<hr size="6">
+<a name="Demo-Programs"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Pulse-Width-Modulation-API-_0028pihwm_005fpwm_002eh_0029" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Setting-up-the-Raspberry-Pi" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Library" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Top" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#pihwm-Developer_0027s-Guide" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Demo-Programs-1"></a>
+<h1 class="chapter">3. Demo Programs</h1>
+<a name="index-demo-programs-for-pihwm"></a>
+
+<p>A number of demo programs are built with the library and may be found
+in the <em>prefix</em>/bin directory.  Details of each demo, and the
+circuit it drives are specified in the following sections.
+</p>
+<p>The rest of this chapter will document the demo programs.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top"><a href="#Setting-up-the-Raspberry-Pi">3.1 Setting up the <em>Raspberry Pi</em></a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr size="6">
+<a name="Setting-up-the-Raspberry-Pi"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Demo-Programs" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Setting-up-the-SD-Card" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#pihwm-Developer_0027s-Guide" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Setting-up-the-Raspberry-Pi-1"></a>
+<h2 class="section">3.1 Setting up the <em>Raspberry Pi</em></h2>
+
+<p>For all these examples we are going to be using the <em>Raspberry Pi</em>
+<em>headless</em>, that is without its own keyboard, mouse and
+monitor. We&rsquo;ll connect to it over Ethenet using the <em>secure
+shell</em> (<code>ssh</code>) program from a terminal window on another computer.
+</p>
+<p>All the examples will work just fine with the conventional setup with
+keyboard, mouse and monitor. However you&rsquo;re quite likely to want to
+use these circuits to control things like model cars or small robots,
+and you really don&rsquo;t want to have to carry around anything more than a battery.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top"><a href="#Setting-up-the-SD-Card">3.1.1 Setting up the SD card</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#Setting-up-the-Network">3.1.2 Setting up the Network</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr size="6">
+<a name="Setting-up-the-SD-Card"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Setting-up-the-Raspberry-Pi" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Setting-up-the-Network" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Setting-up-the-Raspberry-Pi" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#pihwm-Developer_0027s-Guide" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Setting-up-the-SD-card"></a>
+<h3 class="subsection">3.1.1 Setting up the SD card</h3>
+
+<p>The Occidentalis image can be found at
+</p>
+<p><a href="http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro/occidentalis-v0-dot-2">http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro/occidentalis-v0-dot-2</a>.
+</p>
+<p>Full details of how to put this on the SD card (it is not just a
+matter of copying) for a range of operating systems (Windows, Linux,
+Mac) are given at
+</p>
+<p><a href="http://elinux.org/RPi_Easy_SD_Card_Setup">http://elinux.org/RPi_Easy_SD_Card_Setup</a>.
+</p>
+<p>These is the short instructions for Linux. Run them from a shell.
+</p>
+<ol>
+<li> 
+Unzip the image
+
+</li><li>
+Use <code>df -h</code>, then insert your SD card and rerun <code>df -h</code>. The
+new entries are the devices corresponding to your SD card. You&rsquo;ll
+probably see something like &lsquo;<tt>/dev/mmcblk0p1</tt>&rsquo; or
+&lsquo;<tt>/dev/sdd1</tt>&rsquo;. The &lsquo;<tt>p1</tt>&rsquo; or &lsquo;<tt>1</tt>&rsquo; are the partition number
+on the device, but we want to write the whole device, so we&rsquo;ll need to
+refer to it as &lsquo;<tt>/dev/mmcblk0</tt>&rsquo; or &lsquo;<tt>/dev/sdd</tt>&rsquo;
+
+</li><li>
+We don&rsquo;t want anything else trying to write the SD card, so we now
+unmount it (leave it inserted). Use
+<table><tr><td>&nbsp;</td><td><pre class="example">umount /dev/mmcblk0
+</pre></td></tr></table>
+<p>or
+</p><table><tr><td>&nbsp;</td><td><pre class="example">umount /dev/sdd1
+</pre></td></tr></table>
+
+</li><li>
+Now use dd to copy the image to the device. Use the unzipped filename
+of the distribution and the device name <em>for the whole card</em>, not
+just the partition. For example:
+<table><tr><td>&nbsp;</td><td><pre class="example">dd bs=4M if=Occidentalis_v02.img of=/dev/mmcblk0
+</pre></td></tr></table>
+<p>Change the filename and device name as appropriate.
+</p>
+<p><em>Note.</em> This can take a long time (5-15 mins). You can check on
+progress by doing to another shell and running:
+</p><table><tr><td>&nbsp;</td><td><pre class="example">sudo pkill -USR1 -n -x dd 
+</pre></td></tr></table>
+
+</li><li>
+The image probably won&rsquo;t fill the entire SD card, particularly if it&rsquo;s
+large card. To fix this, use <code>gparted</code>. Run this and select the SD
+device (for example /dev/mmcblk0 or /dev/sdd). You&rsquo;ll see two
+partitions, one with a fat16 file system and one with an ext4 file
+system. Select the ext4 partition and use Partition&gt;Resize/Move to
+expand it to the maximum available size. Then use Edit&gt;Apply
+Operations to change the size.
+
+</li></ol>
+
+<p>You now have an Occidentalis <em>Raspberry Pi</em> image using all the space
+available on your SD card.
+</p>
+<hr size="6">
+<a name="Setting-up-the-Network"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Setting-up-the-SD-Card" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#pihwm-Developer_0027s-Guide" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Setting-up-the-Raspberry-Pi" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#pihwm-Developer_0027s-Guide" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="Setting-up-the-Network-1"></a>
+<h3 class="subsection">3.1.2 Setting up the Network</h3>
+
+<p>The <em>Raspberry Pi</em> Occidentalis SD card is set up by default to accept
+SSH. The Ethernet interface will use DHCP to request an appropriate IP
+address. You can then connect to that address. For example if the IP
+address allocated was 192.168.0.77, you could use:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">ssh pi@192.168.0.77
+</pre></td></tr></table>
+
+<p>However for this to work, you need to know which DHCP address has been
+allocated to your <em>Raspberry Pi</em> card. If you are just using your home
+router, you can easily look to see what the value is. But in a more
+secure network environment this may not be possible.
+</p>
+<p>Any router can be set up, so that a particular <em>Raspberry Pi</em> (identified
+by its <em>MAC Address</em>) will always be allocated the same IP
+address. In a school environment it might be appropriate to set this
+up for a classroom set of boards, labelling each board with the IP
+address.
+</p>
+<p>In a standalone environment, it is good to be able to work without a
+full routed network. This is particularly useful when using a laptop
+with a standalone environment. To make this change, two modifications
+are needed:
+</p>
+<ol>
+<li>
+On the <em>Raspberry Pi</em> edit the &lsquo;<tt>/etc/networks/interfaces</tt>&rsquo;
+file. Comment out the lines referencing DHCP and setting up the WLAN
+(use the <code>#</code> character at the start of each line).
+
+<p>Then add the following lines.
+</p><table><tr><td>&nbsp;</td><td><pre class="example">iface eth0 inet static
+address 192.168.2.2
+network 255.255.255.0
+gateway 192.168.2.1
+</pre></td></tr></table>
+
+<p>This sets the <em>Raspberry Pi</em> up to have an IP address of 192.168.2.2 and
+connect to a host machine with IP address 192.168.2.1 You can use
+other numbers, but it it good practice to start with 192.168, and the
+address and gateway must only differ in the last number.
+</p>
+</li><li>
+Then on the host machine (e.g. a laptop), edit the network connections
+for the fixed network. Almost certainly this is set to
+automatic. Change to manual and specify the network address as
+192.168.2.1. Don&rsquo;t specify a gateway.
+
+<p>You should now be able to connect the <em>Raspberry Pi</em> to the host machine by
+Ethernet and use <code>ssh</code> to log in
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">ssh pi@192.168.2.2
+</pre></td></tr></table>
+
+</li></ol>
+
+<hr size="6">
+<a name="pihwm-Developer_0027s-Guide"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Setting-up-the-Network" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#GNU-Free-Documentation-License" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Demo-Programs" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Top" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#GNU-Free-Documentation-License" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="pihwm-Developer_0027s-Guide-1"></a>
+<h1 class="chapter">4. pihwm Developer&rsquo;s Guide</h1>
+
+<p>These are notes to help those wanting to extend pihwm.  This
+section assumes the use of a tag file, so file locations of entities&rsquo;
+definitions are not in general provided.  For more on tags, see the
+Linux manual page for <code>etags</code>.  A tag file can be created
+with:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">make tags
+</pre></td></tr></table>
+
+<hr size="6">
+<a name="GNU-Free-Documentation-License"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#pihwm-Developer_0027s-Guide" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#pihwm-Developer_0027s-Guide" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Top" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<a name="GNU-Free-Documentation-License-1"></a>
+<h1 class="chapter">5. GNU Free Documentation License</h1>
+<a name="index-license-for-pihwm"></a>
+
+<p align="center"> Version 1.2, November 2002
+</p>
+
+<table><tr><td>&nbsp;</td><td><pre class="display">Copyright &copy; 2000,2001,2002 Free Software Foundation, Inc.
+51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.
+</pre></td></tr></table>
+
+<ol>
+<li>
+PREAMBLE
+
+<p>The purpose of this License is to make a manual, textbook, or other
+functional and useful document <em>free</em> in the sense of freedom: to
+assure everyone the effective freedom to copy and redistribute it,
+with or without modifying it, either commercially or noncommercially.
+Secondarily, this License preserves for the author and publisher a way
+to get credit for their work, while not being considered responsible
+for modifications made by others.
+</p>
+<p>This License is a kind of &ldquo;copyleft&rdquo;, which means that derivative
+works of the document must themselves be free in the same sense.  It
+complements the GNU General Public License, which is a copyleft
+license designed for free software.
+</p>
+<p>We have designed this License in order to use it for manuals for free
+software, because free software needs free documentation: a free
+program should come with manuals providing the same freedoms that the
+software does.  But this License is not limited to software manuals;
+it can be used for any textual work, regardless of subject matter or
+whether it is published as a printed book.  We recommend this License
+principally for works whose purpose is instruction or reference.
+</p>
+</li><li>
+APPLICABILITY AND DEFINITIONS
+
+<p>This License applies to any manual or other work, in any medium, that
+contains a notice placed by the copyright holder saying it can be
+distributed under the terms of this License.  Such a notice grants a
+world-wide, royalty-free license, unlimited in duration, to use that
+work under the conditions stated herein.  The &ldquo;Document&rdquo;, below,
+refers to any such manual or work.  Any member of the public is a
+licensee, and is addressed as &ldquo;you&rdquo;.  You accept the license if you
+copy, modify or distribute the work in a way requiring permission
+under copyright law.
+</p>
+<p>A &ldquo;Modified Version&rdquo; of the Document means any work containing the
+Document or a portion of it, either copied verbatim, or with
+modifications and/or translated into another language.
+</p>
+<p>A &ldquo;Secondary Section&rdquo; is a named appendix or a front-matter section
+of the Document that deals exclusively with the relationship of the
+publishers or authors of the Document to the Document&rsquo;s overall
+subject (or to related matters) and contains nothing that could fall
+directly within that overall subject.  (Thus, if the Document is in
+part a textbook of mathematics, a Secondary Section may not explain
+any mathematics.)  The relationship could be a matter of historical
+connection with the subject or with related matters, or of legal,
+commercial, philosophical, ethical or political position regarding
+them.
+</p>
+<p>The &ldquo;Invariant Sections&rdquo; are certain Secondary Sections whose titles
+are designated, as being those of Invariant Sections, in the notice
+that says that the Document is released under this License.  If a
+section does not fit the above definition of Secondary then it is not
+allowed to be designated as Invariant.  The Document may contain zero
+Invariant Sections.  If the Document does not identify any Invariant
+Sections then there are none.
+</p>
+<p>The &ldquo;Cover Texts&rdquo; are certain short passages of text that are listed,
+as Front-Cover Texts or Back-Cover Texts, in the notice that says that
+the Document is released under this License.  A Front-Cover Text may
+be at most 5 words, and a Back-Cover Text may be at most 25 words.
+</p>
+<p>A &ldquo;Transparent&rdquo; copy of the Document means a machine-readable copy,
+represented in a format whose specification is available to the
+general public, that is suitable for revising the document
+straightforwardly with generic text editors or (for images composed of
+pixels) generic paint programs or (for drawings) some widely available
+drawing editor, and that is suitable for input to text formatters or
+for automatic translation to a variety of formats suitable for input
+to text formatters.  A copy made in an otherwise Transparent file
+format whose markup, or absence of markup, has been arranged to thwart
+or discourage subsequent modification by readers is not Transparent.
+An image format is not Transparent if used for any substantial amount
+of text.  A copy that is not &ldquo;Transparent&rdquo; is called &ldquo;Opaque&rdquo;.
+</p>
+<p>Examples of suitable formats for Transparent copies include plain
+<small>ASCII</small> without markup, Texinfo input format, LaTeX input
+format, <acronym>SGML</acronym> or <acronym>XML</acronym> using a publicly available
+<acronym>DTD</acronym>, and standard-conforming simple <acronym>HTML</acronym>,
+PostScript or <acronym>PDF</acronym> designed for human modification.  Examples
+of transparent image formats include <acronym>PNG</acronym>, <acronym>XCF</acronym> and
+<acronym>JPG</acronym>.  Opaque formats include proprietary formats that can be
+read and edited only by proprietary word processors, <acronym>SGML</acronym> or
+<acronym>XML</acronym> for which the <acronym>DTD</acronym> and/or processing tools are
+not generally available, and the machine-generated <acronym>HTML</acronym>,
+PostScript or <acronym>PDF</acronym> produced by some word processors for
+output purposes only.
+</p>
+<p>The &ldquo;Title Page&rdquo; means, for a printed book, the title page itself,
+plus such following pages as are needed to hold, legibly, the material
+this License requires to appear in the title page.  For works in
+formats which do not have any title page as such, &ldquo;Title Page&rdquo; means
+the text near the most prominent appearance of the work&rsquo;s title,
+preceding the beginning of the body of the text.
+</p>
+<p>A section &ldquo;Entitled XYZ&rdquo; means a named subunit of the Document whose
+title either is precisely XYZ or contains XYZ in parentheses following
+text that translates XYZ in another language.  (Here XYZ stands for a
+specific section name mentioned below, such as &ldquo;Acknowledgements&rdquo;,
+&ldquo;Dedications&rdquo;, &ldquo;Endorsements&rdquo;, or &ldquo;History&rdquo;.)  To &ldquo;Preserve the Title&rdquo;
+of such a section when you modify the Document means that it remains a
+section &ldquo;Entitled XYZ&rdquo; according to this definition.
+</p>
+<p>The Document may include Warranty Disclaimers next to the notice which
+states that this License applies to the Document.  These Warranty
+Disclaimers are considered to be included by reference in this
+License, but only as regards disclaiming warranties: any other
+implication that these Warranty Disclaimers may have is void and has
+no effect on the meaning of this License.
+</p>
+</li><li>
+VERBATIM COPYING
+
+<p>You may copy and distribute the Document in any medium, either
+commercially or noncommercially, provided that this License, the
+copyright notices, and the license notice saying this License applies
+to the Document are reproduced in all copies, and that you add no other
+conditions whatsoever to those of this License.  You may not use
+technical measures to obstruct or control the reading or further
+copying of the copies you make or distribute.  However, you may accept
+compensation in exchange for copies.  If you distribute a large enough
+number of copies you must also follow the conditions in section 3.
+</p>
+<p>You may also lend copies, under the same conditions stated above, and
+you may publicly display copies.
+</p>
+</li><li>
+COPYING IN QUANTITY
+
+<p>If you publish printed copies (or copies in media that commonly have
+printed covers) of the Document, numbering more than 100, and the
+Document&rsquo;s license notice requires Cover Texts, you must enclose the
+copies in covers that carry, clearly and legibly, all these Cover
+Texts: Front-Cover Texts on the front cover, and Back-Cover Texts on
+the back cover.  Both covers must also clearly and legibly identify
+you as the publisher of these copies.  The front cover must present
+the full title with all words of the title equally prominent and
+visible.  You may add other material on the covers in addition.
+Copying with changes limited to the covers, as long as they preserve
+the title of the Document and satisfy these conditions, can be treated
+as verbatim copying in other respects.
+</p>
+<p>If the required texts for either cover are too voluminous to fit
+legibly, you should put the first ones listed (as many as fit
+reasonably) on the actual cover, and continue the rest onto adjacent
+pages.
+</p>
+<p>If you publish or distribute Opaque copies of the Document numbering
+more than 100, you must either include a machine-readable Transparent
+copy along with each Opaque copy, or state in or with each Opaque copy
+a computer-network location from which the general network-using
+public has access to download using public-standard network protocols
+a complete Transparent copy of the Document, free of added material.
+If you use the latter option, you must take reasonably prudent steps,
+when you begin distribution of Opaque copies in quantity, to ensure
+that this Transparent copy will remain thus accessible at the stated
+location until at least one year after the last time you distribute an
+Opaque copy (directly or through your agents or retailers) of that
+edition to the public.
+</p>
+<p>It is requested, but not required, that you contact the authors of the
+Document well before redistributing any large number of copies, to give
+them a chance to provide you with an updated version of the Document.
+</p>
+</li><li>
+MODIFICATIONS
+
+<p>You may copy and distribute a Modified Version of the Document under
+the conditions of sections 2 and 3 above, provided that you release
+the Modified Version under precisely this License, with the Modified
+Version filling the role of the Document, thus licensing distribution
+and modification of the Modified Version to whoever possesses a copy
+of it.  In addition, you must do these things in the Modified Version:
+</p>
+<ol>
+<li>
+Use in the Title Page (and on the covers, if any) a title distinct
+from that of the Document, and from those of previous versions
+(which should, if there were any, be listed in the History section
+of the Document).  You may use the same title as a previous version
+if the original publisher of that version gives permission.
+
+</li><li>
+List on the Title Page, as authors, one or more persons or entities
+responsible for authorship of the modifications in the Modified
+Version, together with at least five of the principal authors of the
+Document (all of its principal authors, if it has fewer than five),
+unless they release you from this requirement.
+
+</li><li>
+State on the Title page the name of the publisher of the
+Modified Version, as the publisher.
+
+</li><li>
+Preserve all the copyright notices of the Document.
+
+</li><li>
+Add an appropriate copyright notice for your modifications
+adjacent to the other copyright notices.
+
+</li><li>
+Include, immediately after the copyright notices, a license notice
+giving the public permission to use the Modified Version under the
+terms of this License, in the form shown in the Addendum below.
+
+</li><li>
+Preserve in that license notice the full lists of Invariant Sections
+and required Cover Texts given in the Document&rsquo;s license notice.
+
+</li><li>
+Include an unaltered copy of this License.
+
+</li><li>
+Preserve the section Entitled &ldquo;History&rdquo;, Preserve its Title, and add
+to it an item stating at least the title, year, new authors, and
+publisher of the Modified Version as given on the Title Page.  If
+there is no section Entitled &ldquo;History&rdquo; in the Document, create one
+stating the title, year, authors, and publisher of the Document as
+given on its Title Page, then add an item describing the Modified
+Version as stated in the previous sentence.
+
+</li><li>
+Preserve the network location, if any, given in the Document for
+public access to a Transparent copy of the Document, and likewise
+the network locations given in the Document for previous versions
+it was based on.  These may be placed in the &ldquo;History&rdquo; section.
+You may omit a network location for a work that was published at
+least four years before the Document itself, or if the original
+publisher of the version it refers to gives permission.
+
+</li><li>
+For any section Entitled &ldquo;Acknowledgements&rdquo; or &ldquo;Dedications&rdquo;, Preserve
+the Title of the section, and preserve in the section all the
+substance and tone of each of the contributor acknowledgements and/or
+dedications given therein.
+
+</li><li>
+Preserve all the Invariant Sections of the Document,
+unaltered in their text and in their titles.  Section numbers
+or the equivalent are not considered part of the section titles.
+
+</li><li>
+Delete any section Entitled &ldquo;Endorsements&rdquo;.  Such a section
+may not be included in the Modified Version.
+
+</li><li>
+Do not retitle any existing section to be Entitled &ldquo;Endorsements&rdquo; or
+to conflict in title with any Invariant Section.
+
+</li><li>
+Preserve any Warranty Disclaimers.
+</li></ol>
+
+<p>If the Modified Version includes new front-matter sections or
+appendices that qualify as Secondary Sections and contain no material
+copied from the Document, you may at your option designate some or all
+of these sections as invariant.  To do this, add their titles to the
+list of Invariant Sections in the Modified Version&rsquo;s license notice.
+These titles must be distinct from any other section titles.
+</p>
+<p>You may add a section Entitled &ldquo;Endorsements&rdquo;, provided it contains
+nothing but endorsements of your Modified Version by various
+parties&mdash;for example, statements of peer review or that the text has
+been approved by an organization as the authoritative definition of a
+standard.
+</p>
+<p>You may add a passage of up to five words as a Front-Cover Text, and a
+passage of up to 25 words as a Back-Cover Text, to the end of the list
+of Cover Texts in the Modified Version.  Only one passage of
+Front-Cover Text and one of Back-Cover Text may be added by (or
+through arrangements made by) any one entity.  If the Document already
+includes a cover text for the same cover, previously added by you or
+by arrangement made by the same entity you are acting on behalf of,
+you may not add another; but you may replace the old one, on explicit
+permission from the previous publisher that added the old one.
+</p>
+<p>The author(s) and publisher(s) of the Document do not by this License
+give permission to use their names for publicity for or to assert or
+imply endorsement of any Modified Version.
+</p>
+</li><li>
+COMBINING DOCUMENTS
+
+<p>You may combine the Document with other documents released under this
+License, under the terms defined in section 4 above for modified
+versions, provided that you include in the combination all of the
+Invariant Sections of all of the original documents, unmodified, and
+list them all as Invariant Sections of your combined work in its
+license notice, and that you preserve all their Warranty Disclaimers.
+</p>
+<p>The combined work need only contain one copy of this License, and
+multiple identical Invariant Sections may be replaced with a single
+copy.  If there are multiple Invariant Sections with the same name but
+different contents, make the title of each such section unique by
+adding at the end of it, in parentheses, the name of the original
+author or publisher of that section if known, or else a unique number.
+Make the same adjustment to the section titles in the list of
+Invariant Sections in the license notice of the combined work.
+</p>
+<p>In the combination, you must combine any sections Entitled &ldquo;History&rdquo;
+in the various original documents, forming one section Entitled
+&ldquo;History&rdquo;; likewise combine any sections Entitled &ldquo;Acknowledgements&rdquo;,
+and any sections Entitled &ldquo;Dedications&rdquo;.  You must delete all
+sections Entitled &ldquo;Endorsements.&rdquo;
+</p>
+</li><li>
+COLLECTIONS OF DOCUMENTS
+
+<p>You may make a collection consisting of the Document and other documents
+released under this License, and replace the individual copies of this
+License in the various documents with a single copy that is included in
+the collection, provided that you follow the rules of this License for
+verbatim copying of each of the documents in all other respects.
+</p>
+<p>You may extract a single document from such a collection, and distribute
+it individually under this License, provided you insert a copy of this
+License into the extracted document, and follow this License in all
+other respects regarding verbatim copying of that document.
+</p>
+</li><li>
+AGGREGATION WITH INDEPENDENT WORKS
+
+<p>A compilation of the Document or its derivatives with other separate
+and independent documents or works, in or on a volume of a storage or
+distribution medium, is called an &ldquo;aggregate&rdquo; if the copyright
+resulting from the compilation is not used to limit the legal rights
+of the compilation&rsquo;s users beyond what the individual works permit.
+When the Document is included in an aggregate, this License does not
+apply to the other works in the aggregate which are not themselves
+derivative works of the Document.
+</p>
+<p>If the Cover Text requirement of section 3 is applicable to these
+copies of the Document, then if the Document is less than one half of
+the entire aggregate, the Document&rsquo;s Cover Texts may be placed on
+covers that bracket the Document within the aggregate, or the
+electronic equivalent of covers if the Document is in electronic form.
+Otherwise they must appear on printed covers that bracket the whole
+aggregate.
+</p>
+</li><li>
+TRANSLATION
+
+<p>Translation is considered a kind of modification, so you may
+distribute translations of the Document under the terms of section 4.
+Replacing Invariant Sections with translations requires special
+permission from their copyright holders, but you may include
+translations of some or all Invariant Sections in addition to the
+original versions of these Invariant Sections.  You may include a
+translation of this License, and all the license notices in the
+Document, and any Warranty Disclaimers, provided that you also include
+the original English version of this License and the original versions
+of those notices and disclaimers.  In case of a disagreement between
+the translation and the original version of this License or a notice
+or disclaimer, the original version will prevail.
+</p>
+<p>If a section in the Document is Entitled &ldquo;Acknowledgements&rdquo;,
+&ldquo;Dedications&rdquo;, or &ldquo;History&rdquo;, the requirement (section 4) to Preserve
+its Title (section 1) will typically require changing the actual
+title.
+</p>
+</li><li>
+TERMINATION
+
+<p>You may not copy, modify, sublicense, or distribute the Document except
+as expressly provided for under this License.  Any other attempt to
+copy, modify, sublicense or distribute the Document is void, and will
+automatically terminate your rights under this License.  However,
+parties who have received copies, or rights, from you under this
+License will not have their licenses terminated so long as such
+parties remain in full compliance.
+</p>
+</li><li>
+FUTURE REVISIONS OF THIS LICENSE
+
+<p>The Free Software Foundation may publish new, revised versions
+of the GNU Free Documentation License from time to time.  Such new
+versions will be similar in spirit to the present version, but may
+differ in detail to address new problems or concerns.  See
+<a href="http://www.gnu.org/copyleft/">http://www.gnu.org/copyleft/</a>.
+</p>
+<p>Each version of the License is given a distinguishing version number.
+If the Document specifies that a particular numbered version of this
+License &ldquo;or any later version&rdquo; applies to it, you have the option of
+following the terms and conditions either of that specified version or
+of any later version that has been published (not as a draft) by the
+Free Software Foundation.  If the Document does not specify a version
+number of this License, you may choose any version ever published (not
+as a draft) by the Free Software Foundation.
+</p></li></ol>
+
+
+<a name="ADDENDUM_003a-How-to-use-this-License-for-your-documents"></a>
+<h2 class="heading">ADDENDUM: How to use this License for your documents</h2>
+
+<p>To use this License in a document you have written, include a copy of
+the License in the document and put the following copyright and
+license notices just after the title page:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="smallexample">  Copyright (C)  <var>year</var>  <var>your name</var>.
+  Permission is granted to copy, distribute and/or modify this document
+  under the terms of the GNU Free Documentation License, Version 1.2
+  or any later version published by the Free Software Foundation;
+  with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+  Texts.  A copy of the license is included in the section entitled ``GNU
+  Free Documentation License''.
+</pre></td></tr></table>
+
+<p>If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
+replace the &ldquo;with&hellip;Texts.&rdquo; line with this:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="smallexample">    with the Invariant Sections being <var>list their titles</var>, with
+    the Front-Cover Texts being <var>list</var>, and with the Back-Cover Texts
+    being <var>list</var>.
+</pre></td></tr></table>
+
+<p>If you have Invariant Sections without Cover Texts, or some other
+combination of the three, merge those two alternatives to suit the
+situation.
+</p>
+<p>If your document contains nontrivial examples of program code, we
+recommend releasing these examples in parallel under your choice of
+free software license, such as the GNU General Public License,
+to permit their use in free software.
+</p>
+
+
+<hr size="6">
+<a name="Index"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#GNU-Free-Documentation-License" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[ &gt; ]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#GNU-Free-Documentation-License" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Top" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[ &gt;&gt; ]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+
+<a name="Index-1"></a>
+<h1 class="unnumbered">Index</h1>
+
+<table><tr><th valign="top">Jump to: &nbsp; </th><td><a href="#Index-1_cp_letter-A" class="summary-letter"><b>A</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-D" class="summary-letter"><b>D</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-G" class="summary-letter"><b>G</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-H" class="summary-letter"><b>H</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-I" class="summary-letter"><b>I</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-L" class="summary-letter"><b>L</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-O" class="summary-letter"><b>O</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-P" class="summary-letter"><b>P</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-T" class="summary-letter"><b>T</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-U" class="summary-letter"><b>U</b></a>
+ &nbsp; 
+</td></tr></table>
+<table border="0" class="index-cp">
+<tr><td></td><th align="left">Index Entry</th><th align="left"> Section</th></tr>
+<tr><td colspan="3"> <hr></td></tr>
+<tr><th><a name="Index-1_cp_letter-A">A</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-attachInterrupt"><code>attachInterrupt</code></a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td colspan="3"> <hr></td></tr>
+<tr><th><a name="Index-1_cp_letter-D">D</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-debug"><code>debug</code></a></td><td valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-delay"><code>delay</code></a></td><td valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-demo-programs-for-pihwm">demo programs for pihwm</a></td><td valign="top"><a href="#Demo-Programs">3. Demo Programs</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-detachInterrupt"><code>detachInterrupt</code></a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-digitalRead"><code>digitalRead</code></a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-digitalWrite"><code>digitalWrite</code></a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td colspan="3"> <hr></td></tr>
+<tr><th><a name="Index-1_cp_letter-G">G</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-gpio_005fclear_005fint"><code>gpio_clear_int</code></a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-gpio_005finit"><code>gpio_init</code></a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-gpio_005fread"><code>gpio_read</code></a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-gpio_005frelease"><code>gpio_release</code></a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-gpio_005fset_005fint"><code>gpio_set_int</code></a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-gpio_005fwrite"><code>gpio_write</code></a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td colspan="3"> <hr></td></tr>
+<tr><th><a name="Index-1_cp_letter-H">H</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-HIGH"><code>HIGH</code></a></td><td valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td></tr>
+<tr><td colspan="3"> <hr></td></tr>
+<tr><th><a name="Index-1_cp_letter-I">I</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-IN"><code>IN</code></a></td><td valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-INPUT"><code>INPUT</code></a></td><td valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-installing-pihwm">installing pihwm</a></td><td valign="top"><a href="#Installation">1. Installation</a></td></tr>
+<tr><td colspan="3"> <hr></td></tr>
+<tr><th><a name="Index-1_cp_letter-L">L</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-license-for-pihwm">license for pihwm</a></td><td valign="top"><a href="#GNU-Free-Documentation-License">5. GNU Free Documentation License</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-LOW"><code>LOW</code></a></td><td valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td></tr>
+<tr><td colspan="3"> <hr></td></tr>
+<tr><th><a name="Index-1_cp_letter-O">O</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-OFF"><code>OFF</code></a></td><td valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-ON"><code>ON</code></a></td><td valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-OUT"><code>OUT</code></a></td><td valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-OUTPUT"><code>OUTPUT</code></a></td><td valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td></tr>
+<tr><td colspan="3"> <hr></td></tr>
+<tr><th><a name="Index-1_cp_letter-P">P</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-pihwm_002eh">pihwm.h</a></td><td valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-pihwm_005fgpio_002eh">pihwm_gpio.h</a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-pihwm_005fi2c_002eh">pihwm_i2c.h</a></td><td valign="top"><a href="#I2C-API-_0028pihwm_005fi2c_002eh_0029">2.2.3 I2C API (pihwm_i2c.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-pihwm_005fpwm_002eh">pihwm_pwm.h</a></td><td valign="top"><a href="#Pulse-Width-Modulation-API-_0028pihwm_005fpwm_002eh_0029">2.2.4 Pulse Width Modulation API (pihwm_pwm.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-pinMode"><code>pinMode</code></a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td colspan="3"> <hr></td></tr>
+<tr><th><a name="Index-1_cp_letter-T">T</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-the-general-API-_0028pihwm_002eh_0029">the general API (pihwm.h)</a></td><td valign="top"><a href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-the-GPIO-API-_0028pihwm_005fgpio_002eh_0029">the GPIO API (pihwm_gpio.h)</a></td><td valign="top"><a href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-the-I2C-API-_0028pihwm_005fi2c_002eh_0029">the I2C API (pihwm_i2c.h)</a></td><td valign="top"><a href="#I2C-API-_0028pihwm_005fi2c_002eh_0029">2.2.3 I2C API (pihwm_i2c.h)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-the-pihwm-API">the pihwm API</a></td><td valign="top"><a href="#API">2.2 API</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-the-Pulse-Width-Modulation-API-_0028pihwm_005fpwm_002eh_0029">the Pulse Width Modulation API (pihwm_pwm.h)</a></td><td valign="top"><a href="#Pulse-Width-Modulation-API-_0028pihwm_005fpwm_002eh_0029">2.2.4 Pulse Width Modulation API (pihwm_pwm.h)</a></td></tr>
+<tr><td colspan="3"> <hr></td></tr>
+<tr><th><a name="Index-1_cp_letter-U">U</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-usage-and-API-of-the-pihwm-library_002e">usage and API of the pihwm library.</a></td><td valign="top"><a href="#Library">2. Library</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-using-pihwm">using pihwm</a></td><td valign="top"><a href="#Usage">1.4 Usage</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-using-pihwm-1">using pihwm</a></td><td valign="top"><a href="#Library-Usage">2.1 Library Usage</a></td></tr>
+<tr><td colspan="3"> <hr></td></tr>
+</table>
+<table><tr><th valign="top">Jump to: &nbsp; </th><td><a href="#Index-1_cp_letter-A" class="summary-letter"><b>A</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-D" class="summary-letter"><b>D</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-G" class="summary-letter"><b>G</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-H" class="summary-letter"><b>H</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-I" class="summary-letter"><b>I</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-L" class="summary-letter"><b>L</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-O" class="summary-letter"><b>O</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-P" class="summary-letter"><b>P</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-T" class="summary-letter"><b>T</b></a>
+ &nbsp; 
+<a href="#Index-1_cp_letter-U" class="summary-letter"><b>U</b></a>
+ &nbsp; 
+</td></tr></table>
+
+<hr size="6">
+<a name="SEC_Contents"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h1>Table of Contents</h1>
+<div class="contents">
+
+<ul class="toc">
+  <li><a name="toc-Installation-1" href="#Installation">1. Installation</a>
+  <ul class="toc">
+    <li><a name="toc-Preparation-1" href="#Preparation">1.1 Preparation</a></li>
+    <li><a name="toc-Configuring-the-Build-1" href="#Configuring-the-Build">1.2 Configuring the Build</a></li>
+    <li><a name="toc-Building-and-Installing" href="#Build-and-Install">1.3 Building and Installing</a></li>
+    <li><a name="toc-Usage-1" href="#Usage">1.4 Usage</a></li>
+    <li><a name="toc-Known-Problems-and-Issues" href="#Known-Issues">1.5 Known Problems and Issues</a></li>
+  </ul></li>
+  <li><a name="toc-Library-1" href="#Library">2. Library</a>
+  <ul class="toc">
+    <li><a name="toc-Library-Usage-1" href="#Library-Usage">2.1 Library Usage</a></li>
+    <li><a name="toc-API-1" href="#API">2.2 API</a>
+    <ul class="toc">
+      <li><a name="toc-General-API-_0028pihwm_002eh_0029-1" href="#General-API-_0028pihwm_002eh_0029">2.2.1 General API (pihwm.h)</a></li>
+      <li><a name="toc-GPIO-API-_0028pihwm_005fgpio_002eh_0029-1" href="#GPIO-API-_0028pihwm_005fgpio_002eh_0029">2.2.2 GPIO API (pihwm_gpio.h)</a></li>
+      <li><a name="toc-I2C-API-_0028pihwm_005fi2c_002eh_0029-1" href="#I2C-API-_0028pihwm_005fi2c_002eh_0029">2.2.3 I2C API (pihwm_i2c.h)</a></li>
+      <li><a name="toc-Pulse-Width-Modulation-API-_0028pihwm_005fpwm_002eh_0029-1" href="#Pulse-Width-Modulation-API-_0028pihwm_005fpwm_002eh_0029">2.2.4 Pulse Width Modulation API (pihwm_pwm.h)</a></li>
+    </ul>
+</li>
+  </ul></li>
+  <li><a name="toc-Demo-Programs-1" href="#Demo-Programs">3. Demo Programs</a>
+  <ul class="toc">
+    <li><a name="toc-Setting-up-the-Raspberry-Pi-1" href="#Setting-up-the-Raspberry-Pi">3.1 Setting up the <em>Raspberry Pi</em></a>
+    <ul class="toc">
+      <li><a name="toc-Setting-up-the-SD-card" href="#Setting-up-the-SD-Card">3.1.1 Setting up the SD card</a></li>
+      <li><a name="toc-Setting-up-the-Network-1" href="#Setting-up-the-Network">3.1.2 Setting up the Network</a></li>
+    </ul>
+</li>
+  </ul></li>
+  <li><a name="toc-pihwm-Developer_0027s-Guide-1" href="#pihwm-Developer_0027s-Guide">4. pihwm Developer&rsquo;s Guide</a></li>
+  <li><a name="toc-GNU-Free-Documentation-License-1" href="#GNU-Free-Documentation-License">5. GNU Free Documentation License</a></li>
+  <li><a name="toc-Index-1" href="#Index">Index</a></li>
+</ul>
+</div>
+<hr size="1">
+<a name="SEC_About"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h1>About This Document</h1>
+<p>
+  This document was generated by <em>root</em> on <em>November 13, 2012</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+</p>
+<p>
+  The buttons in the navigation panels have the following meaning:
+</p>
+<table border="1">
+  <tr>
+    <th> Button </th>
+    <th> Name </th>
+    <th> Go to </th>
+    <th> From 1.2.3 go to</th>
+  </tr>
+  <tr>
+    <td align="center"> [ &lt; ] </td>
+    <td align="center">Back</td>
+    <td>Previous section in reading order</td>
+    <td>1.2.2</td>
+  </tr>
+  <tr>
+    <td align="center"> [ &gt; ] </td>
+    <td align="center">Forward</td>
+    <td>Next section in reading order</td>
+    <td>1.2.4</td>
+  </tr>
+  <tr>
+    <td align="center"> [ &lt;&lt; ] </td>
+    <td align="center">FastBack</td>
+    <td>Beginning of this chapter or previous chapter</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td align="center"> [ Up ] </td>
+    <td align="center">Up</td>
+    <td>Up section</td>
+    <td>1.2</td>
+  </tr>
+  <tr>
+    <td align="center"> [ &gt;&gt; ] </td>
+    <td align="center">FastForward</td>
+    <td>Next chapter</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td align="center"> [Top] </td>
+    <td align="center">Top</td>
+    <td>Cover (top) of document</td>
+    <td> &nbsp; </td>
+  </tr>
+  <tr>
+    <td align="center"> [Contents] </td>
+    <td align="center">Contents</td>
+    <td>Table of contents</td>
+    <td> &nbsp; </td>
+  </tr>
+  <tr>
+    <td align="center"> [Index] </td>
+    <td align="center">Index</td>
+    <td>Index</td>
+    <td> &nbsp; </td>
+  </tr>
+  <tr>
+    <td align="center"> [ ? ] </td>
+    <td align="center">About</td>
+    <td>About (help)</td>
+    <td> &nbsp; </td>
+  </tr>
+</table>
+
+<p>
+  where the <strong> Example </strong> assumes that the current position is at <strong> Subsubsection One-Two-Three </strong> of a document of the following structure:
+</p>
+
+<ul>
+  <li> 1. Section One
+    <ul>
+      <li>1.1 Subsection One-One
+        <ul>
+          <li>...</li>
+        </ul>
+      </li>
+      <li>1.2 Subsection One-Two
+        <ul>
+          <li>1.2.1 Subsubsection One-Two-One</li>
+          <li>1.2.2 Subsubsection One-Two-Two</li>
+          <li>1.2.3 Subsubsection One-Two-Three &nbsp; &nbsp;
+            <strong>&lt;== Current Position </strong></li>
+          <li>1.2.4 Subsubsection One-Two-Four</li>
+        </ul>
+      </li>
+      <li>1.3 Subsection One-Three
+        <ul>
+          <li>...</li>
+        </ul>
+      </li>
+      <li>1.4 Subsection One-Four</li>
+    </ul>
+  </li>
+</ul>
+
+<hr size="1">
+<p>
+ <font size="-1">
+  This document was generated by <em>root</em> on <em>November 13, 2012</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>
