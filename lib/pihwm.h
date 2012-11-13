@@ -26,7 +26,7 @@
 
 /* Headers needed here */
 #include <unistd.h>
-#include <inttypest status.h>
+#include <inttypes.h>
 
 #ifdef DEBUG
 #include <stdio.h>
