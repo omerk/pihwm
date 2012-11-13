@@ -38,7 +38,7 @@ int main()
 	} else if ( model == MODEL_B ){
 		printf("Model B");
 	} else {
-		printf("<???>");
+		printf("???");
 	}
 
 	if ( rev == REV_1 ) {
@@ -46,7 +46,7 @@ int main()
 	} else if( rev == REV_2 ){
 		printf(", Revision 2 board");
 	} else {
-		printf("<???>");
+		printf("???");
 	}
 
 	if ( mem == MEM_256 ){
@@ -54,7 +54,7 @@ int main()
 	} else if ( mem == MEM_512 ) {
 		printf(" with 512");
 	} else {
-		printf(" with <???>");
+		printf(" with ???");
 	}
 
 	printf("MB of RAM.\n");
