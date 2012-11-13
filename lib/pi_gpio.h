@@ -1,4 +1,4 @@
-/* gpio_test.c -- Test of GPIO output.
+/* pi_gpio.h -- gpio library headers
 
    Copyright (C) 2012 Omer Kilic
    Copyright (C) 2012 Embecosm Limited
@@ -21,42 +21,26 @@
    You should have received a copy of the GNU General Public License along
    with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#include <stdio.h>
-#include <unistd.h>
+#ifndef PI_GPIO_H
+#define PI_GPIO_H
 
-#include "pihwm.h"
-#include "pi_gpio.h"
+/* Function prototypes */
+int gpio_init (int pin, char *dir);
+int gpio_set_int (int pin, void (*isr) (int), char *mode);
+int gpio_clear_int (int pin);
+int gpio_write (int pin, char *val);
+int gpio_read (int pin);
+int gpio_release (int pin);
 
+/* Aliases for pseudo-Arduino compatibility */
+int pinMode (int   pin,
+	     char *dir);
+int digitalWrite (int   pin,
+		  char *val);
+int digitalRead (int  pin);
+int attachInterrupt (int    pin,
+		     void (*isr) (int),
+		     char  *mode);
+int detachInterrupt (int  pin);
 
-#define	INT_PIN	18
-
-
-void
-my_isr (int pin)
-{
-  printf ("my_isr fired for pin %d\n", pin);
-}
-
-
-int
-main (int argc, char **argv, char **envp)
-{
-  printf ("main start\n");
-
-  /* Init Pin */
-  gpio_init (INT_PIN, INPUT);
-
-  /* Init interrupt */
-  gpio_set_int (INT_PIN, my_isr, "rising");
-
-  for (;;)
-    {
-      printf ("doing nothing, waiting for an interrupt.\n");
-      sleep (2);
-    }
-
-  /* If we didn't have for(;;); */
-  gpio_release (INT_PIN);
-  printf ("main end\n");
-  return 0;
-}
+#endif

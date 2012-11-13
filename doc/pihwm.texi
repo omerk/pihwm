@@ -1,0 +1,542 @@
+\input texinfo   @c -*- texinfo -*-
+@setfilename pihwm.info
+@afourpaper
+@include version.texi
+@include config.texi
+@dircategory Embedded development
+@direntry
+* pihwm: (libpihwm.a).	A lightweight C library for @value{PI} hardware
+@end direntry
+
+@copying
+This file documents the lightweight C library for @value{PI}
+hardware, @value{PIHWM}.
+
+Copyright @copyright{} 2012 Embecosm Limited.
+
+@quotation
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled
+``GNU Free Documentation License''.
+@end quotation
+@end copying
+
+@setchapternewpage on
+@settitle @value{PIHWM} User Guide
+
+@syncodeindex fn cp
+@syncodeindex vr cp
+
+@titlepage
+@title @value{PIHWM} User Guide
+@author Jeremy Bennett
+@author Embecosm Limited
+@author Issue 1 for @value{PIHWM} @value{VERSION}
+
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+     
+Published by Embecosm Limited
+@end titlepage
+
+@contents
+
+@node Top
+@c Perhaps this should be the title of the document (but only for info,
+@c not for TeX).  Existing GNU manuals seem inconsistent on this point.
+@top Scope of this Document
+
+This document is the user guide for @value{PIHWM}, the ligthweight C
+library for @value{PI} hardware.
+
+@menu
+* Installation::
+* Library::
+* Demo Programs::
+
+* @value{PIHWM} Developer's Guide::
+
+* GNU Free Documentation License::  The license for this documentation
+* Index::
+@end menu
+
+@node Installation
+@chapter Installation
+@cindex installing @value{PIHWM}
+
+Installation follows standard GNU protocols.
+
+@menu
+* Preparation::
+* Configuring the Build::
+* Build and Install::
+* Usage::
+* Known Issues::
+@end menu
+
+@node Preparation
+@section Preparation
+
+Unpack the software and create a @emph{separate} directory in which to
+build it:
+
+@example
+tar jxf pihwm-@value{VERSION}.tar.bz2
+cd pihwm-@value{VERSION}
+mkdir bd
+cd bd
+@end example
+
+Alternatively, the latest version software may be cloned from git:
+
+@example
+git clone git://github.com/embecosm/pihwm.git
+cd pihwm
+mkdir bd
+cd bd
+@end example
+
+@node Configuring the Build
+@section Configuring the Build
+
+Configure the software using the @command{configure} script in the
+main directory.
+
+@example
+../configure
+@end example
+
+There are several options available, many of which are standard to GNU
+@command{configure} scripts.  Use @kbd{configure --help} to see all
+the options.  The most useful is @code{--prefix} to specify a
+directory for installation of the library.
+
+@node Build and Install
+@section Building and Installing
+Build the tool with:
+
+@example
+make all
+@end example
+
+If you have DejaGNU installed, you can verify the tool as follows
+(otherwise omit this step):
+
+@example
+make check
+@end example
+
+Install the tool with:
+
+@example
+make install
+@end example
+
+This will install the library in @emph{prefix}/lib, the demo programs
+in @emph{prefix}/bin, headers in @emph{prefix}/include and the
+documentation in @emph{prefix}/share, where @emph{prefix} is the
+prefix specified when configuring, if any.
+
+The documentation may be created and installed in alternative formats (PDF,
+Postscript, DVI, HTML) with for example:
+
+@example
+make pdf
+make install-pdf
+@end example
+
+@node Usage
+@section Usage
+@cindex using @value{PIHWM}
+
+@value{PIHWM} is a C library.  A separate chapter gives details of how
+to use the library, and the API it implements (@pxref{Library, ,
+Library})
+
+The library is supplied with a number of demo programs.  Details of
+the programs and the hardware they drive are provided in a separate
+chapter (@pxref{Demo Programs, , Demo Programs})
+
+@node Known Issues
+@section Known Problems and Issues
+
+Full details of outstanding issues may be found in the @file{NEWS} file in
+the main directory of the distribution.  At present there is no bug
+tracker, so send details of any issues to the author.
+
+@node Library
+@chapter Library
+@cindex usage and API of the @value{PIHWM} library.
+
+@menu
+* Library Usage::
+* API::
+@end menu
+
+@node Library Usage
+@section Library Usage
+@cindex using @value{PIHWM}
+
+The library may be used by adding @code{-lpihwm} when compiling on the
+@value{PI}.  Programs should include @code{pihwm.h} and any other
+hardware specific headers from the @code{include} directory as
+required.  Note that if a prefix has been specified when configuring,
+it may be necessary to specify the location of the library (using the
+@code{-L} flag) and the headers (using the @code{-I} flag).
+
+For example, running on the @value{PI}:
+
+@example
+gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
+@end example
+
+@node API
+@section API
+@cindex the @value{PIHWM} API
+
+@menu
+* General API (pihwm.h)::
+* GPIO API (pihwm_gpio.h)::
+* I2C API (pihwm_i2c.h)::
+* Pulse Width Modulation API (pihwm_pwm.h)::
+@end menu
+
+@node General API (pihwm.h)
+@subsection General API (pihwm.h)
+@cindex the general API (pihwm.h)
+@cindex pihwm.h
+
+The general API is found in the @code{pihwm.h} header, which should be
+included before any other @value{PIHWM} header.
+
+@defvr {Defined constant} INPUT
+@defvrx {Defined constant} IN
+
+These are both @code{#define}d to the constant string @code{"in"}.
+
+@end defvr
+
+@defvr {Defined constant} OUTPUT
+@defvrx {Defined constant} OUT
+
+These are both @code{#define}d to the constant string @code{"out"}.
+
+@end defvr
+
+@defvr {Defined constant} HIGH
+@defvrx {Defined constant} ON
+
+These are both @code{#define}d to the constant string @code{"1"}.
+
+@end defvr
+
+@defvr {Defined constant} LOW
+@defvrx {Defined constant} OFF
+
+These are both @code{#define}d to the constant string @code{"0"}.
+
+@end defvr
+
+@deffn {Macro} debug (@var{...})
+
+If the constant @code{DEBUG} is defined, then this maps directly to
+@code{printf(@var{...})}, otherwise it is empty.
+
+@end deffn
+
+@deffn {Macro} delay (@var{d})
+
+This is defined as a synonymn for @code{sleep(@var{d})}.
+
+@end deffn
+
+@node GPIO API (pihwm_gpio.h)
+@subsection GPIO API (pihwm_gpio.h)
+@cindex the GPIO API (pihwm_gpio.h)
+@cindex pihwm_gpio.h
+
+The following functions are defined for driving the GPIO interface.
+
+@deftypefun int gpio_init (int @var{pin}, char *@var{dir})
+Initialize the GPIO interface for the pin numbered @var{pin} on the
+@value{PI} P1 header in the direction specified by @var{dir}.
+@var{dir} should be either @code{"in"} or @code{"out"}, for which the
+defined constants @code{INPUT}, @code{IN}, @code{OUTPUT} or @code{OUT}
+may be used.
+
+Returns 1 on success and -1 on failure.
+@end deftypefun
+
+@deftypefun int gpio_release (int @var{pin})
+The inverse of @code{gpio_init}. Frees the  pin numbered @var{pin} on the
+@value{PI} P1 header, so it can be used for other purposes.
+
+Returns 1 on success and -1 on failure.
+@end deftypefun
+
+@deftypefun int gpio_write (int @var{pin}, char *@var{val})
+Set the pin numbered @var{pin} on the @value{PI} P1 header to the
+value specified by @var{val}.  @var{dir} should be either @code{"0"}
+or @code{"1"}.  The defined constants @code{LOW} or @code{OFF} may be
+used instead of @code{0} and @code{HIGH} or @code{ON} instead of @code{1}/
+
+Returns 1 on success and -1 on failure.
+@end deftypefun
+
+@deftypefun int gpio_read (int @var{pin})
+Read the value on the pin numbered @var{pin} on the @value{PI} P1
+header.
+
+On success, returns 0 or 1 depending on whether the pin is low or high
+respectively. On failure returns -1.
+@end deftypefun
+
+@deftypefun int gpio_set_int (int @var{pin}, void (*@var{isr}) (int), char *@var{mode})
+Set @var{int} as the interrupt service routine (@acronym{ISR}) for
+pin numbered @var{pin} on the @value{PI} P1 header.  @var{mode} should
+be one of the strings @code{"rising"}, @code{"falling"} or
+@code{"both"} to indicate which edge(s) the @acronym{ISR} is to be
+triggered on.
+
+The function @var{isr} is called whenever the edge specified occurs,
+receiving as argument the number of the pin which triggered the interrupt.
+
+Returns 1 on success. Never fails!
+@end deftypefun
+
+@deftypefun int gpio_clear_int (int @var{pin})
+Clears any interrupt service routine (@acronym{ISR}) set on the pin
+numbered @var{pin} on the @value{PI} P1 header. The @acronym{ISR} will
+have been set originally by a call to @code{gpio_set_int}.
+
+Returns 0 on success. Never fails!
+@end deftypefun
+
+In addition to the standard functions, a number of convenience
+functions are provided, which follow the Arduino style.
+
+@deftypefun int pinMode (int @var{pin}, char *@var{val})
+This is a synonym for @code{gpio_init}/
+@end deftypefun
+
+@deftypefun int digitalWrite (int @var{pin}, char *@var{val})
+This is a near synonym for @code{gpio_write}, except that
+@code{"HIGH"} is mapped to @code{"1} and @code{"LOW"} is mapped to
+@code{"0} before passing @var{val}.
+@end deftypefun
+
+@deftypefun int digitalRead (int @var{pin})
+This is a synonym for @code{gpio_read}.
+@end deftypefun
+
+@deftypefun int attachInterrupt (int @var{pin}, void (*@var{isr}) (int), char *@var{mode})
+This is a synonym for @code{gpio_set_interrupt}.
+@end deftypefun
+
+@deftypefun int detachInterrupt (int @var{pin})
+This is a synonym for @code{gpio_clear_int}.
+@end deftypefun
+
+@node I2C API (pihwm_i2c.h)
+@subsection I2C API (pihwm_i2c.h)
+@cindex the I2C API (pihwm_i2c.h)
+@cindex pihwm_i2c.h
+
+@node Pulse Width Modulation API (pihwm_pwm.h)
+@subsection Pulse Width Modulation API (pihwm_pwm.h)
+@cindex the Pulse Width Modulation API (pihwm_pwm.h)
+@cindex pihwm_pwm.h
+
+@node Demo Programs
+@chapter Demo Programs
+@cindex demo programs for @value{PIHWM}
+
+A number of demo programs are built with the library and may be found
+in the @emph{prefix}/bin directory.  Details of each demo, and the
+circuit it drives are specified in the following sections.
+
+The rest of this chapter will document the demo programs.
+
+@menu
+* Setting up the @value{PI}::
+@end menu
+
+@node Setting up the @value{PI}
+@section Setting up the  @value{PI}
+
+For all these examples we are going to be using the @value{PI}
+@dfn{headless}, that is without its own keyboard, mouse and
+monitor. We'll connect to it over Ethenet using the @emph{secure
+shell} (@command{ssh}) program from a terminal window on another computer.
+
+All the examples will work just fine with the conventional setup with
+keyboard, mouse and monitor. However you're quite likely to want to
+use these circuits to control things like model cars or small robots,
+and you really don't want to have to carry around anything more than a battery.
+
+@menu
+* Setting up the SD Card::
+* Setting up the Network::
+@end menu
+
+@node Setting up the SD Card
+@subsection Setting up the SD card
+
+The Occidentalis image can be found at
+
+@uref{http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro/occidentalis-v0-dot-2}.
+
+Full details of how to put this on the SD card (it is not just a
+matter of copying) for a range of operating systems (Windows, Linux,
+Mac) are given at
+
+@uref{http://elinux.org/RPi_Easy_SD_Card_Setup}.
+
+These is the short instructions for Linux. Run them from a shell.
+
+@enumerate
+
+@item 
+Unzip the image
+
+@item
+Use @command{df -h}, then insert your SD card and rerun @command{df -h}. The
+new entries are the devices corresponding to your SD card. You'll
+probably see something like @file{/dev/mmcblk0p1} or
+@file{/dev/sdd1}. The @file{p1} or @file{1} are the partition number
+on the device, but we want to write the whole device, so we'll need to
+refer to it as @file{/dev/mmcblk0} or @file{/dev/sdd}
+
+@item
+We don't want anything else trying to write the SD card, so we now
+unmount it (leave it inserted). Use
+@example
+umount /dev/mmcblk0
+@end example
+or
+@example
+umount /dev/sdd1
+@end example
+
+@item
+Now use dd to copy the image to the device. Use the unzipped filename
+of the distribution and the device name @emph{for the whole card}, not
+just the partition. For example:
+@example
+dd bs=4M if=Occidentalis_v02.img of=/dev/mmcblk0
+@end example
+Change the filename and device name as appropriate.
+
+@emph{Note.} This can take a long time (5-15 mins). You can check on
+progress by doing to another shell and running:
+@example
+sudo pkill -USR1 -n -x dd 
+@end example
+
+@item
+The image probably won't fill the entire SD card, particularly if it's
+large card. To fix this, use @command{gparted}. Run this and select the SD
+device (for example /dev/mmcblk0 or /dev/sdd). You'll see two
+partitions, one with a fat16 file system and one with an ext4 file
+system. Select the ext4 partition and use Partition>Resize/Move to
+expand it to the maximum available size. Then use Edit>Apply
+Operations to change the size.
+
+@end enumerate
+
+You now have an Occidentalis @value{PI} image using all the space
+available on your SD card.
+
+@node Setting up the Network
+@subsection Setting up the Network
+
+The @value{PI} Occidentalis SD card is set up by default to accept
+SSH. The Ethernet interface will use DHCP to request an appropriate IP
+address. You can then connect to that address. For example if the IP
+address allocated was 192.168.0.77, you could use:
+
+@example
+ssh pi@@192.168.0.77
+@end example
+
+However for this to work, you need to know which DHCP address has been
+allocated to your @value{PI} card. If you are just using your home
+router, you can easily look to see what the value is. But in a more
+secure network environment this may not be possible.
+
+Any router can be set up, so that a particular @value{PI} (identified
+by its @dfn{MAC Address}) will always be allocated the same IP
+address. In a school environment it might be appropriate to set this
+up for a classroom set of boards, labelling each board with the IP
+address.
+
+In a standalone environment, it is good to be able to work without a
+full routed network. This is particularly useful when using a laptop
+with a standalone environment. To make this change, two modifications
+are needed:
+
+@enumerate
+
+@item
+On the @value{PI} edit the @file{/etc/networks/interfaces}
+file. Comment out the lines referencing DHCP and setting up the WLAN
+(use the @code{#} character at the start of each line).
+
+Then add the following lines.
+@example
+iface eth0 inet static
+address 192.168.2.2
+network 255.255.255.0
+gateway 192.168.2.1
+@end example
+
+This sets the @value{PI} up to have an IP address of 192.168.2.2 and
+connect to a host machine with IP address 192.168.2.1 You can use
+other numbers, but it it good practice to start with 192.168, and the
+address and gateway must only differ in the last number.
+
+@item
+Then on the host machine (e.g. a laptop), edit the network connections
+for the fixed network. Almost certainly this is set to
+automatic. Change to manual and specify the network address as
+192.168.2.1. Don't specify a gateway.
+
+You should now be able to connect the @value{PI} to the host machine by
+Ethernet and use @command{ssh} to log in
+
+@example
+ssh pi@@192.168.2.2
+@end example
+
+@end enumerate
+
+@node @value{PIHWM} Developer's Guide
+@chapter @value{PIHWM} Developer's Guide
+
+These are notes to help those wanting to extend @value{PIHWM}.  This
+section assumes the use of a tag file, so file locations of entities'
+definitions are not in general provided.  For more on tags, see the
+Linux manual page for @command{etags}.  A tag file can be created
+with:
+
+@example
+make tags
+@end example
+
+@node  GNU Free Documentation License
+@chapter GNU Free Documentation License
+@cindex license for @value{PIHWM}
+
+@include fdl-1.2.texi
+
+@node Index
+
+@unnumbered Index
+
+@printindex cp
+
+@bye

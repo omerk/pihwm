@@ -1,4 +1,4 @@
-/* gpio_test.c -- Test of GPIO output.
+/* pi_i2c.h -- i2c library headers.
 
    Copyright (C) 2012 Omer Kilic
    Copyright (C) 2012 Embecosm Limited
@@ -21,42 +21,14 @@
    You should have received a copy of the GNU General Public License along
    with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#include <stdio.h>
-#include <unistd.h>
+#ifndef PI_I2C_H
+#define PI_I2C_H
 
-#include "pihwm.h"
-#include "pi_gpio.h"
+int i2c_init (char *devname);
+int i2c_select_device (unsigned int fd, unsigned int addr);
+int i2c_write (unsigned int fd, unsigned int addr, unsigned char *data,
+	       unsigned int len);
+int i2c_read (unsigned int fd, unsigned int addr, unsigned char *data,
+	      unsigned int len);
 
-
-#define	INT_PIN	18
-
-
-void
-my_isr (int pin)
-{
-  printf ("my_isr fired for pin %d\n", pin);
-}
-
-
-int
-main (int argc, char **argv, char **envp)
-{
-  printf ("main start\n");
-
-  /* Init Pin */
-  gpio_init (INT_PIN, INPUT);
-
-  /* Init interrupt */
-  gpio_set_int (INT_PIN, my_isr, "rising");
-
-  for (;;)
-    {
-      printf ("doing nothing, waiting for an interrupt.\n");
-      sleep (2);
-    }
-
-  /* If we didn't have for(;;); */
-  gpio_release (INT_PIN);
-  printf ("main end\n");
-  return 0;
-}
+#endif

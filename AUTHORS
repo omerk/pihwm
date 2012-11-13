@@ -1,0 +1,13 @@
+	  pihwm - a Lightweight C Library for Raspberry Pi Hardware
+	  =========================================================
+
+
+Authors of pihwm
+================
+
+The original author is Omer Kilic <omerkilic@gmail.com> of Erlang solutions.
+
+The code was restructured and documentation provided by Jeremy Bennett
+<jeremy.bennett@embecosm.com> of Embecosm.
+
+The code builds on earlier work by Gert Jan van Loo of Broadcom.

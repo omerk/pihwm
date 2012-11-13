@@ -1,0 +1,1008 @@
+This is ../../doc/pihwm.info, produced by makeinfo version 4.13 from
+../../doc/pihwm.texi.
+
+INFO-DIR-SECTION Embedded development
+START-INFO-DIR-ENTRY
+* pihwm: (libpihwm.a).	A lightweight C library for _Raspberry Pi_ hardware
+END-INFO-DIR-ENTRY
+
+This file documents the lightweight C library for _Raspberry Pi_
+hardware, pihwm.
+
+Copyright (C) 2012 Embecosm Limited.
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU Free Documentation License,
+     Version 1.2 or any later version published by the Free Software
+     Foundation; with no Invariant Sections, with no Front-Cover Texts,
+     and with no Back-Cover Texts.  A copy of the license is included
+     in the section entitled "GNU Free Documentation License".
+
+
+File: pihwm.info,  Node: Top,  Next: Installation,  Up: (dir)
+
+Scope of this Document
+**********************
+
+This document is the user guide for pihwm, the ligthweight C library
+for _Raspberry Pi_ hardware.
+
+* Menu:
+
+* Installation::
+* Library::
+* Demo Programs::
+
+* pihwm Developer's Guide::
+
+* GNU Free Documentation License::  The license for this documentation
+* Index::
+
+
+File: pihwm.info,  Node: Installation,  Next: Library,  Prev: Top,  Up: Top
+
+1 Installation
+**************
+
+Installation follows standard GNU protocols.
+
+* Menu:
+
+* Preparation::
+* Configuring the Build::
+* Build and Install::
+* Usage::
+* Known Issues::
+
+
+File: pihwm.info,  Node: Preparation,  Next: Configuring the Build,  Up: Installation
+
+1.1 Preparation
+===============
+
+Unpack the software and create a _separate_ directory in which to build
+it:
+
+     tar jxf pihwm-2012-09-25.tar.bz2
+     cd pihwm-2012-09-25
+     mkdir bd
+     cd bd
+
+Alternatively, the latest version software may be cloned from git:
+
+     git clone git://github.com/embecosm/pihwm.git
+     cd pihwm
+     mkdir bd
+     cd bd
+
+
+File: pihwm.info,  Node: Configuring the Build,  Next: Build and Install,  Prev: Preparation,  Up: Installation
+
+1.2 Configuring the Build
+=========================
+
+Configure the software using the `configure' script in the main
+directory.
+
+     ../configure
+
+There are several options available, many of which are standard to GNU
+`configure' scripts.  Use `configure --help' to see all the options.
+The most useful is `--prefix' to specify a directory for installation
+of the library.
+
+
+File: pihwm.info,  Node: Build and Install,  Next: Usage,  Prev: Configuring the Build,  Up: Installation
+
+1.3 Building and Installing
+===========================
+
+Build the tool with:
+
+     make all
+
+If you have DejaGNU installed, you can verify the tool as follows
+(otherwise omit this step):
+
+     make check
+
+Install the tool with:
+
+     make install
+
+This will install the library in _prefix_/lib, the demo programs in
+_prefix_/bin, headers in _prefix_/include and the documentation in
+_prefix_/share, where _prefix_ is the prefix specified when
+configuring, if any.
+
+The documentation may be created and installed in alternative formats
+(PDF, Postscript, DVI, HTML) with for example:
+
+     make pdf
+     make install-pdf
+
+
+File: pihwm.info,  Node: Usage,  Next: Known Issues,  Prev: Build and Install,  Up: Installation
+
+1.4 Usage
+=========
+
+pihwm is a C library.  A separate chapter gives details of how to use
+the library, and the API it implements (*note Library: Library.)
+
+The library is supplied with a number of demo programs.  Details of the
+programs and the hardware they drive are provided in a separate chapter
+(*note Demo Programs: Demo Programs.)
+
+
+File: pihwm.info,  Node: Known Issues,  Prev: Usage,  Up: Installation
+
+1.5 Known Problems and Issues
+=============================
+
+Full details of outstanding issues may be found in the `NEWS' file in
+the main directory of the distribution.  At present there is no bug
+tracker, so send details of any issues to the author.
+
+
+File: pihwm.info,  Node: Library,  Next: Demo Programs,  Prev: Installation,  Up: Top
+
+2 Library
+*********
+
+* Menu:
+
+* Library Usage::
+* API::
+
+
+File: pihwm.info,  Node: Library Usage,  Next: API,  Up: Library
+
+2.1 Library Usage
+=================
+
+The library may be used by adding `-lpihwm' when compiling on the
+_Raspberry Pi_.  Programs should include `pihwm.h' and any other
+hardware specific headers from the `include' directory as required.
+Note that if a prefix has been specified when configuring, it may be
+necessary to specify the location of the library (using the `-L' flag)
+and the headers (using the `-I' flag).
+
+For example, running on the _Raspberry Pi_:
+
+     gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
+
+
+File: pihwm.info,  Node: API,  Prev: Library Usage,  Up: Library
+
+2.2 API
+=======
+
+* Menu:
+
+* General API (pihwm.h)::
+* GPIO API (pihwm_gpio.h)::
+* I2C API (pihwm_i2c.h)::
+* Pulse Width Modulation API (pihwm_pwm.h)::
+
+
+File: pihwm.info,  Node: General API (pihwm.h),  Next: GPIO API (pihwm_gpio.h),  Up: API
+
+2.2.1 General API (pihwm.h)
+---------------------------
+
+The general API is found in the `pihwm.h' header, which should be
+included before any other pihwm header.
+
+ -- Defined constant: INPUT
+ -- Defined constant: IN
+     These are both `#define'd to the constant string `"in"'.
+
+
+ -- Defined constant: OUTPUT
+ -- Defined constant: OUT
+     These are both `#define'd to the constant string `"out"'.
+
+
+ -- Defined constant: HIGH
+ -- Defined constant: ON
+     These are both `#define'd to the constant string `"1"'.
+
+
+ -- Defined constant: LOW
+ -- Defined constant: OFF
+     These are both `#define'd to the constant string `"0"'.
+
+
+ -- Macro: debug (...)
+     If the constant `DEBUG' is defined, then this maps directly to
+     `printf(...)', otherwise it is empty.
+
+
+ -- Macro: delay (D)
+     This is defined as a synonymn for `sleep(D)'.
+
+
+
+File: pihwm.info,  Node: GPIO API (pihwm_gpio.h),  Next: I2C API (pihwm_i2c.h),  Prev: General API (pihwm.h),  Up: API
+
+2.2.2 GPIO API (pihwm_gpio.h)
+-----------------------------
+
+The following functions are defined for driving the GPIO interface.
+
+ -- Function: int gpio_init (int PIN, char *DIR)
+     Initialize the GPIO interface for the pin numbered PIN on the
+     _Raspberry Pi_ P1 header in the direction specified by DIR.  DIR
+     should be either `"in"' or `"out"', for which the defined
+     constants `INPUT', `IN', `OUTPUT' or `OUT' may be used.
+
+     Returns 1 on success and -1 on failure.
+
+ -- Function: int gpio_release (int PIN)
+     The inverse of `gpio_init'. Frees the  pin numbered PIN on the
+     _Raspberry Pi_ P1 header, so it can be used for other purposes.
+
+     Returns 1 on success and -1 on failure.
+
+ -- Function: int gpio_write (int PIN, char *VAL)
+     Set the pin numbered PIN on the _Raspberry Pi_ P1 header to the
+     value specified by VAL.  DIR should be either `"0"' or `"1"'.  The
+     defined constants `LOW' or `OFF' may be used instead of `0' and
+     `HIGH' or `ON' instead of `1'/
+
+     Returns 1 on success and -1 on failure.
+
+ -- Function: int gpio_read (int PIN)
+     Read the value on the pin numbered PIN on the _Raspberry Pi_ P1
+     header.
+
+     On success, returns 0 or 1 depending on whether the pin is low or
+     high respectively. On failure returns -1.
+
+ -- Function: int gpio_set_int (int PIN, void (*ISR) (int), char *MODE)
+     Set INT as the interrupt service routine (ISR) for pin numbered
+     PIN on the _Raspberry Pi_ P1 header.  MODE should be one of the
+     strings `"rising"', `"falling"' or `"both"' to indicate which
+     edge(s) the ISR is to be triggered on.
+
+     The function ISR is called whenever the edge specified occurs,
+     receiving as argument the number of the pin which triggered the
+     interrupt.
+
+     Returns 1 on success. Never fails!
+
+ -- Function: int gpio_clear_int (int PIN)
+     Clears any interrupt service routine (ISR) set on the pin numbered
+     PIN on the _Raspberry Pi_ P1 header. The ISR will have been set
+     originally by a call to `gpio_set_int'.
+
+     Returns 0 on success. Never fails!
+
+In addition to the standard functions, a number of convenience
+functions are provided, which follow the Arduino style.
+
+ -- Function: int pinMode (int PIN, char *VAL)
+     This is a synonym for `gpio_init'/
+
+ -- Function: int digitalWrite (int PIN, char *VAL)
+     This is a near synonym for `gpio_write', except that `"HIGH"' is
+     mapped to `"1' and `"LOW"' is mapped to `"0' before passing VAL.
+
+ -- Function: int digitalRead (int PIN)
+     This is a synonym for `gpio_read'.
+
+ -- Function: int attachInterrupt (int PIN, void (*ISR) (int), char
+          *MODE)
+     This is a synonym for `gpio_set_interrupt'.
+
+ -- Function: int detachInterrupt (int PIN)
+     This is a synonym for `gpio_clear_int'.
+
+
+File: pihwm.info,  Node: I2C API (pihwm_i2c.h),  Next: Pulse Width Modulation API (pihwm_pwm.h),  Prev: GPIO API (pihwm_gpio.h),  Up: API
+
+2.2.3 I2C API (pihwm_i2c.h)
+---------------------------
+
+
+File: pihwm.info,  Node: Pulse Width Modulation API (pihwm_pwm.h),  Prev: I2C API (pihwm_i2c.h),  Up: API
+
+2.2.4 Pulse Width Modulation API (pihwm_pwm.h)
+----------------------------------------------
+
+
+File: pihwm.info,  Node: Demo Programs,  Next: pihwm Developer's Guide,  Prev: Library,  Up: Top
+
+3 Demo Programs
+***************
+
+A number of demo programs are built with the library and may be found
+in the _prefix_/bin directory.  Details of each demo, and the circuit
+it drives are specified in the following sections.
+
+The rest of this chapter will document the demo programs.
+
+* Menu:
+
+* Setting up the _Raspberry Pi_::
+
+
+File: pihwm.info,  Node: Setting up the _Raspberry Pi_,  Up: Demo Programs
+
+3.1 Setting up the  _Raspberry Pi_
+==================================
+
+For all these examples we are going to be using the _Raspberry Pi_
+"headless", that is without its own keyboard, mouse and monitor. We'll
+connect to it over Ethenet using the _secure shell_ (`ssh') program
+from a terminal window on another computer.
+
+All the examples will work just fine with the conventional setup with
+keyboard, mouse and monitor. However you're quite likely to want to use
+these circuits to control things like model cars or small robots, and
+you really don't want to have to carry around anything more than a
+battery.
+
+* Menu:
+
+* Setting up the SD Card::
+* Setting up the Network::
+
+
+File: pihwm.info,  Node: Setting up the SD Card,  Next: Setting up the Network,  Up: Setting up the _Raspberry Pi_
+
+3.1.1 Setting up the SD card
+----------------------------
+
+The Occidentalis image can be found at
+
+`http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro/occidentalis-v0-dot-2'.
+
+Full details of how to put this on the SD card (it is not just a matter
+of copying) for a range of operating systems (Windows, Linux, Mac) are
+given at
+
+`http://elinux.org/RPi_Easy_SD_Card_Setup'.
+
+These is the short instructions for Linux. Run them from a shell.
+
+  1. Unzip the image
+
+  2. Use `df -h', then insert your SD card and rerun `df -h'. The new
+     entries are the devices corresponding to your SD card. You'll
+     probably see something like `/dev/mmcblk0p1' or `/dev/sdd1'. The
+     `p1' or `1' are the partition number on the device, but we want to
+     write the whole device, so we'll need to refer to it as
+     `/dev/mmcblk0' or `/dev/sdd'
+
+  3. We don't want anything else trying to write the SD card, so we now
+     unmount it (leave it inserted). Use
+          umount /dev/mmcblk0
+     or
+          umount /dev/sdd1
+
+  4. Now use dd to copy the image to the device. Use the unzipped
+     filename of the distribution and the device name _for the whole
+     card_, not just the partition. For example:
+          dd bs=4M if=Occidentalis_v02.img of=/dev/mmcblk0
+     Change the filename and device name as appropriate.
+
+     _Note._ This can take a long time (5-15 mins). You can check on
+     progress by doing to another shell and running:
+          sudo pkill -USR1 -n -x dd
+
+  5. The image probably won't fill the entire SD card, particularly if
+     it's large card. To fix this, use `gparted'. Run this and select
+     the SD device (for example /dev/mmcblk0 or /dev/sdd). You'll see
+     two partitions, one with a fat16 file system and one with an ext4
+     file system. Select the ext4 partition and use
+     Partition>Resize/Move to expand it to the maximum available size.
+     Then use Edit>Apply Operations to change the size.
+
+
+You now have an Occidentalis _Raspberry Pi_ image using all the space
+available on your SD card.
+
+
+File: pihwm.info,  Node: Setting up the Network,  Prev: Setting up the SD Card,  Up: Setting up the _Raspberry Pi_
+
+3.1.2 Setting up the Network
+----------------------------
+
+The _Raspberry Pi_ Occidentalis SD card is set up by default to accept
+SSH. The Ethernet interface will use DHCP to request an appropriate IP
+address. You can then connect to that address. For example if the IP
+address allocated was 192.168.0.77, you could use:
+
+     ssh pi@192.168.0.77
+
+However for this to work, you need to know which DHCP address has been
+allocated to your _Raspberry Pi_ card. If you are just using your home
+router, you can easily look to see what the value is. But in a more
+secure network environment this may not be possible.
+
+Any router can be set up, so that a particular _Raspberry Pi_
+(identified by its "MAC Address") will always be allocated the same IP
+address. In a school environment it might be appropriate to set this up
+for a classroom set of boards, labelling each board with the IP address.
+
+In a standalone environment, it is good to be able to work without a
+full routed network. This is particularly useful when using a laptop
+with a standalone environment. To make this change, two modifications
+are needed:
+
+  1. On the _Raspberry Pi_ edit the `/etc/networks/interfaces' file.
+     Comment out the lines referencing DHCP and setting up the WLAN
+     (use the `#' character at the start of each line).
+
+     Then add the following lines.
+          iface eth0 inet static
+          address 192.168.2.2
+          network 255.255.255.0
+          gateway 192.168.2.1
+
+     This sets the _Raspberry Pi_ up to have an IP address of
+     192.168.2.2 and connect to a host machine with IP address
+     192.168.2.1 You can use other numbers, but it it good practice to
+     start with 192.168, and the address and gateway must only differ
+     in the last number.
+
+  2. Then on the host machine (e.g. a laptop), edit the network
+     connections for the fixed network. Almost certainly this is set to
+     automatic. Change to manual and specify the network address as
+     192.168.2.1. Don't specify a gateway.
+
+     You should now be able to connect the _Raspberry Pi_ to the host
+     machine by Ethernet and use `ssh' to log in
+
+          ssh pi@192.168.2.2
+
+
+
+File: pihwm.info,  Node: pihwm Developer's Guide,  Next: GNU Free Documentation License,  Prev: Demo Programs,  Up: Top
+
+4 pihwm Developer's Guide
+*************************
+
+These are notes to help those wanting to extend pihwm.  This section
+assumes the use of a tag file, so file locations of entities'
+definitions are not in general provided.  For more on tags, see the
+Linux manual page for `etags'.  A tag file can be created with:
+
+     make tags
+
+
+File: pihwm.info,  Node: GNU Free Documentation License,  Next: Index,  Prev: pihwm Developer's Guide,  Up: Top
+
+5 GNU Free Documentation License
+********************************
+
+                      Version 1.2, November 2002
+
+     Copyright (C) 2000,2001,2002 Free Software Foundation, Inc.
+     51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+
+     Everyone is permitted to copy and distribute verbatim copies
+     of this license document, but changing it is not allowed.
+
+  0. PREAMBLE
+
+     The purpose of this License is to make a manual, textbook, or other
+     functional and useful document "free" in the sense of freedom: to
+     assure everyone the effective freedom to copy and redistribute it,
+     with or without modifying it, either commercially or
+     noncommercially.  Secondarily, this License preserves for the
+     author and publisher a way to get credit for their work, while not
+     being considered responsible for modifications made by others.
+
+     This License is a kind of "copyleft", which means that derivative
+     works of the document must themselves be free in the same sense.
+     It complements the GNU General Public License, which is a copyleft
+     license designed for free software.
+
+     We have designed this License in order to use it for manuals for
+     free software, because free software needs free documentation: a
+     free program should come with manuals providing the same freedoms
+     that the software does.  But this License is not limited to
+     software manuals; it can be used for any textual work, regardless
+     of subject matter or whether it is published as a printed book.
+     We recommend this License principally for works whose purpose is
+     instruction or reference.
+
+  1. APPLICABILITY AND DEFINITIONS
+
+     This License applies to any manual or other work, in any medium,
+     that contains a notice placed by the copyright holder saying it
+     can be distributed under the terms of this License.  Such a notice
+     grants a world-wide, royalty-free license, unlimited in duration,
+     to use that work under the conditions stated herein.  The
+     "Document", below, refers to any such manual or work.  Any member
+     of the public is a licensee, and is addressed as "you".  You
+     accept the license if you copy, modify or distribute the work in a
+     way requiring permission under copyright law.
+
+     A "Modified Version" of the Document means any work containing the
+     Document or a portion of it, either copied verbatim, or with
+     modifications and/or translated into another language.
+
+     A "Secondary Section" is a named appendix or a front-matter section
+     of the Document that deals exclusively with the relationship of the
+     publishers or authors of the Document to the Document's overall
+     subject (or to related matters) and contains nothing that could
+     fall directly within that overall subject.  (Thus, if the Document
+     is in part a textbook of mathematics, a Secondary Section may not
+     explain any mathematics.)  The relationship could be a matter of
+     historical connection with the subject or with related matters, or
+     of legal, commercial, philosophical, ethical or political position
+     regarding them.
+
+     The "Invariant Sections" are certain Secondary Sections whose
+     titles are designated, as being those of Invariant Sections, in
+     the notice that says that the Document is released under this
+     License.  If a section does not fit the above definition of
+     Secondary then it is not allowed to be designated as Invariant.
+     The Document may contain zero Invariant Sections.  If the Document
+     does not identify any Invariant Sections then there are none.
+
+     The "Cover Texts" are certain short passages of text that are
+     listed, as Front-Cover Texts or Back-Cover Texts, in the notice
+     that says that the Document is released under this License.  A
+     Front-Cover Text may be at most 5 words, and a Back-Cover Text may
+     be at most 25 words.
+
+     A "Transparent" copy of the Document means a machine-readable copy,
+     represented in a format whose specification is available to the
+     general public, that is suitable for revising the document
+     straightforwardly with generic text editors or (for images
+     composed of pixels) generic paint programs or (for drawings) some
+     widely available drawing editor, and that is suitable for input to
+     text formatters or for automatic translation to a variety of
+     formats suitable for input to text formatters.  A copy made in an
+     otherwise Transparent file format whose markup, or absence of
+     markup, has been arranged to thwart or discourage subsequent
+     modification by readers is not Transparent.  An image format is
+     not Transparent if used for any substantial amount of text.  A
+     copy that is not "Transparent" is called "Opaque".
+
+     Examples of suitable formats for Transparent copies include plain
+     ASCII without markup, Texinfo input format, LaTeX input format,
+     SGML or XML using a publicly available DTD, and
+     standard-conforming simple HTML, PostScript or PDF designed for
+     human modification.  Examples of transparent image formats include
+     PNG, XCF and JPG.  Opaque formats include proprietary formats that
+     can be read and edited only by proprietary word processors, SGML or
+     XML for which the DTD and/or processing tools are not generally
+     available, and the machine-generated HTML, PostScript or PDF
+     produced by some word processors for output purposes only.
+
+     The "Title Page" means, for a printed book, the title page itself,
+     plus such following pages as are needed to hold, legibly, the
+     material this License requires to appear in the title page.  For
+     works in formats which do not have any title page as such, "Title
+     Page" means the text near the most prominent appearance of the
+     work's title, preceding the beginning of the body of the text.
+
+     A section "Entitled XYZ" means a named subunit of the Document
+     whose title either is precisely XYZ or contains XYZ in parentheses
+     following text that translates XYZ in another language.  (Here XYZ
+     stands for a specific section name mentioned below, such as
+     "Acknowledgements", "Dedications", "Endorsements", or "History".)
+     To "Preserve the Title" of such a section when you modify the
+     Document means that it remains a section "Entitled XYZ" according
+     to this definition.
+
+     The Document may include Warranty Disclaimers next to the notice
+     which states that this License applies to the Document.  These
+     Warranty Disclaimers are considered to be included by reference in
+     this License, but only as regards disclaiming warranties: any other
+     implication that these Warranty Disclaimers may have is void and
+     has no effect on the meaning of this License.
+
+  2. VERBATIM COPYING
+
+     You may copy and distribute the Document in any medium, either
+     commercially or noncommercially, provided that this License, the
+     copyright notices, and the license notice saying this License
+     applies to the Document are reproduced in all copies, and that you
+     add no other conditions whatsoever to those of this License.  You
+     may not use technical measures to obstruct or control the reading
+     or further copying of the copies you make or distribute.  However,
+     you may accept compensation in exchange for copies.  If you
+     distribute a large enough number of copies you must also follow
+     the conditions in section 3.
+
+     You may also lend copies, under the same conditions stated above,
+     and you may publicly display copies.
+
+  3. COPYING IN QUANTITY
+
+     If you publish printed copies (or copies in media that commonly
+     have printed covers) of the Document, numbering more than 100, and
+     the Document's license notice requires Cover Texts, you must
+     enclose the copies in covers that carry, clearly and legibly, all
+     these Cover Texts: Front-Cover Texts on the front cover, and
+     Back-Cover Texts on the back cover.  Both covers must also clearly
+     and legibly identify you as the publisher of these copies.  The
+     front cover must present the full title with all words of the
+     title equally prominent and visible.  You may add other material
+     on the covers in addition.  Copying with changes limited to the
+     covers, as long as they preserve the title of the Document and
+     satisfy these conditions, can be treated as verbatim copying in
+     other respects.
+
+     If the required texts for either cover are too voluminous to fit
+     legibly, you should put the first ones listed (as many as fit
+     reasonably) on the actual cover, and continue the rest onto
+     adjacent pages.
+
+     If you publish or distribute Opaque copies of the Document
+     numbering more than 100, you must either include a
+     machine-readable Transparent copy along with each Opaque copy, or
+     state in or with each Opaque copy a computer-network location from
+     which the general network-using public has access to download
+     using public-standard network protocols a complete Transparent
+     copy of the Document, free of added material.  If you use the
+     latter option, you must take reasonably prudent steps, when you
+     begin distribution of Opaque copies in quantity, to ensure that
+     this Transparent copy will remain thus accessible at the stated
+     location until at least one year after the last time you
+     distribute an Opaque copy (directly or through your agents or
+     retailers) of that edition to the public.
+
+     It is requested, but not required, that you contact the authors of
+     the Document well before redistributing any large number of
+     copies, to give them a chance to provide you with an updated
+     version of the Document.
+
+  4. MODIFICATIONS
+
+     You may copy and distribute a Modified Version of the Document
+     under the conditions of sections 2 and 3 above, provided that you
+     release the Modified Version under precisely this License, with
+     the Modified Version filling the role of the Document, thus
+     licensing distribution and modification of the Modified Version to
+     whoever possesses a copy of it.  In addition, you must do these
+     things in the Modified Version:
+
+       A. Use in the Title Page (and on the covers, if any) a title
+          distinct from that of the Document, and from those of
+          previous versions (which should, if there were any, be listed
+          in the History section of the Document).  You may use the
+          same title as a previous version if the original publisher of
+          that version gives permission.
+
+       B. List on the Title Page, as authors, one or more persons or
+          entities responsible for authorship of the modifications in
+          the Modified Version, together with at least five of the
+          principal authors of the Document (all of its principal
+          authors, if it has fewer than five), unless they release you
+          from this requirement.
+
+       C. State on the Title page the name of the publisher of the
+          Modified Version, as the publisher.
+
+       D. Preserve all the copyright notices of the Document.
+
+       E. Add an appropriate copyright notice for your modifications
+          adjacent to the other copyright notices.
+
+       F. Include, immediately after the copyright notices, a license
+          notice giving the public permission to use the Modified
+          Version under the terms of this License, in the form shown in
+          the Addendum below.
+
+       G. Preserve in that license notice the full lists of Invariant
+          Sections and required Cover Texts given in the Document's
+          license notice.
+
+       H. Include an unaltered copy of this License.
+
+       I. Preserve the section Entitled "History", Preserve its Title,
+          and add to it an item stating at least the title, year, new
+          authors, and publisher of the Modified Version as given on
+          the Title Page.  If there is no section Entitled "History" in
+          the Document, create one stating the title, year, authors,
+          and publisher of the Document as given on its Title Page,
+          then add an item describing the Modified Version as stated in
+          the previous sentence.
+
+       J. Preserve the network location, if any, given in the Document
+          for public access to a Transparent copy of the Document, and
+          likewise the network locations given in the Document for
+          previous versions it was based on.  These may be placed in
+          the "History" section.  You may omit a network location for a
+          work that was published at least four years before the
+          Document itself, or if the original publisher of the version
+          it refers to gives permission.
+
+       K. For any section Entitled "Acknowledgements" or "Dedications",
+          Preserve the Title of the section, and preserve in the
+          section all the substance and tone of each of the contributor
+          acknowledgements and/or dedications given therein.
+
+       L. Preserve all the Invariant Sections of the Document,
+          unaltered in their text and in their titles.  Section numbers
+          or the equivalent are not considered part of the section
+          titles.
+
+       M. Delete any section Entitled "Endorsements".  Such a section
+          may not be included in the Modified Version.
+
+       N. Do not retitle any existing section to be Entitled
+          "Endorsements" or to conflict in title with any Invariant
+          Section.
+
+       O. Preserve any Warranty Disclaimers.
+
+     If the Modified Version includes new front-matter sections or
+     appendices that qualify as Secondary Sections and contain no
+     material copied from the Document, you may at your option
+     designate some or all of these sections as invariant.  To do this,
+     add their titles to the list of Invariant Sections in the Modified
+     Version's license notice.  These titles must be distinct from any
+     other section titles.
+
+     You may add a section Entitled "Endorsements", provided it contains
+     nothing but endorsements of your Modified Version by various
+     parties--for example, statements of peer review or that the text
+     has been approved by an organization as the authoritative
+     definition of a standard.
+
+     You may add a passage of up to five words as a Front-Cover Text,
+     and a passage of up to 25 words as a Back-Cover Text, to the end
+     of the list of Cover Texts in the Modified Version.  Only one
+     passage of Front-Cover Text and one of Back-Cover Text may be
+     added by (or through arrangements made by) any one entity.  If the
+     Document already includes a cover text for the same cover,
+     previously added by you or by arrangement made by the same entity
+     you are acting on behalf of, you may not add another; but you may
+     replace the old one, on explicit permission from the previous
+     publisher that added the old one.
+
+     The author(s) and publisher(s) of the Document do not by this
+     License give permission to use their names for publicity for or to
+     assert or imply endorsement of any Modified Version.
+
+  5. COMBINING DOCUMENTS
+
+     You may combine the Document with other documents released under
+     this License, under the terms defined in section 4 above for
+     modified versions, provided that you include in the combination
+     all of the Invariant Sections of all of the original documents,
+     unmodified, and list them all as Invariant Sections of your
+     combined work in its license notice, and that you preserve all
+     their Warranty Disclaimers.
+
+     The combined work need only contain one copy of this License, and
+     multiple identical Invariant Sections may be replaced with a single
+     copy.  If there are multiple Invariant Sections with the same name
+     but different contents, make the title of each such section unique
+     by adding at the end of it, in parentheses, the name of the
+     original author or publisher of that section if known, or else a
+     unique number.  Make the same adjustment to the section titles in
+     the list of Invariant Sections in the license notice of the
+     combined work.
+
+     In the combination, you must combine any sections Entitled
+     "History" in the various original documents, forming one section
+     Entitled "History"; likewise combine any sections Entitled
+     "Acknowledgements", and any sections Entitled "Dedications".  You
+     must delete all sections Entitled "Endorsements."
+
+  6. COLLECTIONS OF DOCUMENTS
+
+     You may make a collection consisting of the Document and other
+     documents released under this License, and replace the individual
+     copies of this License in the various documents with a single copy
+     that is included in the collection, provided that you follow the
+     rules of this License for verbatim copying of each of the
+     documents in all other respects.
+
+     You may extract a single document from such a collection, and
+     distribute it individually under this License, provided you insert
+     a copy of this License into the extracted document, and follow
+     this License in all other respects regarding verbatim copying of
+     that document.
+
+  7. AGGREGATION WITH INDEPENDENT WORKS
+
+     A compilation of the Document or its derivatives with other
+     separate and independent documents or works, in or on a volume of
+     a storage or distribution medium, is called an "aggregate" if the
+     copyright resulting from the compilation is not used to limit the
+     legal rights of the compilation's users beyond what the individual
+     works permit.  When the Document is included in an aggregate, this
+     License does not apply to the other works in the aggregate which
+     are not themselves derivative works of the Document.
+
+     If the Cover Text requirement of section 3 is applicable to these
+     copies of the Document, then if the Document is less than one half
+     of the entire aggregate, the Document's Cover Texts may be placed
+     on covers that bracket the Document within the aggregate, or the
+     electronic equivalent of covers if the Document is in electronic
+     form.  Otherwise they must appear on printed covers that bracket
+     the whole aggregate.
+
+  8. TRANSLATION
+
+     Translation is considered a kind of modification, so you may
+     distribute translations of the Document under the terms of section
+     4.  Replacing Invariant Sections with translations requires special
+     permission from their copyright holders, but you may include
+     translations of some or all Invariant Sections in addition to the
+     original versions of these Invariant Sections.  You may include a
+     translation of this License, and all the license notices in the
+     Document, and any Warranty Disclaimers, provided that you also
+     include the original English version of this License and the
+     original versions of those notices and disclaimers.  In case of a
+     disagreement between the translation and the original version of
+     this License or a notice or disclaimer, the original version will
+     prevail.
+
+     If a section in the Document is Entitled "Acknowledgements",
+     "Dedications", or "History", the requirement (section 4) to
+     Preserve its Title (section 1) will typically require changing the
+     actual title.
+
+  9. TERMINATION
+
+     You may not copy, modify, sublicense, or distribute the Document
+     except as expressly provided for under this License.  Any other
+     attempt to copy, modify, sublicense or distribute the Document is
+     void, and will automatically terminate your rights under this
+     License.  However, parties who have received copies, or rights,
+     from you under this License will not have their licenses
+     terminated so long as such parties remain in full compliance.
+
+ 10. FUTURE REVISIONS OF THIS LICENSE
+
+     The Free Software Foundation may publish new, revised versions of
+     the GNU Free Documentation License from time to time.  Such new
+     versions will be similar in spirit to the present version, but may
+     differ in detail to address new problems or concerns.  See
+     `http://www.gnu.org/copyleft/'.
+
+     Each version of the License is given a distinguishing version
+     number.  If the Document specifies that a particular numbered
+     version of this License "or any later version" applies to it, you
+     have the option of following the terms and conditions either of
+     that specified version or of any later version that has been
+     published (not as a draft) by the Free Software Foundation.  If
+     the Document does not specify a version number of this License,
+     you may choose any version ever published (not as a draft) by the
+     Free Software Foundation.
+
+ADDENDUM: How to use this License for your documents
+====================================================
+
+To use this License in a document you have written, include a copy of
+the License in the document and put the following copyright and license
+notices just after the title page:
+
+       Copyright (C)  YEAR  YOUR NAME.
+       Permission is granted to copy, distribute and/or modify this document
+       under the terms of the GNU Free Documentation License, Version 1.2
+       or any later version published by the Free Software Foundation;
+       with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+       Texts.  A copy of the license is included in the section entitled ``GNU
+       Free Documentation License''.
+
+If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
+replace the "with...Texts." line with this:
+
+         with the Invariant Sections being LIST THEIR TITLES, with
+         the Front-Cover Texts being LIST, and with the Back-Cover Texts
+         being LIST.
+
+If you have Invariant Sections without Cover Texts, or some other
+combination of the three, merge those two alternatives to suit the
+situation.
+
+If your document contains nontrivial examples of program code, we
+recommend releasing these examples in parallel under your choice of
+free software license, such as the GNU General Public License, to
+permit their use in free software.
+
+
+File: pihwm.info,  Node: Index,  Prev: GNU Free Documentation License,  Up: Top
+
+Index
+*****
+
+ [index ]
+* Menu:
+
+* attachInterrupt:                       GPIO API (pihwm_gpio.h).
+                                                               (line 71)
+* debug:                                 General API (pihwm.h).
+                                                               (line 30)
+* delay:                                 General API (pihwm.h).
+                                                               (line 35)
+* demo programs for pihwm:               Demo Programs.        (line  6)
+* detachInterrupt:                       GPIO API (pihwm_gpio.h).
+                                                               (line 74)
+* digitalRead:                           GPIO API (pihwm_gpio.h).
+                                                               (line 67)
+* digitalWrite:                          GPIO API (pihwm_gpio.h).
+                                                               (line 63)
+* gpio_clear_int:                        GPIO API (pihwm_gpio.h).
+                                                               (line 50)
+* gpio_init:                             GPIO API (pihwm_gpio.h).
+                                                               (line  9)
+* gpio_read:                             GPIO API (pihwm_gpio.h).
+                                                               (line 31)
+* gpio_release:                          GPIO API (pihwm_gpio.h).
+                                                               (line 17)
+* gpio_set_int:                          GPIO API (pihwm_gpio.h).
+                                                               (line 38)
+* gpio_write:                            GPIO API (pihwm_gpio.h).
+                                                               (line 23)
+* HIGH:                                  General API (pihwm.h).
+                                                               (line 20)
+* IN:                                    General API (pihwm.h).
+                                                               (line 11)
+* INPUT:                                 General API (pihwm.h).
+                                                               (line 10)
+* installing pihwm:                      Installation.         (line  6)
+* license for pihwm:                     GNU Free Documentation License.
+                                                               (line  6)
+* LOW:                                   General API (pihwm.h).
+                                                               (line 25)
+* OFF:                                   General API (pihwm.h).
+                                                               (line 26)
+* ON:                                    General API (pihwm.h).
+                                                               (line 21)
+* OUT:                                   General API (pihwm.h).
+                                                               (line 16)
+* OUTPUT:                                General API (pihwm.h).
+                                                               (line 15)
+* pihwm.h:                               General API (pihwm.h).
+                                                               (line  6)
+* pihwm_gpio.h:                          GPIO API (pihwm_gpio.h).
+                                                               (line  6)
+* pihwm_i2c.h:                           I2C API (pihwm_i2c.h).
+                                                               (line  6)
+* pihwm_pwm.h:                           Pulse Width Modulation API (pihwm_pwm.h).
+                                                               (line  6)
+* pinMode:                               GPIO API (pihwm_gpio.h).
+                                                               (line 60)
+* the general API (pihwm.h):             General API (pihwm.h).
+                                                               (line  6)
+* the GPIO API (pihwm_gpio.h):           GPIO API (pihwm_gpio.h).
+                                                               (line  6)
+* the I2C API (pihwm_i2c.h):             I2C API (pihwm_i2c.h).
+                                                               (line  6)
+* the pihwm API:                         API.                  (line  6)
+* the Pulse Width Modulation API (pihwm_pwm.h): Pulse Width Modulation API (pihwm_pwm.h).
+                                                               (line  6)
+* usage and API of the pihwm library.:   Library.              (line  6)
+* using pihwm <1>:                       Library Usage.        (line  6)
+* using pihwm:                           Usage.                (line  6)
+
+
+
+Tag Table:
+Node: Top777
+Node: Installation1156
+Node: Preparation1413
+Node: Configuring the Build1860
+Node: Build and Install2350
+Node: Usage3080
+Node: Known Issues3520
+Node: Library3848
+Node: Library Usage3994
+Node: API4595
+Node: General API (pihwm.h)4815
+Node: GPIO API (pihwm_gpio.h)5748
+Node: I2C API (pihwm_i2c.h)8660
+Node: Pulse Width Modulation API (pihwm_pwm.h)8858
+Node: Demo Programs9062
+Node: Setting up the _Raspberry Pi_9490
+Node: Setting up the SD Card10243
+Node: Setting up the Network12421
+Node: pihwm Developer's Guide14697
+Node: GNU Free Documentation License15153
+Node: Index37567
+
+End Tag Table

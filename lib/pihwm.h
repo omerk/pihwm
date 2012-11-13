@@ -1,4 +1,4 @@
-/* gpio_test.c -- Test of GPIO output.
+/* pihwm.h -- general library header
 
    Copyright (C) 2012 Omer Kilic
    Copyright (C) 2012 Embecosm Limited
@@ -21,42 +21,35 @@
    You should have received a copy of the GNU General Public License along
    with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#include <stdio.h>
+#ifndef PIHWM_H
+#define PIHWM_H
+
+/* Headers needed here */
 #include <unistd.h>
 
-#include "pihwm.h"
-#include "pi_gpio.h"
+#ifdef DEBUG
+#include <stdio.h>
+#endif
+
+/* Useful constants */
+#define INPUT	"in"
+#define OUTPUT	"out"
+#define IN	INPUT
+#define OUT	OUTPUT
+
+#define HIGH	"1"
+#define LOW	"0"
+#define ON	HIGH
+#define OFF	LOW
 
 
-#define	INT_PIN	18
+/* Useful macros */
+#ifdef DEBUG
+#define debug(...) printf(__VA_ARGS__)
+#else
+#define debug(...) ;
+#endif
 
+#define delay(d) sleep(d);
 
-void
-my_isr (int pin)
-{
-  printf ("my_isr fired for pin %d\n", pin);
-}
-
-
-int
-main (int argc, char **argv, char **envp)
-{
-  printf ("main start\n");
-
-  /* Init Pin */
-  gpio_init (INT_PIN, INPUT);
-
-  /* Init interrupt */
-  gpio_set_int (INT_PIN, my_isr, "rising");
-
-  for (;;)
-    {
-      printf ("doing nothing, waiting for an interrupt.\n");
-      sleep (2);
-    }
-
-  /* If we didn't have for(;;); */
-  gpio_release (INT_PIN);
-  printf ("main end\n");
-  return 0;
-}
+#endif
