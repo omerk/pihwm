@@ -1,4 +1,4 @@
-/* gpio_test.c -- Test of GPIO output.
+/* test_board.c -- Test of board identification functions.
 
    Copyright (C) 2012 Omer Kilic
 
@@ -58,5 +58,7 @@ int main()
 	}
 
 	printf("MB of RAM.\n");
+
+	return 0;
 
 }
