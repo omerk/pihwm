@@ -1,4 +1,4 @@
-/* pihwm.h -- general library implementation
+/* pihwm.c -- general library implementation
 
    Copyright (C) 2012 Omer Kilic
 
@@ -20,24 +20,24 @@
    with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <stdio.h>
-#include <inttypes.h>
+#include <linux/types.h>
 #include "pihwm.h"
 
 
-typedef struct {
+struct _board_info {
 	uint8_t model;
 	uint8_t rev;
 	uint8_t mem;
-} board_info;
-
+};
+   
 
 /* http://www.element14.com/community/docs/DOC-50776 */
-board_info get_board_info(void)
+board_info get_board_info()
 {
 	FILE *info;
 	char rev_hex[5];
-	uint8_t rev_int = 0;
-	struct board_info board;
+	unsigned int rev_int = 0;
+	board_info board;
 
 	char *cmd = "cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}'";
 
@@ -48,14 +48,12 @@ board_info get_board_info(void)
 	fgets(rev_hex, 5, info);
 	sscanf(rev_hex, "%x", &rev_int);
 
-	printf("%d\n", rev_int); 
-
 	switch(rev_int){
 		case 2:
 		case 3:
 			board.model = MODEL_B;
 			board.rev = REV_1;
-			board.mem = RAM_256;
+			board.mem = MEM_256;
 		break;
 
 		case 4:
@@ -63,13 +61,15 @@ board_info get_board_info(void)
 		case 6:
 			board.model = MODEL_B;
 			board.rev = REV_2;
-			board.mem = RAM_256;
+			board.mem = MEM_256;
 		break;
 
-		case 13,14,15:
+		case 13:
+		case 14:
+		case 15:
 			board.model = MODEL_B;
 			board.rev = REV_2;
-			board.mem = RAM_512;
+			board.mem = MEM_512;
 		break;
 		
 		default:

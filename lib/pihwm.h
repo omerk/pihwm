@@ -58,10 +58,19 @@
 #define debug(...) ;
 #endif
 
-#define delay(d) sleep(d);
+#define delay(d)	sleep(d);
+
+/* http://gcc.gnu.org/onlinedocs/gcc/Compound-Literals.html */
+#define a(...)		(uint8_t[])__VA_ARGS__
+
+#define size(a)	(sizeof(a) / sizeof((a)[0]))
+
+
+typedef struct _board_info board_info;
+
 
 /* Function prototypes */
-struct board_info get_board_info();
+board_info get_board_info();
 uint8_t board_model();
 uint8_t board_rev();
 uint8_t board_mem();
