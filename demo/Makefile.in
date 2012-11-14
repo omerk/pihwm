@@ -18,8 +18,10 @@
 # Makefile.am -- automake configuration file for demos
 #
 # Copyright (C) 2012 Embecosm Limited
+# Copyright (C) 2012 Omer Kilic
 #
 # Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
+# Contributor Omer Kilic <omerkilic@gmail.com>
 #
 # This file is part of pihwm.
 #
@@ -75,9 +77,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = gpio_int$(EXEEXT) gpio_test$(EXEEXT) \
-	i2c_ads1015$(EXEEXT) i2c_hmc6352$(EXEEXT) \
-	i2c_mcp23017$(EXEEXT) pwm_demo$(EXEEXT) \
+bin_PROGRAMS = board_info$(EXEEXT) gpio_int$(EXEEXT) \
+	gpio_test$(EXEEXT) i2c_ads1015$(EXEEXT) i2c_hmc6352$(EXEEXT) \
+	i2c_mcp23017$(EXEEXT) pwm_demo$(EXEEXT) spi_test$(EXEEXT) \
 	spi_bb_mcp3202$(EXEEXT)
 subdir = demo
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -94,12 +96,15 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_gpio_int_OBJECTS = gpio_int.$(OBJEXT)
-gpio_int_OBJECTS = $(am_gpio_int_OBJECTS)
-gpio_int_DEPENDENCIES = ../lib/libpihwm.la
+am_board_info_OBJECTS = board_info.$(OBJEXT)
+board_info_OBJECTS = $(am_board_info_OBJECTS)
+board_info_DEPENDENCIES = ../lib/libpihwm.la
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
+am_gpio_int_OBJECTS = gpio_int.$(OBJEXT)
+gpio_int_OBJECTS = $(am_gpio_int_OBJECTS)
+gpio_int_DEPENDENCIES = ../lib/libpihwm.la
 am_gpio_test_OBJECTS = gpio_test.$(OBJEXT)
 gpio_test_OBJECTS = $(am_gpio_test_OBJECTS)
 gpio_test_DEPENDENCIES = ../lib/libpihwm.la
@@ -118,6 +123,9 @@ pwm_demo_DEPENDENCIES = ../lib/libpihwm.la
 am_spi_bb_mcp3202_OBJECTS = spi_bb_mcp3202.$(OBJEXT)
 spi_bb_mcp3202_OBJECTS = $(am_spi_bb_mcp3202_OBJECTS)
 spi_bb_mcp3202_DEPENDENCIES = ../lib/libpihwm.la
+am_spi_test_OBJECTS = spi_test.$(OBJEXT)
+spi_test_OBJECTS = $(am_spi_test_OBJECTS)
+spi_test_DEPENDENCIES = ../lib/libpihwm.la
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -144,14 +152,16 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(gpio_int_SOURCES) $(gpio_test_SOURCES) \
-	$(i2c_ads1015_SOURCES) $(i2c_hmc6352_SOURCES) \
-	$(i2c_mcp23017_SOURCES) $(pwm_demo_SOURCES) \
-	$(spi_bb_mcp3202_SOURCES)
-DIST_SOURCES = $(gpio_int_SOURCES) $(gpio_test_SOURCES) \
-	$(i2c_ads1015_SOURCES) $(i2c_hmc6352_SOURCES) \
-	$(i2c_mcp23017_SOURCES) $(pwm_demo_SOURCES) \
-	$(spi_bb_mcp3202_SOURCES)
+SOURCES = $(board_info_SOURCES) $(gpio_int_SOURCES) \
+	$(gpio_test_SOURCES) $(i2c_ads1015_SOURCES) \
+	$(i2c_hmc6352_SOURCES) $(i2c_mcp23017_SOURCES) \
+	$(pwm_demo_SOURCES) $(spi_bb_mcp3202_SOURCES) \
+	$(spi_test_SOURCES)
+DIST_SOURCES = $(board_info_SOURCES) $(gpio_int_SOURCES) \
+	$(gpio_test_SOURCES) $(i2c_ads1015_SOURCES) \
+	$(i2c_hmc6352_SOURCES) $(i2c_mcp23017_SOURCES) \
+	$(pwm_demo_SOURCES) $(spi_bb_mcp3202_SOURCES) \
+	$(spi_test_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -279,6 +289,10 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
+# Board info demo
+board_info_SOURCES = board_info.c
+board_info_LDADD = ../lib/libpihwm.la -lpthread
+
 # GPIO interrupt demo
 gpio_int_SOURCES = gpio_int.c
 gpio_int_LDADD = ../lib/libpihwm.la -lpthread
@@ -303,9 +317,13 @@ i2c_mcp23017_LDADD = ../lib/libpihwm.la -lpthread
 pwm_demo_SOURCES = pwm_demo.c
 pwm_demo_LDADD = ../lib/libpihwm.la -lpthread
 
-# SPI demo
+# Bitbanged SPI demo
 spi_bb_mcp3202_SOURCES = spi_bb_mcp3202.c
 spi_bb_mcp3202_LDADD = ../lib/libpihwm.la -lpthread
+
+# SPI loopback test
+spi_test_SOURCES = spi_test.c
+spi_test_LDADD = ../lib/libpihwm.la -lpthread
 all: all-am
 
 .SUFFIXES:
@@ -386,6 +404,9 @@ clean-binPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
+board_info$(EXEEXT): $(board_info_OBJECTS) $(board_info_DEPENDENCIES) $(EXTRA_board_info_DEPENDENCIES) 
+	@rm -f board_info$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(board_info_OBJECTS) $(board_info_LDADD) $(LIBS)
 gpio_int$(EXEEXT): $(gpio_int_OBJECTS) $(gpio_int_DEPENDENCIES) $(EXTRA_gpio_int_DEPENDENCIES) 
 	@rm -f gpio_int$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(gpio_int_OBJECTS) $(gpio_int_LDADD) $(LIBS)
@@ -407,6 +428,9 @@ pwm_demo$(EXEEXT): $(pwm_demo_OBJECTS) $(pwm_demo_DEPENDENCIES) $(EXTRA_pwm_demo
 spi_bb_mcp3202$(EXEEXT): $(spi_bb_mcp3202_OBJECTS) $(spi_bb_mcp3202_DEPENDENCIES) $(EXTRA_spi_bb_mcp3202_DEPENDENCIES) 
 	@rm -f spi_bb_mcp3202$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(spi_bb_mcp3202_OBJECTS) $(spi_bb_mcp3202_LDADD) $(LIBS)
+spi_test$(EXEEXT): $(spi_test_OBJECTS) $(spi_test_DEPENDENCIES) $(EXTRA_spi_test_DEPENDENCIES) 
+	@rm -f spi_test$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(spi_test_OBJECTS) $(spi_test_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -414,6 +438,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/board_info.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gpio_int.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gpio_test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/i2c_ads1015.Po@am__quote@
@@ -421,6 +446,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/i2c_mcp23017.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pwm_demo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/spi_bb_mcp3202.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/spi_test.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

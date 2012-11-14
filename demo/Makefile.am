@@ -34,11 +34,12 @@ bin_PROGRAMS = board_info \
 	       i2c_hmc6352    \
 	       i2c_mcp23017   \
 	       pwm_demo       \
+			 spi_test		 \
 	       spi_bb_mcp3202
 
 # Board info demo
 board_info_SOURCES = board_info.c
-board_info_LDADD   = ../lib/libpihwm.la
+board_info_LDADD   = ../lib/libpihwm.la -lpthread
 
 # GPIO interrupt demo
 gpio_int_SOURCES = gpio_int.c
@@ -50,20 +51,24 @@ gpio_test_LDADD   = ../lib/libpihwm.la -lpthread
 
 # ADS1015 i2c demo
 i2c_ads1015_SOURCES = i2c_ads1015.c
-i2c_ads1015_LDADD   = ../lib/libpihwm.la
+i2c_ads1015_LDADD   = ../lib/libpihwm.la -lpthread
 
 # HMC6352 i2c demo
 i2c_hmc6352_SOURCES = i2c_hmc6352.c
-i2c_hmc6352_LDADD   = ../lib/libpihwm.la
+i2c_hmc6352_LDADD   = ../lib/libpihwm.la -lpthread
 
 # MCP23017 i2c demo
 i2c_mcp23017_SOURCES = i2c_mcp23017.c
-i2c_mcp23017_LDADD   = ../lib/libpihwm.la
+i2c_mcp23017_LDADD   = ../lib/libpihwm.la -lpthread
 
 # PWM demo
 pwm_demo_SOURCES = pwm_demo.c
-pwm_demo_LDADD   = ../lib/libpihwm.la
+pwm_demo_LDADD   = ../lib/libpihwm.la -lpthread
 
 # Bitbanged SPI demo
 spi_bb_mcp3202_SOURCES = spi_bb_mcp3202.c
-spi_bb_mcp3202_LDADD   = ../lib/libpihwm.la
+spi_bb_mcp3202_LDADD   = ../lib/libpihwm.la -lpthread
+
+# SPI loopback test
+spi_test_SOURCES = spi_test.c
+spi_test_LDADD   = ../lib/libpihwm.la -lpthread
