@@ -1,8 +1,10 @@
 # Makefile.am -- automake configuration file for the libpihwm library
 #
 # Copyright (C) 2012 Embecosm Limited
+# Copyright (C) 2012 Omer Kilic
 #
 # Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
+# Contributor Omer Kilic <omerkilic@gmail.com>
 #
 # This file is part of pihwm.
 #
@@ -30,7 +32,8 @@ lib_LTLIBRARIES = libpihwm.la
 
 include_HEADERS = pi_gpio.h \
 		  pi_i2c.h  \
-		  pi_pwm.h  \
+		  pi_pwm.h	\
+		  pi_spi.h	\
 		  pihwm.h
 
 # Details for the library
@@ -40,4 +43,7 @@ libpihwm_la_SOURCES  = pi_gpio.c \
 		       pi_i2c.h  \
 		       pi_pwm.c  \
 		       pi_pwm.h  \
-		       pihwm.h
+		       pi_spi.c  \
+		       pi_spi.h  \
+		       pihwm.h	  \
+				 pihwm.c

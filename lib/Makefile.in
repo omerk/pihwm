@@ -18,8 +18,10 @@
 # Makefile.am -- automake configuration file for the libpihwm library
 #
 # Copyright (C) 2012 Embecosm Limited
+# Copyright (C) 2012 Omer Kilic
 #
 # Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
+# Contributor Omer Kilic <omerkilic@gmail.com>
 #
 # This file is part of pihwm.
 #
@@ -122,7 +124,8 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(includedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libpihwm_la_LIBADD =
-am_libpihwm_la_OBJECTS = pi_gpio.lo pi_i2c.lo pi_pwm.lo
+am_libpihwm_la_OBJECTS = pi_gpio.lo pi_i2c.lo pi_pwm.lo pi_spi.lo \
+	pihwm.lo
 libpihwm_la_OBJECTS = $(am_libpihwm_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -285,7 +288,8 @@ top_srcdir = @top_srcdir@
 lib_LTLIBRARIES = libpihwm.la
 include_HEADERS = pi_gpio.h \
 		  pi_i2c.h  \
-		  pi_pwm.h  \
+		  pi_pwm.h	\
+		  pi_spi.h	\
 		  pihwm.h
 
 
@@ -296,7 +300,10 @@ libpihwm_la_SOURCES = pi_gpio.c \
 		       pi_i2c.h  \
 		       pi_pwm.c  \
 		       pi_pwm.h  \
-		       pihwm.h
+		       pi_spi.c  \
+		       pi_spi.h  \
+		       pihwm.h	  \
+				 pihwm.c
 
 all: all-am
 
@@ -376,6 +383,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi_gpio.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi_i2c.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi_pwm.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi_spi.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pihwm.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
