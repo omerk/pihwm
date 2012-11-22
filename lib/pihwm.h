@@ -1,25 +1,28 @@
-/* pihwm.h -- general library header
-
-   Copyright (C) 2012 Omer Kilic
-   Copyright (C) 2012 Embecosm Limited
-
-   Contributor Omer Kilic <omerkilic@gmail.com>
-   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
-
-   This file is part of pihwm.
-
-   This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU General Public License as published by the Free
-   Software Foundation; either version 3 of the License, or (at your option)
-   any later version.
-
-   This program is distributed in the hope that it will be useful, but WITHOUT
-   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-   more details.
-
-   You should have received a copy of the GNU General Public License along
-   with this program.  If not, see <http://www.gnu.org/licenses/>. */
+/**
+ * @file   pihwm.h
+ * @author Omer Kilic <omerkilic@gmail.com>
+ * @author Jeremy Bennett <jeremy.bennett@embecosm.com>
+ * @brief  Header for general library functionality
+ *
+ * @section LICENSE
+ * Copyright (C) 2012 Omer Kilic
+ * Copyright (C) 2012 Embecosm Limited
+ *
+ * This file is part of pihwm.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation; either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program.  If not, see <http://www.gnu.org/licenses/>. 
+ */
 
 #ifndef PIHWM_H
 #define PIHWM_H
