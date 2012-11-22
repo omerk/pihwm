@@ -46,7 +46,7 @@ main ()
   printf ("main() start\n");
 
   /* Init I2C bus */
-  fd = i2c_init ("/dev/i2c-0");
+  fd = i2c_init ();
   if (fd < 0)
     {
       return 1;
