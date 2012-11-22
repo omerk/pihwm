@@ -65,14 +65,18 @@
 
 #define size(a)	(sizeof(a) / sizeof((a)[0]))
 
-
-typedef struct _board_info board_info;
-
+typedef struct
+{
+   uint8_t model;
+   uint8_t rev;
+   uint8_t mem;
+} board_info_t;
 
 /* Function prototypes */
-board_info get_board_info();
-uint8_t board_model();
-uint8_t board_rev();
-uint8_t board_mem();
+board_info_t board_info();
+int board_model();
+int board_rev();
+int board_mem();
+int check_kernel_module(char* modulename);
 
 #endif

@@ -29,10 +29,10 @@ struct _board_info {
 	uint8_t rev;
 	uint8_t mem;
 };
-   
+
 
 /* http://www.element14.com/community/docs/DOC-50776 */
-board_info get_board_info()
+board_info_t board_info()
 {
 	FILE *info;
 	char rev_hex[5];
@@ -83,21 +83,26 @@ board_info get_board_info()
 
 }
 
-uint8_t board_model()
+int board_model()
 {
-	board_info b = get_board_info();
+	board_info_t b = board_info();
 	return b.model;
 }
 
-uint8_t board_rev()
+int board_rev()
 {
-	board_info b = get_board_info();
+	board_info_t b = board_info();
 	return b.rev;
 }
 
-uint8_t board_mem()
+int board_mem()
 {
-	board_info b = get_board_info();
+	board_info_t b = gboard_info();
 	return b.mem;
 }
 
+int check_kernel_module(char* modulename)
+{
+	// FIXME: Actually implement this :)
+	return 1;
+}
