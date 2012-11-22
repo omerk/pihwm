@@ -22,75 +22,39 @@
    with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "pihwm.h"
 #include "pi_pwm.h"
 
 
-void
-quick_pwm_demo ()
-{
-  int r, s;
-  for (r = 0; r < 1; r++)
-    {
-      printf ("\n>>> ");
-      fflush (stdout);
-      GPIO_CLR0 = 1 << 4;
-      force_pwm (0, PWM0_ENABLE);
-      for (s = 0x100; s <= 0x400; s += 0x10)
-	{
-	  usleep (10000);
-	  set_pwm (s);
-	  putchar ('+');
-	  fflush (stdout);
-	}
-      for (s = 0x400; s >= 0x100; s -= 0x10)
-	{
-	  usleep (10000);
-	  set_pwm (s);
-	  putchar ('-');
-	  fflush (stdout);
-	}
-      // same in reverse direction
-      GPIO_SET0 = 1 << 4;
-      force_pwm (0, PWM0_ENABLE | PWM0_REVPOLAR);
-      printf ("\n<<< ");
-      for (s = 0x100; s <= 0x400; s += 0x10)
-	{
-	  usleep (10000);
-	  set_pwm (s);
-	  putchar ('+');
-	  fflush (stdout);
-	}
-      for (s = 0x400; s >= 0x100; s -= 0x10)
-	{
-	  usleep (10000);
-	  set_pwm (s);
-	  putchar ('-');
-	  fflush (stdout);
-	}
-    }
-  pwm_off ();
-  putchar ('\n');
-}	/* quick_pwm_demo */
-
-
-
 int
 main (void)
 {
-  /* Map the I/O sections */
-  setup_io ();
+  int i;
 
-  /* Set up PWM module */
-  setup_pwm ();
+  // Initialise PWM module
+  if ( pwm_init() < 0 ){
+    printf("ERROR: Can't initialise PWM module, are you running this as root?\n");
+    exit(1);
+  }
 
-  /* Run PWM demo */
-  quick_pwm_demo ();
+  // Do a little fade in/out
+  printf("Fading in...\n")
+  for( i = 0; i < PWM_MAX; i++ ){
+    pwm_value(i);
+    delay(100);
+  }
 
-  /* make sure everything is off! */
-  pwm_off ();
-  restore_io ();
+  printf("Fading out...\n")
+  for( i = PWM_MAX; i > 0; i-- ){
+    pwm_value(i);
+    delay(100);
+  }
 
+  // Unmap memory and disable the PWM module
+  pwm_release();
+  
   return 0;
-}	/* main */
+
+}

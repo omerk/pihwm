@@ -24,6 +24,8 @@
 #ifndef PI_PWM_H
 #define PI_PWM_H
 
+// Range for the PWM module
+#define PWM_MAX 0x400;
 
 #define BCM2708_PERI_BASE        0x20000000
 #define CLOCK_BASE               (BCM2708_PERI_BASE + 0x101000)	/* Clocks */
@@ -91,16 +93,14 @@
 
 
 /* I/O access */
-volatile unsigned *gpio;
-volatile unsigned *pwm;
-volatile unsigned *clk;
+// FIXME: Remove these?
+volatile unsigned int *gpio;
+volatile unsigned int *pwm;
+volatile unsigned int *clk;
 
-
-void setup_io ();
-void restore_io ();
-void setup_pwm ();
-void set_pwm (int v);
-void force_pwm (int v, int mode);
-void pwm_off ();
+int pwm_init ();
+void pwm_mode (unsigned int mode);
+void pwm_value (unsigned int value);
+void pwm_release ();
 
 #endif
