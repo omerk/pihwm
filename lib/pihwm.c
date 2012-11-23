@@ -25,6 +25,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <linux/types.h>
 #include "pihwm.h"
 
@@ -55,12 +56,16 @@ board_info ()
 	FILE *info;
 	char rev_hex[5];
 	unsigned int rev_int = 0;
+
 	board_t board;
+	board.model = -1;
+	board.rev = -1;
+	board.mem = -1;
 
 	char *cmd = "cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}'";
 
-	if( !(info = popen(cmd,"r")) ){
-		printf("Error!");
+	if( !(info = popen(cmd, "r")) ){
+		return board;
 	}
 
 	fgets(rev_hex, 5, info);
@@ -92,9 +97,7 @@ board_info ()
 		break;
 		
 		default:
-			board.model = -1;
-			board.rev = -1;
-			board.mem = -1;
+			// Default values (-1) already set.
 		break;
 	}
 	
@@ -147,8 +150,27 @@ board_mem ()
 int
 check_kernel_module (char* modulename)
 {
-	// FIXME: Actually implement this :)
-	return 1;
+	FILE *lsmod;
+	char cmd[100];
+	char modcount[2];
+	unsigned int modcount_int = 0;
+	
+	sprintf(cmd, "lsmod | grep %s | wc -l", modulename); 
+
+	if( !(lsmod = popen(cmd, "r")) ){
+		return -1;
+	}
+
+	fgets(modcount, 2, lsmod);
+	modcount_int = atoi(modcount);
+
+	if ( modcount_int > 0 ){
+		return 1;
+	} else {
+		return -1;
+	}
+
 }
 
 /*! @} */
+

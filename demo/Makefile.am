@@ -28,6 +28,7 @@
 
 # Build a set of demos and a library.
 bin_PROGRAMS = board_info \
+          check_kernel_modules \
 	       gpio_int       \
 	       gpio_test      \
 	       i2c_ads1015    \
@@ -36,6 +37,10 @@ bin_PROGRAMS = board_info \
 	       pwm_demo       \
 			 spi_test		 \
 	       spi_bb_mcp3202
+
+# Kernel modules test
+check_kernel_modules_SOURCES = check_kernel_modules.c
+check_kernel_modules_LDADD   = ../lib/libpihwm.la -lpthread
 
 # Board info demo
 board_info_SOURCES = board_info.c
