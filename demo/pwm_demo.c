@@ -31,7 +31,7 @@
 int
 main (void)
 {
-  int i;
+  int i, j;
 
   // Initialise PWM module
   if ( pwm_init() < 0 ){
@@ -39,17 +39,19 @@ main (void)
     exit(1);
   }
 
-  // Do a little fade in/out
-  printf("Fading in...\n")
-  for( i = 0; i < PWM_MAX; i++ ){
-    pwm_value(i);
-    delay(100);
-  }
+  for ( i = 0; i < 5; i++ ){
+	// Do a little fade in/out
+  	printf("Fading in...\n");
+	for( j = 0; j < PWM_MAX; j++ ){
+   	pwm_value(j);
+		delay(2);
+	}
 
-  printf("Fading out...\n")
-  for( i = PWM_MAX; i > 0; i-- ){
-    pwm_value(i);
-    delay(100);
+	  printf("Fading out...\n");
+	  for( j = PWM_MAX; j > 0; j-- ){
+	    pwm_value(j);
+	    delay(2);
+	 }
   }
 
   // Unmap memory and disable the PWM module
@@ -58,3 +60,4 @@ main (void)
   return 0;
 
 }
+
