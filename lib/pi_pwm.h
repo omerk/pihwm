@@ -24,8 +24,6 @@
 #ifndef PI_PWM_H
 #define PI_PWM_H
 
-// Range for the PWM module
-#define PWM_MAX 0x400;
 
 #define BCM2708_PERI_BASE        0x20000000
 #define CLOCK_BASE               (BCM2708_PERI_BASE + 0x101000)	/* Clocks */
@@ -93,6 +91,11 @@
 
 
 /* I/O access */
+
+// Range for the PWM module
+const unsigned int PWM_MAX = 1024;
+
+
 // FIXME: Remove these?
 volatile unsigned int *gpio;
 volatile unsigned int *pwm;

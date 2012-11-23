@@ -24,12 +24,6 @@
 #ifndef PI_GPIO_H
 #define PI_GPIO_H
 
-typedef struct
-{
-  int pin;
-  void (*isr) (int);
-} isr_t;
-
 /* Function prototypes */
 int gpio_init (int pin, char *dir);
 int gpio_set_int (int pin, void (*isr) (int), char *mode);

@@ -29,12 +29,6 @@
 #include "pihwm.h"
 
 
-struct _board_info {
-	uint8_t model;
-	uint8_t rev;
-	uint8_t mem;
-};
-
 /*! \addtogroup General
  *  @brief General library functions
  *  @{
@@ -55,12 +49,13 @@ struct _board_info {
  *
  * @return board information
  */
-board_info_t board_info()
+board_t
+board_info ()
 {
 	FILE *info;
 	char rev_hex[5];
 	unsigned int rev_int = 0;
-	board_info board;
+	board_t board;
 
 	char *cmd = "cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}'";
 
@@ -112,9 +107,10 @@ board_info_t board_info()
  *
  * @return MODEL_A or MODEL_B
  */
-int board_model()
+int
+board_model ()
 {
-	board_info_t b = board_info();
+	board_t b = board_info();
 	return b.model;
 }
 
@@ -123,9 +119,10 @@ int board_model()
  *
  * @return REV_1 or REV_2
  */
-int board_rev()
+int
+board_rev ()
 {
-	board_info_t b = board_info();
+	board_t b = board_info();
 	return b.rev;
 }
 
@@ -134,9 +131,10 @@ int board_rev()
  *
  * @return MEM_256 or MEM_512
  */
-int board_mem()
+int
+board_mem ()
 {
-	board_info_t b = gboard_info();
+	board_t b = board_info();
 	return b.mem;
 }
 
@@ -146,7 +144,8 @@ int board_mem()
  * @param 	name of the kernel module
  * @return 	1 for success, -1 for failure
  */
-int check_kernel_module(char* modulename)
+int
+check_kernel_module (char* modulename)
 {
 	// FIXME: Actually implement this :)
 	return 1;

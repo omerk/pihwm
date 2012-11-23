@@ -36,6 +36,8 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <unistd.h>
+
+#include "pihwm.h"
 #include "pi_pwm.h"
 
 // Registers
@@ -47,7 +49,7 @@ open_memory ()
 {
   int mem_fd;
 
-  mem_fd = open ("/dev/mem", O_RDWR | O_SYNC)
+  mem_fd = open ("/dev/mem", O_RDWR | O_SYNC);
 
   if ( mem_fd < 0 ){
     debug ("[%s] Can't open /dev/mem. Are you root?\n", __func__);
@@ -89,7 +91,8 @@ map_register (int mem_fd, unsigned int addr)
 
 }
 
-int pwm_init(){
+int
+pwm_init (){
 
   int mem_fd;
 
@@ -119,21 +122,22 @@ int pwm_init(){
   GPIO_CLR0 = 1 << 4;   /* Set GPIO 4 LOW */
   
   PWM_CONTROL = 0;
-  usleep (100);
+  usleep(100);
 
   /* I use 1024 steps for the PWM
      (Just a nice value which I happen to like) */
   PWM0_RANGE = PWM_MAX;
-  usleep (100);
+  usleep(100);
 
   PWM_CONTROL = PWM0_ENABLE;
-  usleep (100);
+  usleep(100);
 
   return 1;
 
 }
 
-void pwm_mode(unsigned int mode)
+void
+pwm_mode (unsigned int mode)
 {
   PWM_CONTROL = mode;
 }
@@ -144,13 +148,15 @@ void pwm_mode(unsigned int mode)
    This routine does not wait for the value to arrive If a new value comes in
    before it is picked up by the chip it will definitely be too fast for the
    motor to respond to it */
-void pwm_value(unsigned int value)
+void
+pwm_value (unsigned int value)
 {
 
-  if (value < 0){
+  if ( value < 0 ){
     value = 0;
-  }
-  if (value > PWM_MAX){
+  } 
+  
+  if ( value > PWM_MAX ){
     value = PWM_MAX;
   }
 
@@ -158,16 +164,17 @@ void pwm_value(unsigned int value)
 }
 
 
-void pwm_release()
+void
+pwm_release ()
 {
 
   GPIO_CLR0 = 1 << 4;
-  pwm_set (0);
+  pwm_value(0);
   PWM_CONTROL = 0;
 
   // FIXME: Check this.
-  munmap (pwm, BLOCK_SIZE);
-  munmap (gpio, BLOCK_SIZE);
-  munmap (clk, BLOCK_SIZE);
+  //munmap(pwm, BLOCK_SIZE);
+  //munmap(gpio, BLOCK_SIZE);
+  //munmap(clk, BLOCK_SIZE);
 }
 

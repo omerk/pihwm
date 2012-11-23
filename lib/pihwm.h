@@ -61,7 +61,9 @@
 #define debug(...) ;
 #endif
 
-#define delay(d)	sleep(d);
+#define delay(d)					usleep(d*1000); //millisec
+#define delayMicroseconds(d)	usleep(d);
+#define delaySeconds(d)			sleep(d);
 
 /* http://gcc.gnu.org/onlinedocs/gcc/Compound-Literals.html */
 #define a(...)		(uint8_t[])__VA_ARGS__
@@ -73,10 +75,10 @@ typedef struct
    uint8_t model;
    uint8_t rev;
    uint8_t mem;
-} board_info_t;
+} board_t;
 
 /* Function prototypes */
-board_info_t board_info();
+board_t board_info();
 int board_model();
 int board_rev();
 int board_mem();

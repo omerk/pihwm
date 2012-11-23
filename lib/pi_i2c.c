@@ -41,7 +41,7 @@ i2c_init()
 {
   int rev;
 
-  rev = board_revision();
+  rev = board_rev();
 
   if ( rev == REV_1 ){
     return i2c_init_name("/dev/i2c-0");
