@@ -21,14 +21,8 @@
    You should have received a copy of the GNU General Public License along
    with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#include <linux/i2c-dev.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdint.h>
-#include <errno.h>
-#include <string.h>
 
 #include "pihwm.h"
 #include "pi_i2c.h"
@@ -107,14 +101,12 @@ main ()
   unsigned int res, i, j;
   double volt;
 
-  printf ("main() start\n");
-
-  /* Init I2C bus */
-  fd = i2c_init ();
-  if (fd < 0)
-    {
-      return 1;
-    }
+	/* Init I2C bus */
+	fd = i2c_init ();
+	if ( fd < 0 ) {
+		printf("ERROR: Can't initialise I2C bus.\n");
+		exit(1);
+	}
 
   for (i = 0; i < 4; i++)
     {
@@ -129,8 +121,6 @@ main ()
 	}
       printf ("------\n");
     }
-
-  printf ("main() end\n");
 
   return 0;
 }

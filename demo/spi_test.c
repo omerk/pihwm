@@ -20,7 +20,8 @@
    with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <stdio.h>
-#include <linux/i2c-dev.h>
+#include <stdlib.h>
+
 #include "pihwm.h"
 #include "pi_spi.h"
 
@@ -31,20 +32,18 @@ int main(void)
 	// Dummy data and RX buffer
 	uint8_t tx[] = {
 		0xDE, 0xAD, 0xBE, 0xEF,
-		0xFE, 0xED, 0x00, 0x00
+		0xFE, 0xED, 0x00, 0x42
 	};
 	uint8_t rx[size(tx)] = { 0 };
 	
-	// Initialise SPI module
+	// Initialise SPI module, use CE0
 	fd = spi_init(0);
-
-	if ( fd == -1 ){
-		printf("ERROR: Can't init SPI\n");
+	if ( fd < 0 ){
+		printf("ERROR: Can't initialise SPI\n");
+		exit(1);
 	}
 
 	// Transfer data
-	spi_transfer(fd, tx, rx, size(tx));
-
 	if ( spi_transfer(fd, tx, rx, size(tx))  ){
 		// Print RX buffer
 		for (i = 0; i < size(tx); i++) {

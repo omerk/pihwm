@@ -21,14 +21,8 @@
    You should have received a copy of the GNU General Public License along
    with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#include <linux/i2c-dev.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdint.h>
-#include <errno.h>
-#include <string.h>
 
 #include "pihwm.h"
 #include "pi_i2c.h"
@@ -36,11 +30,11 @@
 /* Registers */
 #define	IODIRA	0x00
 #define	IODIRB	0x01
-#define	GPIOA	0x12
-#define	GPIOB	0x13
+#define	GPIOA		0x12
+#define	GPIOB		0x13
 
 /* I2C Addres (A2,A1,A0 tied to ground) */
-#define ADDR	0x20
+#define	ADDR		0x20
 
 int
 main ()
@@ -49,12 +43,12 @@ main ()
 
   printf ("main() start\n");
 
-  /* Init I2C bus */
-  fd = i2c_init ();
-  if (fd < 0)
-    {
-      return 1;
-    }
+	/* Init I2C bus */
+	fd = i2c_init ();
+	if ( fd < 0 ) {
+		printf("ERROR: Can't initialise I2C bus.\n");
+		exit(1);
+	}
 
   /* Set pin directions */
   i2c_write (fd, ADDR, (unsigned char [])
