@@ -41,6 +41,16 @@ i2c_init()
 {
   int rev;
 
+	if ( check_kernel_module("i2c_dev") < 0 ){
+      debug ("[%s] Kernel module \"i2c_dev\" not loaded.\n", __func__);
+		return -1;
+  	}
+
+	if ( check_kernel_module("i2c_bcm2708") < 0 ){
+      debug ("[%s] Kernel module \"i2c_bcm2708\" not loaded.\n", __func__);
+		return -1;
+  	}
+
   rev = board_rev();
 
   if ( rev == REV_1 ){

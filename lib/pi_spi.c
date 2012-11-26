@@ -41,6 +41,16 @@ spi_init (uint8_t channel)
 {
 	int fd;
 
+	if ( check_kernel_module("spidev") < 0 ){
+      debug ("[%s] Kernel module \"spidev\" not loaded.\n", __func__);
+		return -1;
+  	}
+
+	if ( check_kernel_module("spi_bcm2708") < 0 ){
+      debug ("[%s] Kernel module \"spi_bcm2708\" not loaded.\n", __func__);
+		return -1;
+  	}
+
 	if ( channel == 0 ){
 		fd = open("/dev/spidev0.0", O_RDWR);
 	} else if ( channel == 1 ) {
