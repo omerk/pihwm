@@ -27,24 +27,11 @@
 #ifndef PIHWM_H
 #define PIHWM_H
 
-/* Headers needed here */
 #include <unistd.h>
-#include <inttypes.h>
 
 #ifdef DEBUG
 #include <stdio.h>
 #endif
-
-/* Useful constants */
-#define INPUT	"in"
-#define OUTPUT	"out"
-#define IN		INPUT
-#define OUT		OUTPUT
-
-#define HIGH	"1"
-#define LOW		"0"
-#define ON		HIGH
-#define OFF		LOW
 
 /* Board information */
 #define MODEL_A 100
@@ -66,15 +53,15 @@
 #define delaySeconds(d)			sleep(d);
 
 /* http://gcc.gnu.org/onlinedocs/gcc/Compound-Literals.html */
-#define a(...)		(uint8_t[])__VA_ARGS__
+#define a(...)		(int[])__VA_ARGS__
 
 #define size(a)	(sizeof(a) / sizeof((a)[0]))
 
 typedef struct
 {
-   uint8_t model;
-   uint8_t rev;
-   uint8_t mem;
+   int model;
+   int rev;
+   int mem;
 } board_t;
 
 /* Function prototypes */
