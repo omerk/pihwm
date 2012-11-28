@@ -77,8 +77,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = board_info$(EXEEXT) gpio_int$(EXEEXT) \
-	gpio_test$(EXEEXT) i2c_ads1015$(EXEEXT) i2c_hmc6352$(EXEEXT) \
+bin_PROGRAMS = board_info$(EXEEXT) check_kernel_modules$(EXEEXT) \
+	gpio_int$(EXEEXT) gpio_test$(EXEEXT) gpio_ledborg$(EXEEXT) \
+	i2c_ads1015$(EXEEXT) i2c_hmc6352$(EXEEXT) \
 	i2c_mcp23017$(EXEEXT) pwm_demo$(EXEEXT) spi_test$(EXEEXT) \
 	spi_bb_mcp3202$(EXEEXT)
 subdir = demo
@@ -102,9 +103,15 @@ board_info_DEPENDENCIES = ../lib/libpihwm.la
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
+am_check_kernel_modules_OBJECTS = check_kernel_modules.$(OBJEXT)
+check_kernel_modules_OBJECTS = $(am_check_kernel_modules_OBJECTS)
+check_kernel_modules_DEPENDENCIES = ../lib/libpihwm.la
 am_gpio_int_OBJECTS = gpio_int.$(OBJEXT)
 gpio_int_OBJECTS = $(am_gpio_int_OBJECTS)
 gpio_int_DEPENDENCIES = ../lib/libpihwm.la
+am_gpio_ledborg_OBJECTS = gpio_ledborg.$(OBJEXT)
+gpio_ledborg_OBJECTS = $(am_gpio_ledborg_OBJECTS)
+gpio_ledborg_DEPENDENCIES = ../lib/libpihwm.la
 am_gpio_test_OBJECTS = gpio_test.$(OBJEXT)
 gpio_test_OBJECTS = $(am_gpio_test_OBJECTS)
 gpio_test_DEPENDENCIES = ../lib/libpihwm.la
@@ -152,12 +159,14 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(board_info_SOURCES) $(gpio_int_SOURCES) \
+SOURCES = $(board_info_SOURCES) $(check_kernel_modules_SOURCES) \
+	$(gpio_int_SOURCES) $(gpio_ledborg_SOURCES) \
 	$(gpio_test_SOURCES) $(i2c_ads1015_SOURCES) \
 	$(i2c_hmc6352_SOURCES) $(i2c_mcp23017_SOURCES) \
 	$(pwm_demo_SOURCES) $(spi_bb_mcp3202_SOURCES) \
 	$(spi_test_SOURCES)
-DIST_SOURCES = $(board_info_SOURCES) $(gpio_int_SOURCES) \
+DIST_SOURCES = $(board_info_SOURCES) $(check_kernel_modules_SOURCES) \
+	$(gpio_int_SOURCES) $(gpio_ledborg_SOURCES) \
 	$(gpio_test_SOURCES) $(i2c_ads1015_SOURCES) \
 	$(i2c_hmc6352_SOURCES) $(i2c_mcp23017_SOURCES) \
 	$(pwm_demo_SOURCES) $(spi_bb_mcp3202_SOURCES) \
@@ -289,6 +298,10 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
+# Kernel modules test
+check_kernel_modules_SOURCES = check_kernel_modules.c
+check_kernel_modules_LDADD = ../lib/libpihwm.la -lpthread
+
 # Board info demo
 board_info_SOURCES = board_info.c
 board_info_LDADD = ../lib/libpihwm.la -lpthread
@@ -300,6 +313,10 @@ gpio_int_LDADD = ../lib/libpihwm.la -lpthread
 # Baseline GPIO demo
 gpio_test_SOURCES = gpio_test.c
 gpio_test_LDADD = ../lib/libpihwm.la -lpthread
+
+# LedBorg demo
+gpio_ledborg_SOURCES = gpio_ledborg.c
+gpio_ledborg_LDADD = ../lib/libpihwm.la -lpthread
 
 # ADS1015 i2c demo
 i2c_ads1015_SOURCES = i2c_ads1015.c
@@ -407,9 +424,15 @@ clean-binPROGRAMS:
 board_info$(EXEEXT): $(board_info_OBJECTS) $(board_info_DEPENDENCIES) $(EXTRA_board_info_DEPENDENCIES) 
 	@rm -f board_info$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(board_info_OBJECTS) $(board_info_LDADD) $(LIBS)
+check_kernel_modules$(EXEEXT): $(check_kernel_modules_OBJECTS) $(check_kernel_modules_DEPENDENCIES) $(EXTRA_check_kernel_modules_DEPENDENCIES) 
+	@rm -f check_kernel_modules$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(check_kernel_modules_OBJECTS) $(check_kernel_modules_LDADD) $(LIBS)
 gpio_int$(EXEEXT): $(gpio_int_OBJECTS) $(gpio_int_DEPENDENCIES) $(EXTRA_gpio_int_DEPENDENCIES) 
 	@rm -f gpio_int$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(gpio_int_OBJECTS) $(gpio_int_LDADD) $(LIBS)
+gpio_ledborg$(EXEEXT): $(gpio_ledborg_OBJECTS) $(gpio_ledborg_DEPENDENCIES) $(EXTRA_gpio_ledborg_DEPENDENCIES) 
+	@rm -f gpio_ledborg$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(gpio_ledborg_OBJECTS) $(gpio_ledborg_LDADD) $(LIBS)
 gpio_test$(EXEEXT): $(gpio_test_OBJECTS) $(gpio_test_DEPENDENCIES) $(EXTRA_gpio_test_DEPENDENCIES) 
 	@rm -f gpio_test$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(gpio_test_OBJECTS) $(gpio_test_LDADD) $(LIBS)
@@ -439,7 +462,9 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/board_info.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_kernel_modules.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gpio_int.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gpio_ledborg.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gpio_test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/i2c_ads1015.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/i2c_hmc6352.Po@am__quote@
