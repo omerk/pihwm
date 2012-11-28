@@ -62,7 +62,7 @@ adc_read (uint8_t channel)
   for (i = 7; i >= 4; i--)
     {
       x = cmd & (1 << i);
-      digitalWrite (MOSI, (char *) &x);
+      digitalWrite (MOSI, x);
 
       /* clock pulse */
       digitalWrite (SCK, HIGH);

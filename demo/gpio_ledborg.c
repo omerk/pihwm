@@ -38,23 +38,25 @@ print_usage ()
 	exit(1);	
 }
 
-char*
-check_val (char *val_str)
+unsigned int
+check_val (char* val_str)
 {
-	if ( ( strcmp("0", val_str) == 0 ) || ( strcmp("1", val_str) == 0 ) ){
-		return val_str;
+	unsigned int val = atoi(val_str);
+
+	if ( ( val == 0 ) || ( val == 1 ) ){
+		return val;
 	} else {
 		print_usage();
 	}
 
-	return "";
+	return 0;
 }
 
 int
 main (int argc, char *argv[])
 {
 	unsigned int pin_green;
-	char *val_red, *val_green, *val_blue;
+	unsigned int val_red, val_green, val_blue;
 
 	// do we have enough parameters?
 	if ( argc < 4 ){

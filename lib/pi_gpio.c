@@ -92,7 +92,7 @@ gpio_valfd (int pin)
 
 
 int
-gpio_init (int pin, char *dir)
+gpio_init (unsigned int pin, unsigned int dir)
 {
   FILE *file;
   char filename[35], pinStr[2];
@@ -120,8 +120,15 @@ gpio_init (int pin, char *dir)
       return -1;
     }
 
-  /* TODO: Add check here */
-  fwrite (dir, sizeof (char), strlen (dir), file);
+
+	if ( dir == 0 ){
+		fwrite ("out", sizeof (char), 3, file);
+	} else if ( dir == 1 ){
+		fwrite ("in", sizeof (char), 2, file);
+	} else {
+      debug ("[%s] Can't set pin direction.\n", __func__);
+      return -1;
+	}
 
   fclose (file);
 
@@ -213,7 +220,7 @@ isr_handler (void *isr)
 
 
 int
-gpio_set_int (int pin, void (*isr) (int), char *mode)
+gpio_set_int (unsigned int pin, void (*isr) (int), char *mode)
 {
   /* Details of the ISR */
   isr_t *i = (isr_t *) malloc (sizeof (isr_t));
@@ -234,7 +241,7 @@ gpio_set_int (int pin, void (*isr) (int), char *mode)
 
 
 int
-gpio_clear_int (int pin)
+gpio_clear_int (unsigned int pin)
 {
   /* this will terminate isr_handler thread */
   isr_handler_flag = 0;
@@ -245,16 +252,27 @@ gpio_clear_int (int pin)
 
 
 int
-gpio_write (int pin, char *val)
+gpio_write (unsigned int pin, unsigned int val)
 {
-  int file;
+	int file;
 
-  file = gpio_valfd (pin);
-  if (-1 == write (file, val, (sizeof (char) * 1)))
-    {
-      debug ("[%s] Can't write to GPIO", __func__);
-      return -1;
-    }
+	file = gpio_valfd (pin);
+
+	if ( val == 0 ){
+		if ( write (file, "0", (sizeof(char) * 1)) == -1 ){
+	      debug ("[%s] Can't write to GPIO pin", __func__);
+   	   return -1;
+    	}
+	} else if ( val == 1 ){
+		if ( write (file, "1", (sizeof(char) * 1)) == -1 ){
+	      debug ("[%s] Can't write to GPIO pin", __func__);
+   	   return -1;
+    	}
+	} else {
+		debug ("[%s] Wrong value for the GPIO pin", __func__);
+		return -1;
+	}
+
   close (file);
 
   return 1;
@@ -262,7 +280,7 @@ gpio_write (int pin, char *val)
 
 
 int
-gpio_read (int pin)
+gpio_read (unsigned int pin)
 {
   char valStr[1] = "";
   unsigned int val;
@@ -289,7 +307,7 @@ gpio_read (int pin)
 
 
 int
-gpio_release (int pin)
+gpio_release (unsigned int pin)
 {
   FILE *file;
   char pinStr[3];
@@ -310,88 +328,3 @@ gpio_release (int pin)
 }
 
 
-/*! Wrapper for Arduino pin mode.
-
-    @param[in] pin  Pin to intialize
-    @param[in] dir  Direction to use in "input" or "output".
-
-    @return  1 on success, -1 on failure. */
-int
-pinMode (int   pin,
-	 char *dir)
-{
-  return  gpio_init (pin, dir);
-
-}	/* pinMode () */
-
-
-/*! Wrapper for Arduino write to pin.
-
-    We have to map the Arduino text "HIGH" and "LOW" into "1" and "0" for
-    Raspberry Pi.
-
-    @param[in] pin  Pin to write to
-    @param[in] val  Value to write, "HIGH" or LOW"
-
-    @return  1 on success, -1 on failure. */
-int
-digitalWrite (int   pin,
-	      char *val)
-{
-  if (0 == strcmp (val, "HIGH"))
-    {
-      return gpio_write (pin, HIGH);
-    }
-  else if (0 == strcmp (val, "LOW"))
-    {
-      return gpio_write (pin, LOW);
-    }
-  else
-    {
-      debug  ("[%s] Unrecognized value: %s: ignored.\n", __func__, val);
-      return  -1;
-    }
-}	/* digitalWrite () */
-
-
-/*! Wrapper for Arduino read from pin.
-
-    @param[in] pin  Pin to read from
-
-    @return  Value read or -1 on failure. */
-int
-digitalRead (int  pin)
-{
-  return  gpio_read (pin);
-
-}	/* digitalRead () */
-
-
-/*! Wrapper for Arduino interrupt attach.
-
-    @param[in] pin   Pin concerned with interrupt
-    @param[in] isr   Interrupt service routine
-    @param[in] mode  Edge on which to trigger ("rising", "falling", "both");
-
-    @return  1 on success, -1 on failure. */
-int
-attachInterrupt (int    pin,
-		 void (*isr) (int),
-		 char  *mode)
-{
-  return  gpio_set_int (pin, isr, mode);
-
-}	/* attachInterrupt () */
-
-
-/*! Wrapper for Arduino interrupt detach.
-
-    @param[in] pin   Pin concerned with interrupt
-
-    @return  0 on success, -1 on failure. */
-int
-detachInterrupt (int  pin)
-{
-  return  gpio_clear_int (pin);
-
-}	/* detachInterrupt () */
