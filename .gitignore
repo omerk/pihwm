@@ -22,3 +22,18 @@ autom4te.cache
 
 # Typical build directory
 bd
+
+# ./configure artifacts
+Makefile
+config.h
+config.log
+config.status
+demo/.deps/
+demo/Makefile
+doc/Makefile
+lib/.deps/
+lib/Makefile
+libtool
+stamp-h1
+testsuite/Makefile
+
