@@ -23,6 +23,7 @@
 #define PI_SPI_H
 
 #include <linux/spi/spidev.h>
+#include <inttypes.h>
 
 // Default config for the SPI module
 #define SPI_DEFAULT_MODE	0	
