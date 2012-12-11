@@ -26,31 +26,46 @@
 #include "pihwm.h"
 #include "pi_gpio.h"
 
+#define	BTN0	17
+#define	BTN1	22	
+#define	LED0	23
+#define	LED1	24
+
 int
 main (void)
 {
   unsigned int val, i;
 
-  printf ("main() start\n");
+  printf("main() start\n");
 
-  gpio_init (17, OUTPUT);
-  gpio_init (18, INPUT);
+  gpio_init(LED0, OUTPUT);
+  gpio_init(LED1, OUTPUT);
+  gpio_init(BTN0, INPUT);
+  gpio_init(BTN1, INPUT);
 
-  for (i = 0; i < 5; i++)
+  printf("Pushbuttons:\n");
+  for (i = 0; i < 10; i++)
     {
-      val = gpio_read (18);
-      printf ("Pin 18 Val: %d\n", val);
+      val = gpio_read(BTN0);
+      printf(" GPIO%d: %d  ", BTN0, val);
+      val = gpio_read(BTN1);
+      printf("GPIO%d: %d\n", BTN1, val);
 
-      gpio_write (17, HIGH);
-      sleep (1);
-      gpio_write (17, LOW);
-      sleep (1);
+      gpio_write(LED0, HIGH);
+      gpio_write(LED1, HIGH);
+      sleep(1);
+      gpio_write(LED0, LOW);
+      gpio_write(LED1, LOW);
+      sleep(1);
     }
 
-  gpio_release (17);
-  gpio_release (18);
+  gpio_release(LED0);
+  gpio_release(LED1);
+  gpio_release(BTN0);
+  gpio_release(BTN1);
 
-  printf ("main() end\n");
+  printf("main() end\n");
 
   return 0;
 }
+

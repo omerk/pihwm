@@ -28,7 +28,7 @@
 #include "pi_gpio.h"
 
 
-#define	INT_PIN	18
+#define	INT_PIN	17
 
 
 void
