@@ -292,7 +292,7 @@ gpio_read (unsigned int pin)
     {
       val = atoi (valStr);
 
-      printf ("valStr: %s, val: %d\n", valStr, val);
+      debug ("[%s] valStr: %s, val: %d\n", __func__, valStr, val);
 
       return val;
     }
