@@ -53,7 +53,7 @@
 #define delaySeconds(d)			sleep(d);
 
 /* http://gcc.gnu.org/onlinedocs/gcc/Compound-Literals.html */
-#define a(...)		(int[])__VA_ARGS__
+#define a(...)		(unsigned char[])__VA_ARGS__
 
 #define size(a)	(sizeof(a) / sizeof((a)[0]))
 
