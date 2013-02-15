@@ -71,7 +71,7 @@ board_info ()
 	fgets(rev_hex, 5, info);
 	sscanf(rev_hex, "%x", &rev_int);
 
-	// Data from: http://www.element14.com/community/docs/DOC-50776
+	// Data from: http://raspberryalphaomega.org.uk/?p=428 
 	switch(rev_int){
 		case 2:
 		case 3:
@@ -84,6 +84,14 @@ board_info ()
 		case 5:
 		case 6:
 			board.model = MODEL_B;
+			board.rev = REV_2;
+			board.mem = MEM_256;
+		break;
+
+		case 7:
+		case 8:
+		case 9:
+			board.model = MODEL_A;
 			board.rev = REV_2;
 			board.mem = MEM_256;
 		break;
