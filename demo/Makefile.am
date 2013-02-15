@@ -34,7 +34,7 @@ bin_PROGRAMS = board_info \
 			 gpio_ledborg   \
 	       i2c_ads1015    \
 	       i2c_hmc6352    \
-	       i2c_mcp23017   \
+	       i2c_mcp23008   \
 	       pwm_demo       \
 			 spi_test		 \
 	       spi_bb_mcp3202
@@ -68,8 +68,8 @@ i2c_hmc6352_SOURCES = i2c_hmc6352.c
 i2c_hmc6352_LDADD   = ../lib/libpihwm.la -lpthread
 
 # MCP23017 i2c demo
-i2c_mcp23017_SOURCES = i2c_mcp23017.c
-i2c_mcp23017_LDADD   = ../lib/libpihwm.la -lpthread
+i2c_mcp23008_SOURCES = i2c_mcp23008.c
+i2c_mcp23008_LDADD   = ../lib/libpihwm.la -lpthread
 
 # PWM demo
 pwm_demo_SOURCES = pwm_demo.c
