@@ -30,12 +30,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-// Individual parts of pihwm
-#include "pi_gpio.h"
-#include "pi_pwm.h"
-#include "pi_i2c.h"
-#include "pi_spi.h"
-
 // Board information
 #define MODEL_A	100
 #define MODEL_B	200
