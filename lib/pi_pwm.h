@@ -1,34 +1,34 @@
 /* pi_pwm.h -- Pulse width modulation library headers.
 
-   Copyright (C) 2012 Omer Kilic
-   Copyright (C) 2012 Embecosm Limited
+Copyright (C) 2012 Omer Kilic
+Copyright (C) 2012 Embecosm Limited
 
-   Contributor Omer Kilic <omerkilic@gmail.com>
-   Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
+Contributor Omer Kilic <omerkilic@gmail.com>
+Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
 
-   This file is part of pihwm.
+This file is part of pihwm.
 
-   This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU General Public License as published by the Free
-   Software Foundation; either version 3 of the License, or (at your option)
-   any later version.
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation; either version 3 of the License, or (at your option)
+any later version.
 
-   This program is distributed in the hope that it will be useful, but WITHOUT
-   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-   more details.
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+more details.
 
-   You should have received a copy of the GNU General Public License along
-   with this program.  If not, see <http://www.gnu.org/licenses/>. */
+You should have received a copy of the GNU General Public License along
+with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #ifndef PI_PWM_H
 #define PI_PWM_H
 
 
-#define BCM2708_PERI_BASE        0x20000000
-#define CLOCK_BASE               (BCM2708_PERI_BASE + 0x101000)	/* Clocks */
-#define GPIO_BASE                (BCM2708_PERI_BASE + 0x200000)	/* GPIO   */
-#define PWM_BASE                 (BCM2708_PERI_BASE + 0x20C000)	/* PWM    */
+#define BCM2708_PERI_BASE	0x20000000
+#define CLOCK_BASE			(BCM2708_PERI_BASE + 0x101000)	/* Clocks */
+#define GPIO_BASE			(BCM2708_PERI_BASE + 0x200000)	/* GPIO   */
+#define PWM_BASE			(BCM2708_PERI_BASE + 0x20C000)	/* PWM    */
 
 /* PWM Registers */
 #define GPIO_SET0   *(gpio+7)	/* Set GPIO high bits 0-31 */
@@ -75,8 +75,7 @@
 #define BLOCK_SIZE (4*1024)
 
 
-/* GPIO setup macros. Always use INP_GPIO(x) before using OUT_GPIO(x) or
-   SET_GPIO_ALT(x,y) */
+/* GPIO setup macros. Always use INP_GPIO(x) before using OUT_GPIO(x) or SET_GPIO_ALT(x,y) */
 #define INP_GPIO(g) *(gpio+((g)/10)) &= ~(7<<(((g)%10)*3))
 #define OUT_GPIO(g) *(gpio+((g)/10)) |=  (1<<(((g)%10)*3))
 #define SET_GPIO_ALT(g,a) *(gpio+(((g)/10))) |= (((a)<=3?(a)+4:(a)==4?3:2)<<(((g)%10)*3))
@@ -94,7 +93,6 @@
 
 // Range for the PWM module
 const unsigned int PWM_MAX = 1024;
-
 
 // FIXME: Remove these?
 volatile unsigned int *gpio;

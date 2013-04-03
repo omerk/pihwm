@@ -1,23 +1,23 @@
 /* pi_spi.c -- SPI library function implementation.
 
-   Copyright (C) 2012 Omer Kilic
+Copyright (C) 2012 Omer Kilic
 
-   Contributor Omer Kilic <omerkilic@gmail.com>
+Contributor Omer Kilic <omerkilic@gmail.com>
 
-   This file is part of pihwm.
+This file is part of pihwm.
 
-   This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU General Public License as published by the Free
-   Software Foundation; either version 3 of the License, or (at your option)
-   any later version.
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation; either version 3 of the License, or (at your option)
+any later version.
 
-   This program is distributed in the hope that it will be useful, but WITHOUT
-   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-   more details.
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+more details.
 
-   You should have received a copy of the GNU General Public License along
-   with this program.  If not, see <http://www.gnu.org/licenses/>. */
+You should have received a copy of the GNU General Public License along
+with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 //#include "config.h"
 
@@ -35,39 +35,51 @@
 #include "pihwm.h"
 #include "pi_spi.h"
 
-
 int
 spi_init (uint8_t channel)
 {
 	int fd;
 
-	if ( check_kernel_module("spidev") < 0 ){
-      debug ("[%s] Kernel module \"spidev\" not loaded.\n", __func__);
+	if ( check_kernel_module("spidev") < 0 )
+	{
+		debug ("[%s] Kernel module \"spidev\" not loaded.\n", __func__);
 		return -1;
-  	}
+	}
 
-	if ( check_kernel_module("spi_bcm2708") < 0 ){
-      debug ("[%s] Kernel module \"spi_bcm2708\" not loaded.\n", __func__);
+	if ( check_kernel_module("spi_bcm2708") < 0 )
+	{
+		debug ("[%s] Kernel module \"spi_bcm2708\" not loaded.\n", __func__);
 		return -1;
-  	}
+	}
 
-	if ( channel == 0 ){
+	if ( channel == 0 )
+	{
 		fd = open("/dev/spidev0.0", O_RDWR);
-	} else if ( channel == 1 ) {
+	}
+	else if ( channel == 1 )
+	{
 		fd = open("/dev/spidev0.1", O_RDWR);
-	} else {
+	}
+	else
+	{
 		debug ("[%s] Invalid SPI channel: %d\n", __func__, channel);
 		fd = -1;
 	}
 
-	if ( fd < 0 ){
+	if ( fd < 0 )
+	{
 		debug ("[%s] Can't open SPI device.\n", __func__);
 		return -1;
-	} else {
+	}
+	else
+	{
 		// device open, config default values
-		if ( spi_config_default(fd) ){
+		if ( spi_config_default(fd) )
+		{
 			return fd;
-		} else {
+		}
+		else
+		{
 			debug ("[%s] Can't set default SPI config.\n", __func__);
 			return -1;
 		}
@@ -75,28 +87,30 @@ spi_init (uint8_t channel)
 }
 
 int
-spi_config(int fd, uint8_t mode, uint8_t bits,
-			  uint32_t speed, uint16_t delay)
+spi_config(int fd, uint8_t mode, uint8_t bits, uint32_t speed, uint16_t delay)
 {
 	int ret;
 
 	//spi mode
 	ret = ioctl(fd, SPI_IOC_WR_MODE, &mode);
-	if ( ret == -1 ){
+	if ( ret == -1 )
+	{
 		debug ("[%s] Can't set SPI mode.\n", __func__);
 		return -1;
 	}
 
 	// bits per word
 	ret = ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &bits);
-	if ( ret == -1 ){
+	if ( ret == -1 )
+	{
 		debug ("[%s] Can't set SPI bits per word.\n", __func__);
 		return -1;
 	}
 
 	// max speed hz
 	ret = ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed);
-	if ( ret == -1 ){
+	if ( ret == -1 )
+	{
 		debug ("[%s] Can't set SPI max speed.\n", __func__);
 		return -1;
 	}
@@ -109,8 +123,7 @@ spi_config_default(int fd)
 {
 	int ret;
 
-	ret = spi_config (fd, SPI_DEFAULT_MODE, SPI_DEFAULT_BPW,
-						   SPI_DEFAULT_SPEED, SPI_DEFAULT_DELAY);
+	ret = spi_config (fd, SPI_DEFAULT_MODE, SPI_DEFAULT_BPW, SPI_DEFAULT_SPEED, SPI_DEFAULT_DELAY);
 
 	return ret;
 }
@@ -130,10 +143,13 @@ spi_transfer (int fd, uint8_t txbuf[], uint8_t rxbuf[], uint8_t len)
 	};
 
 	ret = ioctl(fd, SPI_IOC_MESSAGE(1), &transfer);
-	if ( ret < 1 ){
+	if ( ret < 1 )
+	{
 		debug ("[%s] Can't send SPI message.\n", __func__);
 		return -1;
-	} else {
+	}
+	else
+	{
 		return 1;
 	}
 }

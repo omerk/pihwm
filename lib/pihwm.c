@@ -1,28 +1,28 @@
 /**
- * @file   pihwm.c
- * @author Omer Kilic <omerkilic@gmail.com>
- * @brief  Implementation for general library functions
- *
- * @description
- *
- * @section LICENSE
- * Copyright (C) 2012 Omer Kilic
- *
- * This file is part of pihwm.
- *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the Free
- * Software Foundation; either version 3 of the License, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program.  If not, see <http://www.gnu.org/licenses/>. 
- */
+* @file   pihwm.c
+* @author Omer Kilic <omerkilic@gmail.com>
+* @brief  Implementation for general library functions
+*
+* @description
+*
+* @section LICENSE
+* Copyright (C) 2012 Omer Kilic
+*
+* This file is part of pihwm.
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by the Free
+* Software Foundation; either version 3 of the License, or (at your option)
+* any later version.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+* FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+* more details.
+*
+* You should have received a copy of the GNU General Public License along
+* with this program.  If not, see <http://www.gnu.org/licenses/>. 
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,25 +31,25 @@
 
 
 /*! \addtogroup General
- *  @brief General library functions
- *  @{
- */
-
- /**
- * @mainpage Documentation
- *
- * <h2>Introduction</h2>
- * foo
- * 
- * <h2>Usage</h2>
- * bar
- */
+*  @brief General library functions
+*  @{
+*/
 
 /**
- * @brief Return board information (Model, PCB revision and Memory)
- *
- * @return board information
- */
+* @mainpage Documentation
+*
+* <h2>Introduction</h2>
+* foo
+* 
+* <h2>Usage</h2>
+* bar
+*/
+
+/**
+* @brief Return board information (Model, PCB revision and Memory)
+*
+* @return board information
+*/
 board_t
 board_info ()
 {
@@ -64,7 +64,8 @@ board_info ()
 
 	char *cmd = "cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}'";
 
-	if( !(info = popen(cmd, "r")) ){
+	if( !(info = popen(cmd, "r")) )
+	{
 		return board;
 	}
 
@@ -78,7 +79,7 @@ board_info ()
 			board.model = MODEL_B;
 			board.rev = REV_1;
 			board.mem = MEM_256;
-		break;
+			break;
 
 		case 4:
 		case 5:
@@ -103,21 +104,21 @@ board_info ()
 			board.rev = REV_2;
 			board.mem = MEM_512;
 		break;
-		
-		default:
-			// Default values (-1) already set.
+
+	default:
+		// Default values (-1) already set.
 		break;
 	}
-	
+
 	return board;
 
 }
 
 /**
- * @brief Return board model
- *
- * @return MODEL_A or MODEL_B
- */
+* @brief Return board model
+*
+* @return MODEL_A or MODEL_B
+*/
 int
 board_model ()
 {
@@ -126,10 +127,10 @@ board_model ()
 }
 
 /**
- * @brief Return board revision
- *
- * @return REV_1 or REV_2
- */
+* @brief Return board revision
+*
+* @return REV_1 or REV_2
+*/
 int
 board_rev ()
 {
@@ -138,10 +139,10 @@ board_rev ()
 }
 
 /**
- * @brief Return the amount of system memory
- *
- * @return MEM_256 or MEM_512
- */
+* @brief Return the amount of system memory
+*
+* @return MEM_256 or MEM_512
+*/
 int
 board_mem ()
 {
@@ -150,11 +151,11 @@ board_mem ()
 }
 
 /**
- * @brief Check if the kernel module specified is loaded.
- *
- * @param 	name of the kernel module
- * @return 	1 for success, -1 for failure
- */
+* @brief Check if the kernel module specified is loaded.
+*
+* @param 	name of the kernel module
+* @return 	1 for success, -1 for failure
+*/
 int
 check_kernel_module (char* modulename)
 {
@@ -162,23 +163,26 @@ check_kernel_module (char* modulename)
 	char cmd[100];
 	char modcount[2];
 	unsigned int modcount_int = 0;
-	
+
 	sprintf(cmd, "lsmod | grep %s | wc -l", modulename); 
 
-	if( !(lsmod = popen(cmd, "r")) ){
+	if( !(lsmod = popen(cmd, "r")) )
+	{
 		return -1;
 	}
 
 	fgets(modcount, 2, lsmod);
 	modcount_int = atoi(modcount);
 
-	if ( modcount_int > 0 ){
+	if ( modcount_int > 0 )
+	{
 		return 1;
-	} else {
+	}
+	else
+	{
 		return -1;
 	}
 
 }
 
 /*! @} */
-
