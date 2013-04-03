@@ -37,7 +37,8 @@ bin_PROGRAMS = board_info \
 	       i2c_mcp23008   \
 	       pwm_demo       \
 			 spi_test		 \
-	       spi_bb_mcp3202
+	       spi_bb_mcp3202 \
+	       spi_mcp3002
 
 # Kernel modules test
 check_kernel_modules_SOURCES = check_kernel_modules.c
@@ -74,6 +75,10 @@ i2c_mcp23008_LDADD   = ../lib/libpihwm.la -lpthread
 # PWM demo
 pwm_demo_SOURCES = pwm_demo.c
 pwm_demo_LDADD   = ../lib/libpihwm.la -lpthread
+
+# MCP3002 SPI demo
+spi_mcp3002_SOURCES = spi_mcp3002.c
+spi_mcp3002_LDADD   = ../lib/libpihwm.la -lpthread
 
 # Bitbanged SPI demo
 spi_bb_mcp3202_SOURCES = spi_bb_mcp3202.c

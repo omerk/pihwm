@@ -80,8 +80,8 @@ host_triplet = @host@
 bin_PROGRAMS = board_info$(EXEEXT) check_kernel_modules$(EXEEXT) \
 	gpio_int$(EXEEXT) gpio_test$(EXEEXT) gpio_ledborg$(EXEEXT) \
 	i2c_ads1015$(EXEEXT) i2c_hmc6352$(EXEEXT) \
-	i2c_mcp23017$(EXEEXT) pwm_demo$(EXEEXT) spi_test$(EXEEXT) \
-	spi_bb_mcp3202$(EXEEXT)
+	i2c_mcp23008$(EXEEXT) pwm_demo$(EXEEXT) spi_test$(EXEEXT) \
+	spi_bb_mcp3202$(EXEEXT) spi_mcp3002$(EXEEXT)
 subdir = demo
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -121,15 +121,18 @@ i2c_ads1015_DEPENDENCIES = ../lib/libpihwm.la
 am_i2c_hmc6352_OBJECTS = i2c_hmc6352.$(OBJEXT)
 i2c_hmc6352_OBJECTS = $(am_i2c_hmc6352_OBJECTS)
 i2c_hmc6352_DEPENDENCIES = ../lib/libpihwm.la
-am_i2c_mcp23017_OBJECTS = i2c_mcp23017.$(OBJEXT)
-i2c_mcp23017_OBJECTS = $(am_i2c_mcp23017_OBJECTS)
-i2c_mcp23017_DEPENDENCIES = ../lib/libpihwm.la
+am_i2c_mcp23008_OBJECTS = i2c_mcp23008.$(OBJEXT)
+i2c_mcp23008_OBJECTS = $(am_i2c_mcp23008_OBJECTS)
+i2c_mcp23008_DEPENDENCIES = ../lib/libpihwm.la
 am_pwm_demo_OBJECTS = pwm_demo.$(OBJEXT)
 pwm_demo_OBJECTS = $(am_pwm_demo_OBJECTS)
 pwm_demo_DEPENDENCIES = ../lib/libpihwm.la
 am_spi_bb_mcp3202_OBJECTS = spi_bb_mcp3202.$(OBJEXT)
 spi_bb_mcp3202_OBJECTS = $(am_spi_bb_mcp3202_OBJECTS)
 spi_bb_mcp3202_DEPENDENCIES = ../lib/libpihwm.la
+am_spi_mcp3002_OBJECTS = spi_mcp3002.$(OBJEXT)
+spi_mcp3002_OBJECTS = $(am_spi_mcp3002_OBJECTS)
+spi_mcp3002_DEPENDENCIES = ../lib/libpihwm.la
 am_spi_test_OBJECTS = spi_test.$(OBJEXT)
 spi_test_OBJECTS = $(am_spi_test_OBJECTS)
 spi_test_DEPENDENCIES = ../lib/libpihwm.la
@@ -162,15 +165,15 @@ am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(board_info_SOURCES) $(check_kernel_modules_SOURCES) \
 	$(gpio_int_SOURCES) $(gpio_ledborg_SOURCES) \
 	$(gpio_test_SOURCES) $(i2c_ads1015_SOURCES) \
-	$(i2c_hmc6352_SOURCES) $(i2c_mcp23017_SOURCES) \
+	$(i2c_hmc6352_SOURCES) $(i2c_mcp23008_SOURCES) \
 	$(pwm_demo_SOURCES) $(spi_bb_mcp3202_SOURCES) \
-	$(spi_test_SOURCES)
+	$(spi_mcp3002_SOURCES) $(spi_test_SOURCES)
 DIST_SOURCES = $(board_info_SOURCES) $(check_kernel_modules_SOURCES) \
 	$(gpio_int_SOURCES) $(gpio_ledborg_SOURCES) \
 	$(gpio_test_SOURCES) $(i2c_ads1015_SOURCES) \
-	$(i2c_hmc6352_SOURCES) $(i2c_mcp23017_SOURCES) \
+	$(i2c_hmc6352_SOURCES) $(i2c_mcp23008_SOURCES) \
 	$(pwm_demo_SOURCES) $(spi_bb_mcp3202_SOURCES) \
-	$(spi_test_SOURCES)
+	$(spi_mcp3002_SOURCES) $(spi_test_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -327,12 +330,16 @@ i2c_hmc6352_SOURCES = i2c_hmc6352.c
 i2c_hmc6352_LDADD = ../lib/libpihwm.la -lpthread
 
 # MCP23017 i2c demo
-i2c_mcp23017_SOURCES = i2c_mcp23017.c
-i2c_mcp23017_LDADD = ../lib/libpihwm.la -lpthread
+i2c_mcp23008_SOURCES = i2c_mcp23008.c
+i2c_mcp23008_LDADD = ../lib/libpihwm.la -lpthread
 
 # PWM demo
 pwm_demo_SOURCES = pwm_demo.c
 pwm_demo_LDADD = ../lib/libpihwm.la -lpthread
+
+# MCP3002 SPI demo
+spi_mcp3002_SOURCES = spi_mcp3002.c
+spi_mcp3002_LDADD = ../lib/libpihwm.la -lpthread
 
 # Bitbanged SPI demo
 spi_bb_mcp3202_SOURCES = spi_bb_mcp3202.c
@@ -442,15 +449,18 @@ i2c_ads1015$(EXEEXT): $(i2c_ads1015_OBJECTS) $(i2c_ads1015_DEPENDENCIES) $(EXTRA
 i2c_hmc6352$(EXEEXT): $(i2c_hmc6352_OBJECTS) $(i2c_hmc6352_DEPENDENCIES) $(EXTRA_i2c_hmc6352_DEPENDENCIES) 
 	@rm -f i2c_hmc6352$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(i2c_hmc6352_OBJECTS) $(i2c_hmc6352_LDADD) $(LIBS)
-i2c_mcp23017$(EXEEXT): $(i2c_mcp23017_OBJECTS) $(i2c_mcp23017_DEPENDENCIES) $(EXTRA_i2c_mcp23017_DEPENDENCIES) 
-	@rm -f i2c_mcp23017$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(i2c_mcp23017_OBJECTS) $(i2c_mcp23017_LDADD) $(LIBS)
+i2c_mcp23008$(EXEEXT): $(i2c_mcp23008_OBJECTS) $(i2c_mcp23008_DEPENDENCIES) $(EXTRA_i2c_mcp23008_DEPENDENCIES) 
+	@rm -f i2c_mcp23008$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(i2c_mcp23008_OBJECTS) $(i2c_mcp23008_LDADD) $(LIBS)
 pwm_demo$(EXEEXT): $(pwm_demo_OBJECTS) $(pwm_demo_DEPENDENCIES) $(EXTRA_pwm_demo_DEPENDENCIES) 
 	@rm -f pwm_demo$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(pwm_demo_OBJECTS) $(pwm_demo_LDADD) $(LIBS)
 spi_bb_mcp3202$(EXEEXT): $(spi_bb_mcp3202_OBJECTS) $(spi_bb_mcp3202_DEPENDENCIES) $(EXTRA_spi_bb_mcp3202_DEPENDENCIES) 
 	@rm -f spi_bb_mcp3202$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(spi_bb_mcp3202_OBJECTS) $(spi_bb_mcp3202_LDADD) $(LIBS)
+spi_mcp3002$(EXEEXT): $(spi_mcp3002_OBJECTS) $(spi_mcp3002_DEPENDENCIES) $(EXTRA_spi_mcp3002_DEPENDENCIES) 
+	@rm -f spi_mcp3002$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(spi_mcp3002_OBJECTS) $(spi_mcp3002_LDADD) $(LIBS)
 spi_test$(EXEEXT): $(spi_test_OBJECTS) $(spi_test_DEPENDENCIES) $(EXTRA_spi_test_DEPENDENCIES) 
 	@rm -f spi_test$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(spi_test_OBJECTS) $(spi_test_LDADD) $(LIBS)
@@ -468,9 +478,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gpio_test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/i2c_ads1015.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/i2c_hmc6352.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/i2c_mcp23017.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/i2c_mcp23008.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pwm_demo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/spi_bb_mcp3202.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/spi_mcp3002.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/spi_test.Po@am__quote@
 
 .c.o:

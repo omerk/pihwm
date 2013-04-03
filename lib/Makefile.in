@@ -287,23 +287,23 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 lib_LTLIBRARIES = libpihwm.la
 include_HEADERS = pi_gpio.h \
-		  pi_i2c.h  \
-		  pi_pwm.h	\
-		  pi_spi.h	\
-		  pihwm.h
+				  pi_i2c.h  \
+				  pi_pwm.h	\
+				  pi_spi.h	\
+				  pihwm.h
 
 
 # Details for the library
 libpihwm_la_SOURCES = pi_gpio.c \
-		       pi_gpio.h \
-		       pi_i2c.c  \
-		       pi_i2c.h  \
-		       pi_pwm.c  \
-		       pi_pwm.h  \
-		       pi_spi.c  \
-		       pi_spi.h  \
-		       pihwm.h	  \
-				 pihwm.c
+					   pi_gpio.h \
+					   pi_i2c.c  \
+					   pi_i2c.h  \
+					   pi_pwm.c  \
+					   pi_pwm.h  \
+					   pi_spi.c  \
+					   pi_spi.h  \
+					   pihwm.h	 \
+					   pihwm.c
 
 all: all-am
 
