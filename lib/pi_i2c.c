@@ -150,6 +150,8 @@ i2c_read (unsigned int fd, unsigned int addr, unsigned char *data,	unsigned int 
 		debug("[%s] Can't select I2C device at address: 0x%X, write failed\n", __func__, addr);
 		return -1;
 	}
+}
+
 
 /*
 int
