@@ -118,7 +118,7 @@ gpio_init (unsigned int pin, unsigned int dir)
 		return -1;
 	}
 
-
+  int ret = 1;
 	if ( dir == 0 )
 	{
 		fwrite("out", sizeof (char), 3, file);
@@ -130,12 +130,12 @@ gpio_init (unsigned int pin, unsigned int dir)
 	else
 	{
 		debug("[%s] Can't set pin direction.\n", __func__);
-		return -1;
+    ret = -1;
 	}
 
 	fclose(file);
 
-	return 1;
+	return ret;
 }
 
 
@@ -258,6 +258,7 @@ int
 gpio_write (unsigned int pin, unsigned int val)
 {
 	int file;
+  int ret = 1;
 
 	file = gpio_valfd (pin);
 
@@ -266,7 +267,7 @@ gpio_write (unsigned int pin, unsigned int val)
 		if ( write(file, "0", (sizeof(char) * 1)) == -1 )
 		{
 			debug("[%s] Can't write to GPIO pin", __func__);
-			return -1;
+      ret = -1;
 		}
 	} 
 	else if ( val == 1 )
@@ -274,18 +275,18 @@ gpio_write (unsigned int pin, unsigned int val)
 		if ( write(file, "1", (sizeof(char) * 1)) == -1 )
 		{
 			debug("[%s] Can't write to GPIO pin", __func__);
-			return -1;
+      ret = -1;
 		}
 	} 
 	else 
 	{
 		debug("[%s] Wrong value for the GPIO pin", __func__);
-		return -1;
+    ret = -1;
 	}
 
 	close(file);
 
-	return 1;
+	return ret;
 }
 
 
@@ -301,18 +302,16 @@ gpio_read (unsigned int pin)
   if (read (file, &valStr, 1) == 1)
     {
       val = atoi (valStr);
-
       debug ("[%s] valStr: %s, val: %d\n", __func__, valStr, val);
-
-      return val;
     }
   else
     {
       debug ("[%s] Can't read pin value", __func__);
-      return -1;
+      val = -1;
     }
 
   close (file);
+  return val;
 }
 
 
