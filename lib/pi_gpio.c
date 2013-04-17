@@ -1,27 +1,29 @@
-/* pi_gpio.c -- gpio library function implementation.
-
-Copyright (C) 2012 Omer Kilic
-Copyright (C) 2012 Embecosm Limited
-
-Contributor Omer Kilic <omerkilic@gmail.com>
-Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
-
-This file is part of pihwm.
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the Free
-Software Foundation; either version 3 of the License, or (at your option)
-any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-more details.
-
-You should have received a copy of the GNU General Public License along
-with this program.  If not, see <http://www.gnu.org/licenses/>. */
-
-#include "config.h"
+/**
+* @file   pi_gpio.c
+* @author Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+* @author Jeremy Bennett <jeremy.bennett@embecosm.com> - Embecosm Limited
+* @brief  gpio library function implementation
+*
+* @description
+*
+* @section LICENSE
+* Copyright (C) 2013 Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+* Copyright (C) 2013 Jeremy Bennett <jeremy.bennett@embecosm.com> - Embecosm Limited
+*
+* This file is part of pihwm <http://omerk.github.io/pihwm>
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at:
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 #include <stdio.h>
 #include <string.h>
@@ -46,6 +48,20 @@ typedef struct
 } isr_t;
 
 
+/*! \addtogroup GPIO
+*  @brief GPIO library functions
+*  @{
+*/
+
+/**
+* @brief	Return the file desriptor for the /edge sysfs entry for a pin.
+* Also sets the interrupt condition for the pin.
+*
+* @param	pin		Pin number
+* @param	edge	Interrupt condition
+*
+* @return 	1 for success, -1 for failure
+*/
 static int
 gpio_edge (int pin, char *edge)
 {
@@ -67,7 +83,13 @@ gpio_edge (int pin, char *edge)
 	return 1;
 }
 
-
+/**
+* @brief	Return the file desriptor for the /value sysfs entry for a pin
+*
+* @param	pin		Pin number
+*
+* @return 	1 for success, -1 for failure
+*/
 static int
 gpio_valfd (int pin)
 {
@@ -88,7 +110,17 @@ gpio_valfd (int pin)
 
 }
 
-
+/**
+* @brief	Initialize the GPIO interface for the pin numbered pin on the 
+* Raspberry Pi P1 header in the direction specified by dir. dir should be
+* either "in" or "out", for which the defined constants INPUT, IN, OUTPUT
+* or OUT may be used.
+*
+* @param	pin		Pin number		
+* @param	dir		Direction of pin (input or output)
+*
+* @return 	1 for success, -1 for failure
+*/
 int
 gpio_init (unsigned int pin, unsigned int dir)
 {
@@ -139,8 +171,13 @@ gpio_init (unsigned int pin, unsigned int dir)
 }
 
 
-/* Bits from:
-https://www.ridgerun.com/developer/wiki/index.php/Gpio-int-test.c */
+/**
+* @brief	Set up the listener thread for the interrupt service routine
+*
+* @param	isr		Interrupt service routine
+*
+* @return 	1 for success, -1 for failure
+*/
 static void *
 isr_handler (void *isr)
 {
@@ -221,7 +258,19 @@ isr_handler (void *isr)
 
 }
 
-
+/**
+* @brief	Set <b>isr</b> as the interrupt service routine (ISR) for pin numbered
+* <b>pin</b> on the Raspberry Pi P1 header. mode should be one of the strings "rising",
+* "falling" or "both" to indicate which edge(s) the ISR is to be triggered on.
+* The function isr is called whenever the edge specified occurs, receiving as 
+* argument the number of the pin which triggered the interrupt.
+*
+* @param	pin		Pin number to attach interrupt to
+* @param	isr		Interrupt service routine to call
+* @param	mode	Interrupt mode
+*
+* @return 	Returns 1 on success. Never fails
+*/
 int
 gpio_set_int (unsigned int pin, void (*isr) (int), char *mode)
 {
@@ -242,7 +291,15 @@ gpio_set_int (unsigned int pin, void (*isr) (int), char *mode)
 	return 1;
 }
 
-
+/**
+* @brief	Clears any interrupt service routine (ISR) set on the pin numbered
+* pin on the Raspberry Pi P1 header. The ISR will have been set originally by
+* a call to gpio_set_int.
+*
+* @param	Pin number which has an interrupt attached
+*
+* @return 	Returns 1 on success. Never fails
+*/
 int
 gpio_clear_int (unsigned int pin)
 {
@@ -253,7 +310,14 @@ gpio_clear_int (unsigned int pin)
 	return  0;			/* Is this a correct return result. */
 }
 
-
+/**
+* @brief	Set the pin numbered pin on the Raspberry Pi P1 header to the value specified by val. dir should be either "0" or "1". The defined constants LOW or OFF may be used instead of 0 and HIGH or ON instead of 1/
+*
+* @param	pin		Pin number to write to
+* @param	val		Value to set (0 or 1)
+*
+* @return 	1 for success, -1 for failure
+*/
 int
 gpio_write (unsigned int pin, unsigned int val)
 {
@@ -289,7 +353,15 @@ gpio_write (unsigned int pin, unsigned int val)
 	return ret;
 }
 
-
+/**
+* @brief	Read the value on the pin numbered pin on the Raspberry Pi
+* P1 header.
+*
+* @param	pin		Pin number to read from
+*
+* @return 	On success, returns 0 or 1 depending on whether the pin is
+* low or high respectively. On failure returns -1.
+*/
 int
 gpio_read (unsigned int pin)
 {
@@ -314,7 +386,14 @@ gpio_read (unsigned int pin)
   return val;
 }
 
-
+/**
+* @brief	The inverse of gpio_init. Frees the pin numbered pin on the
+* Raspberry Pi P1 header, so it can be used for other purposes.
+*
+* @param	pin		Pin number to release
+*
+* @return 	1 for success, -1 for failure
+*/
 int
 gpio_release (unsigned int pin)
 {
@@ -336,4 +415,4 @@ gpio_release (unsigned int pin)
 	return 1;
 }
 
-
+/*! @} */

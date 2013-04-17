@@ -1,25 +1,29 @@
-/* pi_i2c.c -- I2C library function implementation.
-
-Copyright (C) 2012 Omer Kilic
-Copyright (C) 2012 Embecosm Limited
-
-Contributor Omer Kilic <omerkilic@gmail.com>
-Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
-
-This file is part of pihwm.
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the Free
-Software Foundation; either version 3 of the License, or (at your option)
-any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-more details.
-
-You should have received a copy of the GNU General Public License along
-with this program.  If not, see <http://www.gnu.org/licenses/>. */
+/**
+* @file   pi_i2c.c
+* @author Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+* @author Jeremy Bennett <jeremy.bennett@embecosm.com> - Embecosm Limited
+* @brief  I2C library function implementation.
+*
+* @description
+*
+* @section LICENSE
+* Copyright (C) 2013 Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+* Copyright (C) 2013 Jeremy Bennett <jeremy.bennett@embecosm.com> - Embecosm Limited
+*
+* This file is part of pihwm <http://omerk.github.io/pihwm>
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at:
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 #include "config.h"
 
@@ -37,7 +41,18 @@ with this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "pihwm.h"
 #include "pi_i2c.h"
 
+/*! \addtogroup I2C
+*  @brief I2C library functions
+*  @{
+*/
 
+/**
+* @brief	Initialises the i2c-dev interface for the I2C peripheral
+* exposed on the P1 header (which is dependent on the board revision)
+*
+* @return 	The file descriptor for the relevant i2c-dev interface, -1
+* for failure
+*/
 int
 i2c_init()
 {
@@ -72,7 +87,15 @@ i2c_init()
 
 }
 
-
+/**
+* @brief	Initialises the i2c-dev interface for the sysfs entry specified
+* by the devname parameter.
+*
+* @param	devname		The sysfs entry for a particular I2C peripheral
+*
+* @return 	The file descriptor for the relevant i2c-dev interface, -1
+* for failure
+*/
 int
 i2c_init_name (char *devname)
 {
@@ -89,7 +112,14 @@ i2c_init_name (char *devname)
 	}
 }
 
-
+/**
+* @brief	Selects a specific I2C slave device
+*
+* @param	fd		File descriptor for the i2c-dev interface	
+* @param	addr	I2C slave device address
+*
+* @return 	1 for success, -1 for failure
+*/
 int
 i2c_select_device (unsigned int fd, unsigned int addr)
 {
@@ -104,7 +134,16 @@ i2c_select_device (unsigned int fd, unsigned int addr)
 	}
 }
 
-
+/**
+* @brief	Initiates an I2C write operation
+*
+* @param	fd		File descriptor for the i2c-dev interface
+* @param	addr	I2C slave device address
+* @param	data	Data to write to the device
+* @param	len		Length of data
+*
+* @return 	1 for success, -1 for failure
+*/
 int
 i2c_write (unsigned int fd, unsigned int addr, unsigned char *data,	unsigned int len)
 {
@@ -126,7 +165,16 @@ i2c_write (unsigned int fd, unsigned int addr, unsigned char *data,	unsigned int
 	return 1;
 }
 
-
+/**
+* @brief	Initiates an I2C read operation
+*
+* @param	fd		File descriptor for the i2c-dev interface
+* @param	addr	I2C slave device address
+* @param	data	Pointer to the read buffer
+* @param	len		Length of data
+*
+* @return 	1 for success, -1 for failure
+*/
 int
 i2c_read (unsigned int fd, unsigned int addr, unsigned char *data,	unsigned int len)
 {
@@ -154,6 +202,7 @@ i2c_read (unsigned int fd, unsigned int addr, unsigned char *data,	unsigned int 
 
 
 /*
+* FIXME: Test this.
 int
 i2c_read_write (unsigned int fd, unsigned int addr, unsigned char *write, unsigned char *read)
 {
@@ -186,3 +235,5 @@ i2c_read_write (unsigned int fd, unsigned int addr, unsigned char *write, unsign
 	return 1;
 }
 */
+
+/*! @} */

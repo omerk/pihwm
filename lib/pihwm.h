@@ -1,27 +1,28 @@
 /**
 * @file   pihwm.h
-* @author Omer Kilic <omerkilic@gmail.com>
-* @author Jeremy Bennett <jeremy.bennett@embecosm.com>
+* @author Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+* @author Jeremy Bennett <jeremy.bennett@embecosm.com> - Embecosm Limited
 * @brief  Header for general library functionality
 *
+* @description
+*
 * @section LICENSE
-* Copyright (C) 2012 Omer Kilic
-* Copyright (C) 2012 Embecosm Limited
+* Copyright (C) 2013 Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+* Copyright (C) 2013 Jeremy Bennett <jeremy.bennett@embecosm.com> - Embecosm Limited
 *
-* This file is part of pihwm.
+* This file is part of pihwm <http://omerk.github.io/pihwm>
 *
-* This program is free software; you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by the Free
-* Software Foundation; either version 3 of the License, or (at your option)
-* any later version.
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at:
 *
-* This program is distributed in the hope that it will be useful, but WITHOUT
-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-* FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-* more details.
+*   http://www.apache.org/licenses/LICENSE-2.0
 *
-* You should have received a copy of the GNU General Public License along
-* with this program.  If not, see <http://www.gnu.org/licenses/>. 
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
 */
 
 #ifndef PIHWM_H
@@ -49,10 +50,10 @@
 #define delayMicroseconds(d)	usleep(d);
 #define delaySeconds(d)			sleep(d);
 
-/* http://gcc.gnu.org/onlinedocs/gcc/Compound-Literals.html */
-#define a(...)		(unsigned char[])__VA_ARGS__
+// http://gcc.gnu.org/onlinedocs/gcc/Compound-Literals.html
+#define a(...)	(unsigned char[])__VA_ARGS__
 
-#define size(a)		(sizeof(a) / sizeof((a)[0]))
+#define size(a)	(sizeof(a) / sizeof((a)[0]))
 
 typedef struct
 {
@@ -61,7 +62,7 @@ typedef struct
 	int mem;
 } board_t;
 
-// Function prototypes for pihwm.c
+// Function prototypes
 board_t board_info ();
 int board_model ();
 int board_rev ();

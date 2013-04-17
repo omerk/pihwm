@@ -1,29 +1,31 @@
-/* pi_pwm.c -- Pulse width modulation library function implementation.
+/**
+* @file   pi_pwm.c
+* @author Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+* @author Jeremy Bennett <jeremy.bennett@embecosm.com> - Embecosm Limited
+* @brief  Pulse width modulation library function implementation.
+*
+* @description
+*
+* @section LICENSE
+* Copyright (C) 2013 Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+* Copyright (C) 2013 Jeremy Bennett <jeremy.bennett@embecosm.com> - Embecosm Limited
+*
+* This file is part of pihwm <http://omerk.github.io/pihwm>
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at:
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
-Copyright (C) 2012 Omer Kilic
-Copyright (C) 2012 Embecosm Limited
-
-Contributor Omer Kilic <omerkilic@gmail.com>
-Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
-
-This file is part of pihwm.
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the Free
-Software Foundation; either version 3 of the License, or (at your option)
-any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-more details.
-
-You should have received a copy of the GNU General Public License along
-with this program.  If not, see <http://www.gnu.org/licenses/>. */
-
-/* Based on Gert Jan van Loo's example code. */
-
-#include "config.h"
+/* Based on Gert van Loo's example code. */
 
 #include <stdio.h>
 #include <string.h>
@@ -41,9 +43,19 @@ with this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "pi_pwm.h"
 
 // Registers
-// TODO: These are already defined in .h, remove?
+// FIXME: These are already defined in .h, remove?
 volatile unsigned int *gpio, *pwm, *clk;
 
+/*! \addtogroup PWM
+*  @brief PWM library functions
+*  @{
+*/
+
+/**
+* @brief	Opens /dev/mem and returns the file descriptor
+*
+* @return 	File descriptor for /dev/mem, -1 for failure
+*/
 static int
 open_memory ()
 {
@@ -61,6 +73,14 @@ open_memory ()
 
 }
 
+/**
+* @brief	Maps a specified register in memory for manipulation
+*
+* @param	mem_fd		File descriptor for /dev/mem
+* @param	addr		Address of register
+*
+* @return 	Pointer for specified register in memory, -1 for failure
+*/
 static volatile unsigned int*
 map_register (int mem_fd, unsigned int addr)
 {
@@ -95,6 +115,11 @@ map_register (int mem_fd, unsigned int addr)
 
 }
 
+/**
+* @brief	Initialises the PWM peripheral
+*
+* @return 	1 for success, -1 for failure
+*/
 int
 pwm_init ()
 {
@@ -130,8 +155,7 @@ pwm_init ()
 	PWM_CONTROL = 0;
 	usleep(100);
 
-	/* I use 1024 steps for the PWM
-	(Just a nice value which I happen to like) */
+	/* 1024 steps for the PWM */
 	PWM0_RANGE = PWM_MAX;
 	usleep(100);
 
@@ -142,6 +166,13 @@ pwm_init ()
 
 }
 
+/**
+* @brief	Sets mode for the PWM peripheral
+*
+* @param	mode		Mode for the PWM peripheral
+*
+* @return 	none
+*/
 void
 pwm_mode (unsigned int mode)
 {
@@ -149,11 +180,13 @@ pwm_mode (unsigned int mode)
 }
 
 
-/* Set PWM value
-
-This routine does not wait for the value to arrive If a new value comes in
-before it is picked up by the chip it will definitely be too fast for the
-motor to respond to it */
+/**
+* @brief	Sets PWM value
+*
+* @param	value		PWM value
+*
+* @return 	1 for success, -1 for failure
+*/
 void
 pwm_value (unsigned int value)
 {
@@ -172,6 +205,11 @@ pwm_value (unsigned int value)
 }
 
 
+/**
+* @brief	Releases the PWM peripheral and unmaps the memory
+*
+* @return 	none
+*/
 void
 pwm_release ()
 {
@@ -185,3 +223,5 @@ pwm_release ()
 	//munmap(gpio, BLOCK_SIZE);
 	//munmap(clk, BLOCK_SIZE);
 }
+
+/*! @} */

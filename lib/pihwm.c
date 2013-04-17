@@ -1,34 +1,34 @@
 /**
 * @file   pihwm.c
-* @author Omer Kilic <omerkilic@gmail.com>
+* @author Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+* @author Jeremy Bennett <jeremy.bennett@embecosm.com> - Embecosm Limited
 * @brief  Implementation for general library functions
 *
 * @description
 *
 * @section LICENSE
-* Copyright (C) 2012 Omer Kilic
+* Copyright (C) 2013 Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+* Copyright (C) 2013 Jeremy Bennett <jeremy.bennett@embecosm.com> - Embecosm Limited
 *
-* This file is part of pihwm.
+* This file is part of pihwm <http://omerk.github.io/pihwm>
 *
-* This program is free software; you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by the Free
-* Software Foundation; either version 3 of the License, or (at your option)
-* any later version.
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at:
 *
-* This program is distributed in the hope that it will be useful, but WITHOUT
-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-* FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-* more details.
+*   http://www.apache.org/licenses/LICENSE-2.0
 *
-* You should have received a copy of the GNU General Public License along
-* with this program.  If not, see <http://www.gnu.org/licenses/>. 
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <linux/types.h>
 #include "pihwm.h"
-
 
 /*! \addtogroup General
 *  @brief General library functions
@@ -37,12 +37,68 @@
 
 /**
 * @mainpage Documentation
-*
-* <h2>Introduction</h2>
-* foo
-* 
-* <h2>Usage</h2>
-* bar
+
+pihwm is a collection of lightweight drivers for the hardware peripherals on the
+Raspberry Pi computer.
+
+* @section build Building and installing pihwm
+
+Grab the latest copy of the library from Github:
+<pre>
+git clone git://github.com/omerk/pihwm.git
+cd pihwm
+mkdir build
+cd build
+</pre>
+
+Configure the software using the configure script in the main directory.
+<pre>
+../configure
+</pre>
+
+There are several options available, many of which are standard to GNU configure 
+scripts. Use configure --help to see all the options. The most useful is --prefix 
+to specify a directory for installation of the library.
+
+Build the tool with:
+<pre>
+make all
+</pre>
+
+Install the tool with:
+<pre>
+make install
+</pre>
+
+This will install the library in prefix/lib, the demo programs in prefix/bin,
+headers in prefix/include and the documentation in prefix/share, where prefix is
+the prefix specified when configuring, if any.
+
+The documentation may be created and installed in alternative formats (PDF,
+Postscript,DVI, HTML) with for example:
+<pre>
+make pdf
+make install-pdf
+</pre>
+
+* @section usage Using the library
+The library may be used by adding -lpihwm when compiling on the Raspberry Pi.
+Programs should include pihwm.h and any other hardware specific headers from 
+the include directory as required. Note that if a prefix has been specified 
+when configuring, it may be necessary to specify the location of the library 
+(using the -L flag) and the headers (using the -I flag).
+
+For example, running on the Raspberry Pi:
+<pre>
+gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
+</pre>
+
+A number of examples can be found under the /demo directory.
+
+* @section bugs Reporting errors/bugs
+Please report bugs via the <a href="https://github.com/omerk/pihwm/issues">
+issue tracker</a> on the Github project page. Pull requests are also welcome!
+
 */
 
 /**
@@ -154,6 +210,7 @@ board_mem ()
 * @brief Check if the kernel module specified is loaded.
 *
 * @param 	name of the kernel module
+*
 * @return 	1 for success, -1 for failure
 */
 int

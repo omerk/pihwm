@@ -1,25 +1,27 @@
-/* pi_spi.c -- SPI library function implementation.
-
-Copyright (C) 2012 Omer Kilic
-
-Contributor Omer Kilic <omerkilic@gmail.com>
-
-This file is part of pihwm.
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the Free
-Software Foundation; either version 3 of the License, or (at your option)
-any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-more details.
-
-You should have received a copy of the GNU General Public License along
-with this program.  If not, see <http://www.gnu.org/licenses/>. */
-
-//#include "config.h"
+/**
+* @file   pi_spi.c
+* @author Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+* @brief  SPI library function implementation.
+*
+* @description
+*
+* @section LICENSE
+* Copyright (C) 2013 Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+*
+* This file is part of pihwm <http://omerk.github.io/pihwm>
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at:
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,6 +37,18 @@ with this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "pihwm.h"
 #include "pi_spi.h"
 
+/*! \addtogroup SPI
+*  @brief SPI library functions
+*  @{
+*/
+
+/**
+* @brief	Initialises the spidev interface
+*
+* @param	channel	SPI channel to use (0 or 1)
+*
+* @return	1 for success, -1 for failure
+*/
 int
 spi_init (uint8_t channel)
 {
@@ -86,6 +100,18 @@ spi_init (uint8_t channel)
 	}
 }
 
+
+/**
+* @brief	Configures the spidev interface
+*
+* @param	fd		File descriptor to use, can be acquired via spi_init()
+* @param	mode	SPI mode	
+* @param	bits	Number of bits
+* @param	speed	Bus speed
+* @param	delay	Amount of delay
+*
+* @return	1 for success, -1 for failure
+*/
 int
 spi_config(int fd, uint8_t mode, uint8_t bits, uint32_t speed, uint16_t delay)
 {
@@ -118,6 +144,13 @@ spi_config(int fd, uint8_t mode, uint8_t bits, uint32_t speed, uint16_t delay)
 	return 1;
 }
 
+/**
+* @brief	Configures the spidev interface with default values
+*
+* @param	fd	File descriptor to use, can be acquired via spi_init()
+*
+* @return	1 for success, -1 for failure
+*/
 int
 spi_config_default(int fd)
 {
@@ -128,6 +161,16 @@ spi_config_default(int fd)
 	return ret;
 }
 
+/**
+* @brief	Initiates SPI transfers
+*
+* @param	fd		File descriptor to use, can be acquired via spi_init()
+* @param	txbuf	Transmit buffer array
+* @param	rxbuf	Receive buffer array
+* @param	len		Length of transfer
+*
+* @return	1 for success, -1 for failure
+*/
 int
 spi_transfer (int fd, uint8_t txbuf[], uint8_t rxbuf[], uint8_t len)
 {
@@ -154,3 +197,4 @@ spi_transfer (int fd, uint8_t txbuf[], uint8_t rxbuf[], uint8_t len)
 	}
 }
 
+/*! @} */
