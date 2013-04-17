@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>pihwm: Documentation</title>
+<title>pihwm: Modules</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -42,8 +42,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li class="current"><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -76,7 +76,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('index.html','');});
+$(document).ready(function(){initNavTree('modules.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -95,44 +95,19 @@ $(document).ready(function(){initNavTree('index.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Documentation </div>  </div>
+<div class="title">Modules</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>pihwm is a collection of lightweight drivers for the hardware peripherals on the Raspberry Pi computer.</p>
-<h1><a class="anchor" id="build"></a>
-Building and installing pihwm</h1>
-<p>Grab the latest copy of the library from Github: </p>
-<pre>
-git clone git://github.com/omerk/pihwm.git
-cd pihwm
-mkdir build
-cd build
-</pre><p>Configure the software using the configure script in the main directory. </p>
-<pre>
-../configure
-</pre><p>There are several options available, many of which are standard to GNU configure scripts. Use configure &ndash;help to see all the options. The most useful is &ndash;prefix to specify a directory for installation of the library.</p>
-<p>Build the tool with: </p>
-<pre>
-make all
-</pre><p>Install the tool with: </p>
-<pre>
-make install
-</pre><p>This will install the library in prefix/lib, the demo programs in prefix/bin, headers in prefix/include and the documentation in prefix/share, where prefix is the prefix specified when configuring, if any.</p>
-<p>The documentation may be created and installed in alternative formats (PDF, Postscript,DVI, HTML) with for example: </p>
-<pre>
-make pdf
-make install-pdf
-</pre><h1><a class="anchor" id="usage"></a>
-Using the library</h1>
-<p>The library may be used by adding -lpihwm when compiling on the Raspberry Pi. Programs should include <a class="el" href="pihwm_8h.html" title="Header for general library functionality.">pihwm.h</a> and any other hardware specific headers from the include directory as required. Note that if a prefix has been specified when configuring, it may be necessary to specify the location of the library (using the -L flag) and the headers (using the -I flag).</p>
-<p>For example, running on the Raspberry Pi: </p>
-<pre>
-gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
-</pre><p>A number of examples can be found under the /demo directory.</p>
-<h1><a class="anchor" id="bugs"></a>
-Reporting errors/bugs</h1>
-<p>Please report bugs via the <a href="https://github.com/omerk/pihwm/issues">issue tracker</a> on the Github project page. Pull requests are also welcome! </p>
-</div></div><!-- contents -->
+<div class="textblock">Here is a list of all modules:</div><div class="directory">
+<table class="directory">
+<tr id="row_0_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><a class="el" href="group___g_p_i_o.html" target="_self">GPIO</a></td><td class="desc">GPIO library functions</td></tr>
+<tr id="row_1_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><a class="el" href="group___i2_c.html" target="_self">I2C</a></td><td class="desc">I2C library functions</td></tr>
+<tr id="row_2_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><a class="el" href="group___p_w_m.html" target="_self">PWM</a></td><td class="desc">PWM library functions</td></tr>
+<tr id="row_3_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><a class="el" href="group___s_p_i.html" target="_self">SPI</a></td><td class="desc">SPI library functions</td></tr>
+<tr id="row_4_" class="even"><td class="entry"><img src="ftv2lastnode.png" alt="\" width="16" height="22" /><a class="el" href="group___general.html" target="_self">General</a></td><td class="desc">General library functions</td></tr>
+</table>
+</div><!-- directory -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

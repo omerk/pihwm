@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>pihwm: Documentation</title>
+<title>pihwm: lib/pi_i2c.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -42,10 +42,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,6 +64,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
+    </ul>
+  </div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -76,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('index.html','');});
+$(document).ready(function(){initNavTree('pi__i2c_8h_source.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -95,49 +101,27 @@ $(document).ready(function(){initNavTree('index.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Documentation </div>  </div>
+<div class="title">pi_i2c.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>pihwm is a collection of lightweight drivers for the hardware peripherals on the Raspberry Pi computer.</p>
-<h1><a class="anchor" id="build"></a>
-Building and installing pihwm</h1>
-<p>Grab the latest copy of the library from Github: </p>
-<pre>
-git clone git://github.com/omerk/pihwm.git
-cd pihwm
-mkdir build
-cd build
-</pre><p>Configure the software using the configure script in the main directory. </p>
-<pre>
-../configure
-</pre><p>There are several options available, many of which are standard to GNU configure scripts. Use configure &ndash;help to see all the options. The most useful is &ndash;prefix to specify a directory for installation of the library.</p>
-<p>Build the tool with: </p>
-<pre>
-make all
-</pre><p>Install the tool with: </p>
-<pre>
-make install
-</pre><p>This will install the library in prefix/lib, the demo programs in prefix/bin, headers in prefix/include and the documentation in prefix/share, where prefix is the prefix specified when configuring, if any.</p>
-<p>The documentation may be created and installed in alternative formats (PDF, Postscript,DVI, HTML) with for example: </p>
-<pre>
-make pdf
-make install-pdf
-</pre><h1><a class="anchor" id="usage"></a>
-Using the library</h1>
-<p>The library may be used by adding -lpihwm when compiling on the Raspberry Pi. Programs should include <a class="el" href="pihwm_8h.html" title="Header for general library functionality.">pihwm.h</a> and any other hardware specific headers from the include directory as required. Note that if a prefix has been specified when configuring, it may be necessary to specify the location of the library (using the -L flag) and the headers (using the -I flag).</p>
-<p>For example, running on the Raspberry Pi: </p>
-<pre>
-gcc -I/opt/pihwm/include demo.c -L/opt/pihwm/lib -l pihwm -o demo
-</pre><p>A number of examples can be found under the /demo directory.</p>
-<h1><a class="anchor" id="bugs"></a>
-Reporting errors/bugs</h1>
-<p>Please report bugs via the <a href="https://github.com/omerk/pihwm/issues">issue tracker</a> on the Github project page. Pull requests are also welcome! </p>
-</div></div><!-- contents -->
+<a href="pi__i2c_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef PI_I2C_H</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define PI_I2C_H</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">int</span> <a class="code" href="group___i2_c.html#ga960687810ca702976552efb5ca963d56" title="Initialises the i2c-dev interface for the I2C peripheral exposed on the P1 header (which is dependent...">i2c_init</a> ();</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">int</span> <a class="code" href="group___i2_c.html#ga66b3e466a75e324cf2c6a95d6e7b4520" title="Initialises the i2c-dev interface for the sysfs entry specified by the devname parameter.">i2c_init_name</a> (<span class="keywordtype">char</span> *devname);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">int</span> <a class="code" href="group___i2_c.html#ga52162a1feff51c501256b4eb26129dca" title="Selects a specific I2C slave device.">i2c_select_device</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> fd, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> addr);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">int</span> <a class="code" href="group___i2_c.html#ga7869a698aa9fb143561485ca80ec3860" title="Initiates an I2C write operation.">i2c_write</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> fd, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> addr, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *data, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> len);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">int</span> <a class="code" href="group___i2_c.html#gafa2a7bd52867020fe9ffb04d5739353d" title="Initiates an I2C read operation.">i2c_read</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> fd, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> addr, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *data, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> len);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif</span></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Apr 17 2013 23:40:58 for pihwm by
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="pi__i2c_8h.html">pi_i2c.h</a></li>
+    <li class="footer">Generated on Wed Apr 17 2013 23:40:57 for pihwm by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 </li>
   </ul>
