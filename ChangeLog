@@ -1,3 +1,8 @@
+2013-04-17  Omer Kilic  <omerkilic@gmail.com>
+
+	* lib/pi_gpio.c: always close file handles in gpio_* (@mokele)
+	* Switch to Apache 2 License.
+
 2012-09-25  Jeremy Bennett  <jeremy.bennett@embecosm.com>
 
 	* aclocal.m4, configure: Regenerated.
