@@ -286,7 +286,7 @@ gpio_set_int (unsigned int pin, void (*isr) (int), char *mode)
 	TODO: check for errors using retval */
 	isr_handler_flag = 1;
 	pthread_create(&isr_handler_thread, NULL, isr_handler, (void *) i);
-	pthread_tryjoin_np(isr_handler_thread, NULL);
+	//pthread_tryjoin_np(isr_handler_thread, NULL);
 
 	return 1;
 }
