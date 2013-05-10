@@ -189,7 +189,7 @@ isr_handler (void *isr)
 
 	if ( isr_handler_flag )
 	{
-		printf("isr_handler running\n");
+		debug("isr_handler running\n");
 
 		/* Get /value fd
 		TODO: Add check here */
@@ -244,7 +244,7 @@ isr_handler (void *isr)
 					return (void *) -1;
 				}
 
-				printf("\npoll() stdin read 0x%2.2X\n", (unsigned int) buf[0]);
+				debug("\npoll() stdin read 0x%2.2X\n", buf[0]);
 			}
 
 			fflush(stdout);

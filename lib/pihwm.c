@@ -125,8 +125,14 @@ board_info ()
 		return board;
 	}
 
-	fgets(rev_hex, 5, info);
-	sscanf(rev_hex, "%x", &rev_int);
+	if ( fgets(rev_hex, 5, info) != NULL )
+	{
+		sscanf(rev_hex, "%x", &rev_int);
+	}
+	else
+	{
+		return board;
+	}
 
 	// Data from: http://raspberryalphaomega.org.uk/?p=428 
 	switch(rev_int){
@@ -228,8 +234,15 @@ check_kernel_module (char* modulename)
 		return -1;
 	}
 
-	fgets(modcount, 2, lsmod);
-	modcount_int = atoi(modcount);
+	if ( fgets(modcount, 2, lsmod) != NULL )
+	{
+		modcount_int = atoi(modcount);
+	}
+	else
+	{
+		return -1;
+	}
+
 
 	if ( modcount_int > 0 )
 	{
