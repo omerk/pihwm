@@ -37,7 +37,7 @@ AC_PROG_LIBTOOL
 AM_INIT_AUTOMAKE
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
-#AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_HEADERS([config.h])
 
 # make sure we are using a recent autoconf version
 AC_PREREQ(2.68)
@@ -78,8 +78,17 @@ AC_SUBST(INCLUDES)
 
 AC_CONFIG_FILES([Makefile             \
                  demo/Makefile        \
-                 doc/Makefile         \
+                 doc/Doxyfile         \
+ 				 doc/Makefile         \
                  lib/Makefile])
+
+# Check if we have doxygen installed.
+AC_CHECK_PROGS([DOXYGEN], [doxygen])
+if test -z "$DOXYGEN"; then
+	AC_MSG_WARN([Doxygen not found - documentation will not be generated.])
+fi
+
+AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 
 # Generate the output
 AC_COPYRIGHT([Copyright (C) 2013 Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
