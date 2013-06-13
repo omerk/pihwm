@@ -25,7 +25,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 # Use a full version number (x.y.z, possibly with "rc<n>" as a suffix) when
 # preparing a release, otherwise use a the date version (yyyy-mm-dd).
-AC_INIT([pihwm], [2012-09-25], [omerkilic@gmail.com])
+AC_INIT([pihwm], [r1], [omerkilic@gmail.com])
 AC_CONFIG_MACRO_DIR([m4])
 
 # Generically use extensions such as _GNU_SOURCE if available.
@@ -37,7 +37,7 @@ AC_PROG_LIBTOOL
 AM_INIT_AUTOMAKE
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
-AC_CONFIG_HEADERS([config.h])
+#AC_CONFIG_HEADERS([config.h])
 
 # make sure we are using a recent autoconf version
 AC_PREREQ(2.68)
@@ -79,29 +79,24 @@ AC_SUBST(INCLUDES)
 AC_CONFIG_FILES([Makefile             \
                  demo/Makefile        \
                  doc/Makefile         \
-                 lib/Makefile         \
-                 testsuite/Makefile])
+                 lib/Makefile])
 
 # Generate the output
-AC_COPYRIGHT([Copyright (C) 2012 Omer Kilic
-Copyright (C) 2012 Embecosm Limited
+AC_COPYRIGHT([Copyright (C) 2013 Omer Kilic <omerkilic@gmail.com> - Erlang Solutions
+Copyright (C) 2013 Jeremy Bennett <jeremy.bennett@embecosm.com> - Embecosm Limited
 
-Contributor Omer Kilic <omerkilic@gmail.com>
-Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
+This file is part of pihwm <http://omerk.github.io/pihwm>
 
-This file is part of pihwm.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at:
 
-This program is free software; you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation; either version 3 of the License, or (at your option) any later
-version.
+  http://www.apache.org/licenses/LICENSE-2.0
 
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
-details.
-
-You should have received a copy of the GNU General Public License along
-with this program.  If not, see <http://www.gnu.org/licenses/>.])
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.])
 
 AC_OUTPUT
