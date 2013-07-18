@@ -34,7 +34,7 @@ AC_USE_SYSTEM_EXTENSIONS
 # Set up to use libtool and automake as well, with silent output, and create a
 # config header
 AC_PROG_LIBTOOL
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([foreign no-installman])
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
 AC_CONFIG_HEADERS([config.h])
