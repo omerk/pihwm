@@ -37,6 +37,7 @@
 
 // Function Prototypes
 int spi_init (uint8_t channel);
+int spi_init_name (char *devname);
 int spi_config (int fd, uint8_t mode, uint8_t bits, uint32_t speed, uint16_t delay);
 int spi_config_default (int fd);
 int spi_transfer (int fd, uint8_t txbuf[], uint8_t rxbuf[], uint8_t len);

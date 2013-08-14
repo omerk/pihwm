@@ -35,7 +35,6 @@
 #include <linux/spi/spidev.h>
 
 #include "pihwm.h"
-#include "pi_spi.h"
 
 /*! \addtogroup SPI
 *  @brief SPI library functions
@@ -68,11 +67,11 @@ spi_init (uint8_t channel)
 
 	if ( channel == 0 )
 	{
-		fd = open("/dev/spidev0.0", O_RDWR);
+		fd = spi_init_name("/dev/spidev0.0");
 	}
 	else if ( channel == 1 )
 	{
-		fd = open("/dev/spidev0.1", O_RDWR);
+		fd = spi_init_name("/dev/spidev0.1");
 	}
 	else
 	{
@@ -100,6 +99,30 @@ spi_init (uint8_t channel)
 	}
 }
 
+/**
+* @brief	Initialises the spidev interface for the sysfs entry specified
+* by the devname parameter.
+*
+* @param	devname		The sysfs entry for a particular SPI peripheral
+*
+* @return 	The file descriptor for the relevant spidev interface, -1
+* for failure
+*/
+int
+spi_init_name (char *devname)
+{
+	int fd = open (devname, O_RDWR);
+
+	if ( fd < 0 )
+	{
+		debug("[%s] Can't open %s : %s\n", __func__, devname, strerror (errno));
+		return -1;
+	}
+	else
+	{
+		return fd;
+	}
+}
 
 /**
 * @brief	Configures the spidev interface
