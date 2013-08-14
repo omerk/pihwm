@@ -40,7 +40,6 @@
 #include <unistd.h>
 
 #include "pihwm.h"
-#include "pi_pwm.h"
 
 // Registers
 // FIXME: These are already defined in .h, remove?

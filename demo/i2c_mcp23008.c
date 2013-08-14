@@ -22,7 +22,6 @@
 #include <stdlib.h>
 
 #include "pihwm.h"
-#include "pi_i2c.h"
 
 // Registers
 #define	IODIR		0x00

@@ -30,6 +30,10 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include "pi_gpio.h"
+#include "pi_pwm.h"
+#include "pi_spi.h"
+#include "pi_i2c.h"
 
 // Board information
 #define MODEL_A	100

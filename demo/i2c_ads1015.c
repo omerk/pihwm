@@ -22,7 +22,6 @@
 #include <stdlib.h>
 
 #include "pihwm.h"
-#include "pi_i2c.h"
 
 /* I2C Address */
 #define ADDR	0x48

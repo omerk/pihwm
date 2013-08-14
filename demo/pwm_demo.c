@@ -22,8 +22,6 @@
 #include <stdlib.h>
 
 #include "pihwm.h"
-#include "pi_pwm.h"
-
 
 int
 main (void)

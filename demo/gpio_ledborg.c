@@ -23,7 +23,6 @@
 #include <string.h>
 
 #include "pihwm.h"
-#include "pi_gpio.h"
 
 #define	PIN_RED	17
 #define	PIN_BLUE	22

@@ -23,7 +23,6 @@
 #include <linux/types.h>
 
 #include "pihwm.h"
-#include "pi_spi.h"
 
 int
 mcp3002_read (int fd, int channel)

@@ -22,7 +22,6 @@
 #include <stdlib.h>
 
 #include "pihwm.h"
-#include "pi_spi.h"
 
 int main(void)
 {

@@ -96,7 +96,7 @@
 /* I/O access */
 
 // Range for the PWM module
-const unsigned int PWM_MAX = 1024;
+#define PWM_MAX 1024
 
 // FIXME: Remove these?
 volatile unsigned int *gpio;

@@ -21,7 +21,6 @@
 #include <stdio.h>
 
 #include "pihwm.h"
-#include "pi_gpio.h"
 
 #define	BTN0	17
 #define	BTN1	22	

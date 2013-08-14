@@ -39,7 +39,6 @@
 #include <sys/ioctl.h>
 
 #include "pihwm.h"
-#include "pi_i2c.h"
 
 /*! \addtogroup I2C
 *  @brief I2C library functions

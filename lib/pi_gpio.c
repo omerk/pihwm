@@ -36,7 +36,6 @@
 #include <pthread.h>
 
 #include "pihwm.h"
-#include "pi_gpio.h"
 
 static pthread_t isr_handler_thread;
 static int isr_handler_flag;
