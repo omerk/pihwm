@@ -76,6 +76,9 @@ fi
 	$LIBTOOLIZE --force --copy
 }
 
+mkdir -p m4
+touch config.h.in
+
 echo "Running $ACLOCAL $aclocalinclude ..."
 aclocal $aclocalinclude
 
